@@ -1,0 +1,8 @@
+node_modules/
+brainrush-backend/
+*.log
+.env
+.DS_Store
+Thumbs.db
+package-lock.json
+desktop.ini

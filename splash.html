@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brain Rush</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+  body, html { height: 100%; width: 100%; overflow: hidden; background: #1a1a2e; }
+
+  /* Splash Screen */
+  #splash {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at center, #2c003e, #1a1a2e);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #00bfff;
+    text-align: center;
+  }
+
+  /* Increase size of main splash logo */
+  #logo {
+    width: 300px;  /* Changed from 150px */
+    height: 300px; /* Changed from 150px */
+    background: url('logo.png') no-repeat center/contain;
+    animation: pulse 1.5s infinite;
+  }
+
+  #brain {
+    width: 200px;
+    height: 200px;
+    margin: 20px 0;
+    stroke: #00bfff;
+    stroke-width: 3;
+    fill: none;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 2s forwards;
+  }
+
+  @keyframes draw {
+    to { stroke-dashoffset: 0; }
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px #00bfff); }
+    50% { transform: scale(1.1); filter: drop-shadow(0 0 20px #00bfff); }
+  }
+
+  .dots span {
+    display: inline-block;
+    animation: blink 1.4s infinite both;
+    font-size: 2rem;
+    margin: 0 5px;
+  }
+  .dots span:nth-child(1) { animation-delay: 0s; }
+  .dots span:nth-child(2) { animation-delay: 0.2s; }
+  .dots span:nth-child(3) { animation-delay: 0.4s; }
+
+  @keyframes blink {
+    0%, 80%, 100% { opacity: 0; }
+    40% { opacity: 1; }
+  }
+
+  #play-btn, #continue-btn {
+    margin-top: 25px;
+    padding: 12px 30px;
+    font-size: 1.5rem;
+    color: #fff;
+    background: transparent;
+    border: 2px solid #00bfff;
+    border-radius: 12px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    animation: glow 1.5s infinite alternate;
+    transition: 0.3s;
+  }
+
+  #play-btn:hover, #continue-btn:hover {
+    background: #00bfff;
+    color: #1a1a2e;
+    box-shadow: 0 0 20px #00bfff, 0 0 40px #00bfff;
+  }
+
+  @keyframes glow {
+    0% { box-shadow: 0 0 5px #00bfff; }
+    100% { box-shadow: 0 0 20px #00bfff, 0 0 40px #00bfff; }
+  }
+
+  #splash.hidden { 
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
+  /* Welcome Screen */
+  #welcome {
+    display: none;
+    height: 100%;
+    width: 100%;
+    background: #1a1a2e;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Increase size of welcome screen logo */
+  #welcome-logo {
+    width: 300px;  /* Changed from 150px */
+    height: 300px; /* Changed from 150px */
+    background: url('logo.png') no-repeat center/contain;
+    margin-bottom: 20px;
+    animation: pulse 1.5s infinite;
+  }
+
+  #welcome h1 {
+    font-size: 3rem;
+    color: #00bfff;
+    margin-bottom: 20px;
+  }
+
+  #welcome p {
+    font-size: 1.5rem;
+    color: #ccc;
+    margin-bottom: 30px;
+    max-width: 600px;
+  }
+
+  /* Per-letter animated colored title */
+  .rainbow-letter {
+    display: inline-block;
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1;
+    padding: 0 2px;
+    color: var(--clr, #00bfff);
+    text-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    will-change: transform, opacity;
+    animation: letterBounce 1.25s cubic-bezier(.2,.8,.2,1) infinite both;
+    animation-delay: calc(var(--i) * 0.06s);
+  }
+
+  @keyframes letterBounce {
+    0%   { transform: translateY(0) scale(1); opacity: 1; }
+    40%  { transform: translateY(-12px) scale(1.06); opacity: 1; }
+    70%  { transform: translateY(-6px) scale(1.03); opacity: 0.98; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+
+  /* small staggered hue shift for extra sparkle */
+  .rainbow-letter::after {
+    content: '';
+    display: block;
+    height: 6px;
+    width: 100%;
+    margin-top: 6px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+    transform-origin: left center;
+    opacity: 0.85;
+    filter: blur(6px);
+  }
+
+  /* Floating particles */
+  .particle {
+    position: absolute;
+    background: #00bfff;
+    border-radius: 50%;
+    opacity: 0.7;
+    animation: float 5s infinite ease-in-out;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+    50% { transform: translateY(-100px) translateX(50px); opacity: 0.4; }
+    100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+  }
+
+  /* Main content */
+  #main {
+    display: none;
+    height: 100%;
+    background: #1a1a2e;
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+  }
+</style>
+</head>
+<body>
+
+<!-- Splash Screen -->
+<div id="splash">
+  <img src="logo.png" alt="Brain Rush Logo" id="logo">
+
+  Brain Rush
+  <div class="dots">
+    <span>.</span><span>.</span><span>.</span>
+  </div>
+
+  <button id="play-btn">Play Now</button>
+</div>
+
+<!-- Welcome Screen -->
+<div id="welcome">
+  <!-- Particles -->
+  <div class="particle" style="width:10px;height:10px;top:20%;left:15%;"></div>
+  <div class="particle" style="width:8px;height:8px;top:50%;left:70%;"></div>
+  <div class="particle" style="width:12px;height:12px;top:80%;left:40%;"></div>
+
+  <div id="welcome-logo"></div>
+
+  <!-- changed welcome heading to animated rainbow text -->
+  <h1 id="welcome-title" class="rainbow-text">Welcome to Brain Rush! 🧠</h1>
+  <p>Test your brain with fun games, quizzes, puzzles, and riddles!</p>
+  <button id="continue-btn">Continue</button>
+</div>
+
+<!-- Main Content -->
+<div id="main">
+  This is where your main website content goes.
+</div>
+
+<!-- Background audio for splash (muted for autoplay) -->
+<audio id="bg-music" autoplay>
+  <source src="background-music.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+  const splash = document.getElementById('splash');
+  const welcome = document.getElementById('welcome');
+  const playBtn = document.getElementById('play-btn');
+  const continueBtn = document.getElementById('continue-btn');
+
+  // Auto show welcome after 4s
+  setTimeout(() => { welcome.style.display = 'flex'; }, 4000);
+
+  playBtn?.addEventListener('click', () => {
+    welcome.style.display = 'flex';
+  });
+
+  // AUDIO: attempt muted autoplay, then unmute on first user gesture (gesture "trap")
+  document.addEventListener('DOMContentLoaded', () => {
+    const music = document.getElementById('bg-music');
+    const clickSfx = document.getElementById('click-sfx');
+    const toggle = document.getElementById('music-toggle');
+
+    // Split welcome title into per-letter spans and assign colors + delays
+    (function animateWelcomeTitle(){
+      const el = document.getElementById('welcome-title');
+      if (!el) return;
+      const txt = el.textContent;
+      el.innerHTML = '';
+      const colors = ['#00bfff', '#9b59b6', '#ff69b4', '#ffd166', '#7afcff']; // sky blue, purple, pink, yellow, teal
+      [...txt].forEach((ch, i) => {
+        const span = document.createElement('span');
+        span.className = 'rainbow-letter';
+        span.textContent = ch;
+        span.style.setProperty('--i', i);
+        // skip coloring spaces (keep subtle)
+        const color = ch.trim() ? colors[i % colors.length] : 'transparent';
+        span.style.setProperty('--clr', color);
+        el.appendChild(span);
+      });
+    })();
+
+    // Try to start muted playback (most browsers allow muted autoplay)
+    if (music) {
+      try {
+        music.muted = true;
+        music.volume = 0;
+        music.play().catch(()=>{});
+      } catch(e) {}
+    }
+
+    // Fade-in helper to smoothly unmute
+    function fadeInAudio(el, targetVol=0.6, step=0.02, interval=80) {
+      if (!el) return;
+      try {
+        el.muted = false;
+        el.volume = 0;
+        const iv = setInterval(() => {
+          el.volume = Math.min(targetVol, +(el.volume + step).toFixed(3));
+          if (el.volume >= targetVol) clearInterval(iv);
+        }, interval);
+      } catch (e) {}
+    }
+
+    // Resume/unmute on first user gesture
+    const resumeOnGesture = () => {
+      fadeInAudio(music, 0.6);
+      document.body.removeEventListener('click', resumeOnGesture);
+      document.body.removeEventListener('keydown', resumeOnGesture);
+    };
+    document.body.addEventListener('click', resumeOnGesture, { once: true });
+    document.body.addEventListener('keydown', resumeOnGesture, { once: true });
+
+    // Continue button: mark index to play and try to unmute immediately before navigating
+    continueBtn?.addEventListener('click', () => {
+      try { localStorage.setItem('br_play_music', '1'); } catch (e) {}
+      // Try to unmute/play now so music starts before navigation (if allowed)
+      try {
+        if (music) {
+          music.muted = false;
+          music.volume = 0.6;
+          music.play().catch(()=>{});
+        }
+      } catch (e) {}
+      window.location.href = 'index.html';
+    });
+  });
+</script>
+</body>
+</html>

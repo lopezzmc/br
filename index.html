@@ -1,0 +1,2570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Brain Rush | Premium</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================
+   PREMIUM THEME VARIABLES
+   ============================================ */
+:root {
+  --bg-primary: #f0f2f8;
+  --bg-secondary: #ffffff;
+  --bg-card: rgba(255,255,255,0.92);
+  --bg-card-hover: rgba(255,255,255,0.98);
+  --text-primary: #1a1a2e;
+  --text-secondary: #444;
+  --text-muted: #888;
+  --border-color: rgba(0,0,0,0.06);
+  --shadow: 0 8px 40px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 56px rgba(123,58,246,0.2);
+  --header-bg: rgba(255,255,255,0.92);
+  --modal-bg: #ffffff;
+  --input-bg: #f5f5f5;
+  --input-border: #e8e8e8;
+  --blob-opacity: 0.08;
+  --streak-bg: rgba(0,0,0,0.04);
+  --gradient-main: linear-gradient(135deg, #7b3af6, #00e5ff);
+  --gradient-warm: linear-gradient(135deg, #ff6b6b, #ffa94d);
+  --gradient-green: linear-gradient(135deg, #1fb97a, #22d3ee);
+  --gradient-gold: linear-gradient(135deg, #f59e0b, #ff6b6b);
+  --highlight-glow: rgba(123,58,246,0.3);
+  --card-border: rgba(0,0,0,0.04);
+  --category-glow: rgba(123,58,246,0.12);
+}
+
+body.theme-dark {
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #141428;
+  --bg-card: rgba(20,20,40,0.92);
+  --bg-card-hover: rgba(30,30,60,0.95);
+  --text-primary: #f0f0ff;
+  --text-secondary: #b0b0d0;
+  --text-muted: #707090;
+  --border-color: rgba(255,255,255,0.06);
+  --shadow: 0 8px 40px rgba(0,0,0,0.6);
+  --shadow-hover: 0 12px 56px rgba(123,58,246,0.35);
+  --header-bg: rgba(10,10,26,0.92);
+  --modal-bg: #141428;
+  --input-bg: #1a1a35;
+  --input-border: #2a2a50;
+  --blob-opacity: 0.04;
+  --streak-bg: rgba(255,255,255,0.04);
+  --highlight-glow: rgba(123,58,246,0.5);
+  --card-border: rgba(255,255,255,0.05);
+  --category-glow: rgba(123,58,246,0.2);
+}
+
+body.theme-ocean {
+  --bg-primary: #0a1628;
+  --bg-secondary: #0d2137;
+  --bg-card: rgba(13,33,55,0.92);
+  --bg-card-hover: rgba(20,50,80,0.95);
+  --text-primary: #d4f1ff;
+  --text-secondary: #8bc4e8;
+  --text-muted: #5a8fa8;
+  --border-color: rgba(100,200,255,0.08);
+  --shadow: 0 8px 40px rgba(0,50,100,0.4);
+  --shadow-hover: 0 12px 56px rgba(0,150,255,0.25);
+  --header-bg: rgba(10,22,40,0.92);
+  --modal-bg: #0d2137;
+  --input-bg: #0f2a45;
+  --input-border: #1a3d60;
+  --gradient-main: linear-gradient(135deg, #0088ff, #00ddff);
+  --gradient-warm: linear-gradient(135deg, #ff6b6b, #ffa94d);
+  --gradient-green: linear-gradient(135deg, #00d4aa, #00ffd4);
+  --gradient-gold: linear-gradient(135deg, #f59e0b, #ff6b6b);
+}
+
+body.theme-forest {
+  --bg-primary: #0a1a0a;
+  --bg-secondary: #0f2a0f;
+  --bg-card: rgba(15,42,15,0.92);
+  --bg-card-hover: rgba(25,60,25,0.95);
+  --text-primary: #d4f0d4;
+  --text-secondary: #8bc48b;
+  --text-muted: #5a8f5a;
+  --border-color: rgba(100,255,100,0.06);
+  --shadow: 0 8px 40px rgba(0,50,0,0.4);
+  --shadow-hover: 0 12px 56px rgba(0,200,0,0.2);
+  --header-bg: rgba(10,26,10,0.92);
+  --modal-bg: #0f2a0f;
+  --input-bg: #1a3a1a;
+  --input-border: #2a5a2a;
+  --gradient-main: linear-gradient(135deg, #00b894, #00d2aa);
+  --gradient-warm: linear-gradient(135deg, #ff6b6b, #ffa94d);
+  --gradient-green: linear-gradient(135deg, #55efc4, #00b894);
+  --gradient-gold: linear-gradient(135deg, #f59e0b, #ff6b6b);
+}
+
+body.theme-sunset {
+  --bg-primary: #1a0a14;
+  --bg-secondary: #2a0f1a;
+  --bg-card: rgba(42,15,26,0.92);
+  --bg-card-hover: rgba(60,25,40,0.95);
+  --text-primary: #ffd4e0;
+  --text-secondary: #e88ba8;
+  --text-muted: #a85a78;
+  --border-color: rgba(255,100,150,0.06);
+  --shadow: 0 8px 40px rgba(50,0,20,0.4);
+  --shadow-hover: 0 12px 56px rgba(200,0,100,0.2);
+  --header-bg: rgba(26,10,20,0.92);
+  --modal-bg: #2a0f1a;
+  --input-bg: #3a1a2a;
+  --input-border: #5a2a3a;
+  --gradient-main: linear-gradient(135deg, #ff6b6b, #ff9f43);
+  --gradient-warm: linear-gradient(135deg, #ff6b6b, #ffa94d);
+  --gradient-green: linear-gradient(135deg, #55efc4, #00b894);
+  --gradient-gold: linear-gradient(135deg, #f59e0b, #ff6b6b);
+}
+
+body.theme-cyber {
+  --bg-primary: #0a0a14;
+  --bg-secondary: #0f0f24;
+  --bg-card: rgba(15,15,36,0.92);
+  --bg-card-hover: rgba(25,25,50,0.95);
+  --text-primary: #d4d4ff;
+  --text-secondary: #8888d4;
+  --text-muted: #555588;
+  --border-color: rgba(0,255,200,0.06);
+  --shadow: 0 8px 40px rgba(0,200,255,0.12);
+  --shadow-hover: 0 12px 56px rgba(0,255,200,0.2);
+  --header-bg: rgba(10,10,20,0.92);
+  --modal-bg: #0f0f24;
+  --input-bg: #1a1a35;
+  --input-border: #2a2a50;
+  --gradient-main: linear-gradient(135deg, #00ffc8, #00d4ff);
+  --gradient-warm: linear-gradient(135deg, #ff6b6b, #ffa94d);
+  --gradient-green: linear-gradient(135deg, #00ff88, #00ffc8);
+  --gradient-gold: linear-gradient(135deg, #f59e0b, #ff6b6b);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+html, body {
+  height:100%;
+  font-family:'Poppins',sans-serif;
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  overflow-x:hidden;
+  scroll-behavior:smooth;
+  transition:background 0.6s ease, color 0.6s ease;
+}
+
+/* Landscape Overlay */
+.landscape-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  background: linear-gradient(135deg, #0f0e17 0%, #1a1a2e 100%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+.landscape-overlay .rotate-icon { font-size:120px; margin-bottom:24px; animation:rotatePhone 2.5s ease-in-out infinite; filter:drop-shadow(0 0 40px rgba(123,58,246,0.5)); }
+@keyframes rotatePhone {
+  0%,100%{transform:rotate(0deg) scale(1);}
+  25%{transform:rotate(90deg) scale(1.1);}
+  50%{transform:rotate(90deg) scale(1.1);}
+  75%{transform:rotate(0deg) scale(1);}
+}
+.landscape-overlay h2 { font-size:2rem; font-weight:900; color:#fff; margin-bottom:12px; background:linear-gradient(135deg,#7b3af6,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.landscape-overlay p { color:#a7a9be; font-size:1.1rem; max-width:420px; line-height:1.8; }
+@media (max-width:1024px) and (orientation:portrait) { .landscape-overlay { display:flex !important; } body>*:not(.landscape-overlay){display:none !important;} }
+
+/* Animated Background */
+.animated-bg {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+}
+.pulse-glow {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: radial-gradient(ellipse at 20% 50%, rgba(123,58,246,0.05) 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 50%, rgba(0,229,255,0.05) 0%, transparent 50%);
+  animation: pulseGlow 8s ease-in-out infinite alternate;
+  transition: background 0.6s ease;
+}
+@keyframes pulseGlow { 0% { opacity:0.5; transform:scale(1); } 100% { opacity:1; transform:scale(1.05); } }
+
+.float-shape {
+  position: absolute; border-radius: 50%; opacity: 0.06; animation: floatShape 20s ease-in-out infinite;
+  transition: background 0.6s ease;
+}
+.float-shape:nth-child(1) { width:300px; height:300px; background:radial-gradient(circle,#7b3af6,#00e5ff); top:10%; left:-5%; animation-delay:0s; animation-duration:25s; }
+.float-shape:nth-child(2) { width:200px; height:200px; background:radial-gradient(circle,#ff6b6b,#ffa94d); bottom:15%; right:-3%; animation-delay:3s; animation-duration:20s; }
+.float-shape:nth-child(3) { width:150px; height:150px; background:radial-gradient(circle,#4ade80,#22d3ee); top:50%; left:60%; animation-delay:6s; animation-duration:22s; }
+.float-shape:nth-child(4) { width:100px; height:100px; background:radial-gradient(circle,#f59e0b,#ff6b6b); top:20%; right:20%; animation-delay:9s; animation-duration:18s; }
+.float-shape:nth-child(5) { width:250px; height:250px; background:radial-gradient(circle,#a78bfa,#7b3af6); bottom:30%; left:30%; animation-delay:2s; animation-duration:28s; }
+
+.float-icon {
+  position: absolute; font-size: 2.5rem; opacity: 0.08; animation: floatIcon 15s ease-in-out infinite; pointer-events: none;
+}
+.float-icon:nth-child(6) { top:5%; left:20%; animation-delay:0s; font-size:3rem; }
+.float-icon:nth-child(7) { top:15%; right:15%; animation-delay:2s; font-size:2rem; }
+.float-icon:nth-child(8) { bottom:20%; left:10%; animation-delay:4s; font-size:3.5rem; }
+.float-icon:nth-child(9) { bottom:10%; right:25%; animation-delay:6s; font-size:2.5rem; }
+.float-icon:nth-child(10) { top:45%; left:5%; animation-delay:8s; font-size:2rem; }
+.float-icon:nth-child(11) { top:55%; right:5%; animation-delay:10s; font-size:3rem; }
+
+@keyframes floatShape {
+  0%,100% { transform:translate(0,0) scale(1) rotate(0deg); border-radius:50%; }
+  25% { transform:translate(50px,-40px) scale(1.1) rotate(45deg); border-radius:30% 70% 50% 50%/50% 40% 60% 50%; }
+  50% { transform:translate(-30px,60px) scale(0.9) rotate(90deg); border-radius:40% 60% 70% 30%/50% 60% 40% 50%; }
+  75% { transform:translate(40px,30px) scale(1.05) rotate(135deg); border-radius:60% 40% 30% 70%/40% 50% 60% 50%; }
+}
+@keyframes floatIcon {
+  0%,100% { transform:translateY(0px) rotate(0deg) scale(1); }
+  50% { transform:translateY(-30px) rotate(10deg) scale(1.1); }
+}
+
+/* ============================================
+   ONBOARDING PAGE
+   ============================================ */
+.onboarding-page {
+  display: none; min-height: 100vh; align-items: center; justify-content: center; padding: 20px; position: relative; z-index: 1;
+}
+.onboarding-container {
+  background: var(--bg-card); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-radius: 24px; padding: 40px; max-width: 480px; width: 100%; box-shadow: var(--shadow);
+  border: 1px solid var(--border-color); position: relative; z-index: 2; animation: fadeInUp 0.6s ease;
+}
+@keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+.onboarding-container .onboarding-logo { text-align: center; margin-bottom: 30px; }
+.onboarding-container .onboarding-logo .logo-icon { font-size:60px; margin-bottom:10px; }
+.onboarding-container .onboarding-logo h1 { font-size:28px; font-weight:900; background:var(--gradient-main); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.onboarding-container .onboarding-logo p { color:var(--text-muted); font-size:0.9rem; }
+.onboarding-container label { display:block; font-size:0.85rem; font-weight:600; color:var(--text-secondary); margin-bottom:6px; }
+.onboarding-container input {
+  width:100%; padding:12px 14px; border-radius:12px; border:2px solid var(--input-border); font-size:0.95rem;
+  background:var(--input-bg); color:var(--text-primary); font-family:'Poppins',sans-serif; transition:all 0.3s ease; margin-bottom:16px;
+}
+.onboarding-container input:focus { outline:none; border-color:#7b3af6; box-shadow:0 0 0 4px rgba(123,58,246,0.1); }
+.onboarding-container .avatar-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 12px 0 16px;
+}
+.onboarding-container .avatar-option {
+  padding:12px 8px; border-radius:14px; border:2px solid var(--border-color); background:var(--bg-secondary);
+  cursor:pointer; text-align:center; transition:all 0.3s ease;
+}
+.onboarding-container .avatar-option:hover { transform:scale(1.05); border-color:#7b3af6; }
+.onboarding-container .avatar-option.active { border-color:#7b3af6; background:rgba(123,58,246,0.1); box-shadow:0 0 20px rgba(123,58,246,0.15); }
+.onboarding-container .avatar-option .avatar-emoji { font-size:2.2rem; display:block; }
+.onboarding-container .avatar-option .avatar-name { font-size:0.6rem; font-weight:600; margin-top:4px; color:var(--text-muted); }
+.onboarding-container .btn-primary {
+  width:100%; padding:14px; border:none; border-radius:12px; background:var(--gradient-main); color:#fff;
+  font-weight:700; font-size:1rem; cursor:pointer; transition:all 0.3s ease; font-family:'Poppins',sans-serif;
+}
+.onboarding-container .btn-primary:hover { transform:scale(1.02); box-shadow:var(--shadow-hover); }
+.onboarding-container .btn-primary:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+
+/* ============================================
+   PREMIUM HEADER
+   ============================================ */
+.header {
+  position:fixed; top:0; left:0; right:0; z-index:100; padding:8px 16px;
+  background:var(--header-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border-color); display:none; justify-content:space-between; align-items:center;
+  gap:8px; flex-wrap:wrap; transition:background 0.6s ease, border-color 0.6s ease;
+}
+.header-left { display:flex; align-items:center; gap:10px; }
+.logo { display:flex; align-items:center; gap:8px; text-decoration:none; }
+.logo img { width:38px; height:38px; border-radius:10px; }
+.logo span { font-size:18px; font-weight:900; background:var(--gradient-main); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.header-right { display:flex; align-items:center; gap:4px; flex-wrap:wrap; }
+
+.profile-btn {
+  width:34px; height:34px; border-radius:50%; background:var(--bg-secondary); border:1px solid var(--border-color);
+  cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:all 0.3s ease;
+  color:var(--text-primary);
+}
+.profile-btn:hover { background:var(--bg-card-hover); transform:scale(1.1); }
+
+.badge-item {
+  display:flex; align-items:center; gap:3px; padding:3px 8px; border-radius:30px; font-size:10px; font-weight:700;
+  background:var(--bg-secondary); border:1px solid var(--border-color); color:var(--text-primary);
+  transition:background 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+}
+.badge-item .icon { font-size:12px; }
+.badge-item .value { color:#f59e0b; }
+.badge-item .value.diamond { color:#7b3af6; }
+
+.level-badge {
+  display:flex; align-items:center; gap:3px; padding:3px 8px; border-radius:30px; font-size:9px; font-weight:800;
+  background:linear-gradient(135deg,#7b3af6,#a78bfa); color:#fff;
+}
+.streak-badge-header {
+  display:flex; align-items:center; gap:4px; padding:3px 10px; border-radius:30px;
+  background:var(--gradient-warm); color:#fff; font-size:9px; font-weight:700;
+}
+.music-btn, .settings-btn {
+  width:34px; height:34px; border-radius:50%; background:var(--bg-secondary); border:1px solid var(--border-color);
+  cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:all 0.3s ease;
+  color:var(--text-primary);
+}
+.music-btn:hover, .settings-btn:hover { background:var(--bg-card-hover); transform:scale(1.08); }
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+.main {
+  padding-top:70px; padding-bottom:40px; position:relative; z-index:1; max-width:1200px; margin:0 auto;
+  padding-left:16px; padding-right:16px; display: none;
+}
+.hero-section { text-align:center; padding:20px 16px 16px; }
+.hero-section .greeting { font-size:2rem; font-weight:900; margin-bottom:2px; background:var(--gradient-main); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.hero-section .sub-greeting { font-size:1rem; color:var(--text-secondary); font-weight:400; margin-bottom:12px; transition:color 0.6s ease; }
+.hero-section .hero-stats { display:flex; justify-content:center; gap:16px; flex-wrap:wrap; }
+.hero-section .hero-stats .stat {
+  background:var(--bg-card); backdrop-filter:blur(12px); padding:8px 18px; border-radius:30px;
+  border:1px solid var(--border-color); box-shadow:var(--shadow); font-size:12px; font-weight:600;
+  color:var(--text-secondary); transition:background 0.6s ease, color 0.6s ease, border-color 0.6s ease;
+}
+.hero-section .hero-stats .stat span { color:#7b3af6; font-weight:800; }
+
+.quick-actions {
+  display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin:12px 0 8px;
+}
+.quick-actions .action-btn {
+  padding:10px 18px; border-radius:30px; border:none; font-weight:700; font-size:12px;
+  cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; gap:6px;
+}
+.quick-actions .action-btn:hover { transform:translateY(-3px) scale(1.03); }
+.quick-actions .action-btn.primary { background:var(--gradient-main); color:#fff; }
+.quick-actions .action-btn.warm { background:var(--gradient-warm); color:#fff; }
+.quick-actions .action-btn.green { background:var(--gradient-green); color:#fff; }
+.quick-actions .action-btn.shop { background:var(--gradient-gold); color:#fff; }
+.quick-actions .action-btn.leaderboard { background:linear-gradient(135deg,#7b3af6,#a78bfa); color:#fff; }
+
+.streak-wrap { width:100%; max-width:600px; margin:12px auto 16px; }
+.streak-bar { width:100%; height:6px; background:var(--streak-bg); border-radius:12px; overflow:hidden; transition:background 0.6s ease; }
+.streak-fill { width:0%; height:100%; background:linear-gradient(90deg,#4ade80,#22d3ee); border-radius:12px; transition:width 0.5s ease; }
+.streak-info { display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; font-size:0.75rem; }
+.streak-info .streak-label { color:var(--text-muted); font-weight:600; transition:color 0.6s ease; }
+.streak-info .streak-count { color:#ff6b6b; font-weight:800; }
+.streak-info .streak-next { color:var(--text-muted); font-size:0.65rem; transition:color 0.6s ease; }
+
+/* ============================================
+   PREMIUM CATEGORIES
+   ============================================ */
+.categories-section { margin-top:16px; }
+.categories-section .section-title {
+  font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:12px;
+  display:flex; align-items:center; gap:10px; transition:color 0.6s ease;
+}
+.categories-section .section-title span { background:var(--gradient-main); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+
+.categories-grid {
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(140px,1fr)); gap:12px;
+}
+.category-card {
+  display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px 12px;
+  border-radius:16px; background:var(--bg-card); backdrop-filter:blur(10px); border:1px solid var(--border-color);
+  text-decoration:none; color:var(--text-primary); font-weight:700; font-size:0.85rem;
+  transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1), background 0.6s ease, border-color 0.6s ease, color 0.6s ease;
+  min-height:85px; cursor:pointer; position:relative; overflow:hidden;
+}
+.category-card::before {
+  content:''; position:absolute; inset:0; background:var(--gradient-main); opacity:0; transition:opacity 0.4s ease; border-radius:16px;
+}
+.category-card:hover {
+  transform:translateY(-6px) scale(1.02); box-shadow:0 0 30px var(--category-glow); border-color:#7b3af6;
+}
+.category-card:hover::before { opacity:0.08; }
+.category-card .emoji { font-size:2rem; margin-bottom:4px; position:relative; z-index:1; }
+.category-card .name { position:relative; z-index:1; font-size:0.75rem; text-align:center; }
+.category-card .play-count { position:relative; z-index:1; font-size:0.55rem; color:var(--text-muted); margin-top:2px; }
+
+/* ============================================
+   EPIC PROFILE STYLES
+   ============================================ */
+.profile-avatar-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56px;
+  background: var(--bg-secondary);
+  border: 4px solid transparent;
+  background-image: linear-gradient(var(--bg-secondary), var(--bg-secondary)), 
+                    var(--gradient-main);
+  background-origin: padding-box, border-box;
+  background-clip: padding-box, border-box;
+  box-shadow: 0 0 40px rgba(123,58,246,0.2), 0 8px 32px rgba(0,0,0,0.1);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: avatarPulse 3s ease-in-out infinite;
+}
+
+.profile-avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 60px rgba(123,58,246,0.4), 0 8px 40px rgba(0,0,0,0.15);
+}
+
+@keyframes avatarPulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(123,58,246,0.2), 0 8px 32px rgba(0,0,0,0.1); }
+  50% { box-shadow: 0 0 60px rgba(123,58,246,0.35), 0 8px 40px rgba(0,0,0,0.15); }
+}
+
+.profile-avatar-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  background: var(--gradient-main);
+  opacity: 0.15;
+  animation: ringSpin 8s linear infinite;
+  z-index: -1;
+}
+
+@keyframes ringSpin {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.05); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.profile-avatar .level-badge-ring {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: var(--gradient-gold);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--bg-secondary);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.profile-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.profile-stat-card {
+  background: var(--input-bg);
+  padding: 12px 8px;
+  border-radius: 14px;
+  text-align: center;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.profile-stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(123,58,246,0.2);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}
+
+.profile-stat-card .stat-icon { font-size: 22px; display: block; margin-bottom: 2px; }
+.profile-stat-card .stat-value { font-size: 18px; font-weight: 800; color: var(--text-primary); }
+.profile-stat-card .stat-label { font-size: 9px; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.profile-stat-card.gold .stat-value { color: #f59e0b; }
+.profile-stat-card.purple .stat-value { color: #7b3af6; }
+.profile-stat-card.green .stat-value { color: #1fb97a; }
+.profile-stat-card.red .stat-value { color: #ff6b6b; }
+.profile-stat-card.blue .stat-value { color: #4d96ff; }
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.achievement-badge {
+  background: var(--input-bg);
+  padding: 10px 8px;
+  border-radius: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.achievement-badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: var(--gradient-main);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.achievement-badge.locked { opacity: 0.4; filter: grayscale(1); }
+.achievement-badge.unlocked { 
+  border-color: rgba(123,58,246,0.2); 
+  background: rgba(123,58,246,0.05);
+}
+.achievement-badge.unlocked::after { opacity: 0.05; }
+.achievement-badge .ach-icon { font-size: 24px; display: block; margin-bottom: 2px; position: relative; z-index: 1; }
+.achievement-badge .ach-name { font-size: 8px; font-weight: 700; color: var(--text-primary); position: relative; z-index: 1; }
+.achievement-badge .ach-progress { 
+  width: 100%; 
+  height: 3px; 
+  background: var(--border-color); 
+  border-radius: 10px; 
+  margin-top: 4px; 
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+.achievement-badge .ach-progress .ach-fill { 
+  height: 100%; 
+  background: var(--gradient-main); 
+  border-radius: 10px; 
+  transition: width 1s ease;
+}
+
+.history-timeline {
+  position: relative;
+  padding-left: 24px;
+  margin: 8px 0;
+}
+
+.history-timeline::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border-color);
+}
+
+.history-item {
+  position: relative;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  background: var(--input-bg);
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.history-item::before {
+  content: '';
+  position: absolute;
+  left: -18px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--gradient-main);
+  border: 2px solid var(--bg-secondary);
+}
+.history-item.correct::before { background: #4ade80; }
+.history-item.wrong::before { background: #ff4757; }
+.history-item .h-category { font-weight: 700; font-size: 12px; color: var(--text-primary); }
+.history-item .h-result { font-size: 11px; font-weight: 600; }
+.history-item .h-result.correct { color: #4ade80; }
+.history-item .h-result.wrong { color: #ff4757; }
+.history-item .h-coins { font-size: 11px; font-weight: 700; color: #f59e0b; }
+
+/* ============================================
+   PREMIUM SHOP
+   ============================================ */
+.shop-container { padding:5px 0; }
+.shop-category-title { font-size:0.9rem; font-weight:800; color:var(--text-primary); margin:16px 0 10px; display:flex; align-items:center; gap:8px; transition:color 0.6s ease; }
+.shop-item-card {
+  display:flex; align-items:center; justify-content:space-between; padding:14px 18px;
+  background:var(--bg-card); border-radius:14px; margin-bottom:10px; border:1px solid var(--border-color);
+  transition:all 0.3s ease, background 0.6s ease, border-color 0.6s ease; gap:12px;
+}
+.shop-item-card:hover { background:var(--bg-card-hover); border-color:#7b3af6; transform:translateX(4px); }
+.shop-item-card .item-icon { font-size:2rem; min-width:45px; text-align:center; }
+.shop-item-card .item-info { flex:1; min-width:100px; }
+.shop-item-card .item-info h4 { font-size:0.9rem; font-weight:700; color:var(--text-primary); transition:color 0.6s ease; }
+.shop-item-card .item-info p { font-size:0.7rem; color:var(--text-muted); transition:color 0.6s ease; }
+.shop-item-card .item-info .badge {
+  display:inline-block; font-size:0.6rem; font-weight:700; padding:2px 10px; border-radius:20px; margin-top:4px;
+}
+.shop-item-card .item-info .badge.owned { background:#4ade80; color:#0b6b3a; }
+.shop-item-card .item-info .badge.equipped { background:#7b3af6; color:#fff; }
+.shop-item-card .item-action { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
+.shop-item-card .item-action .price {
+  font-weight:700; font-size:0.8rem; padding:4px 12px; border-radius:20px; background:var(--input-bg);
+  color:var(--text-secondary); transition:background 0.6s ease, color 0.6s ease;
+}
+.shop-item-card .item-action .btn-buy {
+  padding:6px 14px; border:none; border-radius:20px; font-weight:700; cursor:pointer; transition:all 0.3s ease; font-size:0.75rem;
+}
+.shop-item-card .item-action .btn-buy.coin { background:#f59e0b; color:#fff; }
+.shop-item-card .item-action .btn-buy.diamond { background:#7b3af6; color:#fff; }
+.shop-item-card .item-action .btn-buy:hover { transform:scale(1.05); }
+.shop-item-card .item-action .btn-buy:disabled { opacity:0.5; cursor:not-allowed; }
+.shop-item-card .item-action .btn-equip {
+  padding:6px 14px; border:none; border-radius:20px; font-weight:700; cursor:pointer; transition:all 0.3s ease; font-size:0.75rem;
+  background:var(--gradient-green); color:#fff;
+}
+.shop-item-card .item-action .btn-equip:hover { transform:scale(1.05); }
+.shop-item-card .item-action .btn-equip:disabled { opacity:0.5; cursor:not-allowed; }
+.shop-item-card .item-action .owned-tag {
+  font-size:0.75rem; font-weight:700; color:#4ade80; padding:4px 12px; border-radius:20px; background:rgba(74,222,128,0.15);
+}
+
+.shop-tabs {
+  display:flex; gap:6px; margin-bottom:16px; border-bottom:2px solid var(--border-color); padding-bottom:12px; flex-wrap:wrap;
+  transition:border-color 0.6s ease;
+}
+.shop-tab {
+  padding:8px 16px; border:none; border-radius:30px; cursor:pointer; font-weight:700; font-size:0.75rem;
+  background:var(--input-bg); color:var(--text-secondary); transition:all 0.3s ease, background 0.6s ease, color 0.6s ease;
+  font-family:'Poppins',sans-serif;
+}
+.shop-tab.active { background:#7b3af6; color:#fff; }
+.shop-tab:hover { transform:scale(1.02); }
+
+.shop-balance {
+  display:flex; gap:12px; margin-bottom:16px; flex-wrap:wrap;
+}
+.shop-balance .bal-item {
+  background:var(--input-bg); padding:6px 14px; border-radius:12px; font-weight:600; font-size:0.8rem;
+  color:var(--text-secondary); transition:background 0.6s ease, color 0.6s ease;
+}
+.shop-balance .bal-item span { color:var(--text-primary); transition:color 0.6s ease; }
+
+.theme-preview {
+  width:50px; height:50px; border-radius:12px; border:2px solid var(--border-color);
+  display:flex; align-items:center; justify-content:center; font-size:1.5rem;
+  flex-shrink:0; transition:all 0.3s ease, border-color 0.6s ease;
+}
+.theme-preview.dark { background:#0a0a1a; color:#f0f0ff; }
+.theme-preview.ocean { background:#0a1628; color:#d4f1ff; }
+.theme-preview.forest { background:#0a1a0a; color:#d4f0d4; }
+.theme-preview.sunset { background:#1a0a14; color:#ffd4e0; }
+.theme-preview.cyber { background:#0a0a14; color:#d4d4ff; }
+
+/* ============================================
+   SETTINGS - THEME SELECTOR (FIXED)
+   ============================================ */
+.theme-selector-grid {
+  display:grid; grid-template-columns:repeat(auto-fit, minmax(90px,1fr)); gap:10px; margin:12px 0;
+}
+.theme-card {
+  padding:12px; border-radius:12px; border:2px solid var(--border-color); background:var(--bg-secondary);
+  cursor:pointer; text-align:center; transition:all 0.3s ease, background 0.6s ease, border-color 0.6s ease;
+}
+.theme-card:hover { transform:scale(1.05); border-color:#7b3af6; }
+.theme-card.active { border-color:#7b3af6; background:rgba(123,58,246,0.1); }
+.theme-card .theme-preview-box {
+  width:50px; height:50px; border-radius:12px; margin:0 auto 6px;
+  display:flex; align-items:center; justify-content:center; font-size:1.8rem;
+}
+.theme-card .theme-name { font-size:0.7rem; font-weight:600; color:var(--text-primary); transition:color 0.6s ease; }
+.theme-card .theme-status { font-size:0.55rem; color:var(--text-muted); transition:color 0.6s ease; }
+
+.settings-toggle {
+  display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--border-color);
+}
+.settings-toggle .toggle-label { font-size:0.8rem; font-weight:600; color:var(--text-primary); }
+.switch {
+  position:relative; display:inline-block; width:40px; height:22px;
+}
+.switch input { opacity:0; width:0; height:0; }
+.switch .slider {
+  position:absolute; cursor:pointer; inset:0; background:var(--border-color); transition:0.3s; border-radius:22px;
+}
+.switch .slider::before {
+  content:''; position:absolute; height:16px; width:16px; left:3px; bottom:3px; background:#fff; transition:0.3s; border-radius:50%;
+}
+.switch input:checked + .slider { background:#7b3af6; }
+.switch input:checked + .slider::before { transform:translateX(18px); }
+
+/* ============================================
+   MODALS
+   ============================================ */
+.modal-overlay {
+  position:fixed; inset:0; z-index:200; background:rgba(0,0,0,0.5); backdrop-filter:blur(8px);
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
+.modal-overlay.active { display:flex; }
+.modal-overlay .modal {
+  background:var(--modal-bg); border-radius:24px; padding:28px; max-width:650px; width:100%;
+  box-shadow:0 20px 80px rgba(0,0,0,0.3); max-height:90vh; overflow-y:auto; border:1px solid var(--border-color);
+  transition:background 0.6s ease, border-color 0.6s ease;
+}
+.modal .modal-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; }
+.modal .modal-header h2 { font-size:1.2rem; font-weight:800; background:var(--gradient-main); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+.modal .modal-header .close-btn {
+  width:32px; height:32px; border-radius:50%; border:none; background:var(--input-bg); cursor:pointer; font-size:18px;
+  color:var(--text-primary); transition:background 0.6s ease, color 0.6s ease;
+}
+.modal .modal-header .close-btn:hover { background:var(--border-color); }
+.modal .modal-body { color:var(--text-secondary); font-size:0.9rem; line-height:1.6; transition:color 0.6s ease; }
+
+.modal .btn-primary {
+  width:100%; padding:12px; border:none; border-radius:12px; background:var(--gradient-main); color:#fff;
+  font-weight:700; font-size:0.95rem; cursor:pointer; transition:all 0.3s ease;
+}
+.modal .btn-primary:hover { transform:scale(1.02); }
+.modal .btn-secondary {
+  padding:8px 16px; border:none; border-radius:12px; background:var(--input-bg); color:var(--text-secondary);
+  font-weight:600; cursor:pointer; transition:background 0.6s ease, color 0.6s ease;
+}
+.modal .btn-secondary:hover { background:var(--border-color); }
+
+/* ============================================
+   LEADERBOARD
+   ============================================ */
+.leaderboard-podium {
+  display:flex; justify-content:center; align-items:flex-end; gap:14px; padding:20px 0;
+}
+.lb-podium-item { display:flex; flex-direction:column; align-items:center; gap:4px; }
+.lb-podium-item .rank { font-size:1.3rem; font-weight:800; }
+.lb-podium-item .avatar {
+  width:50px; height:50px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:1.8rem; color:#fff; border:3px solid var(--bg-secondary); overflow:hidden;
+  transition:border-color 0.6s ease;
+}
+.lb-podium-item .name { font-size:0.8rem; font-weight:700; max-width:65px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; color:var(--text-primary); transition:color 0.6s ease; }
+.lb-podium-item .coins { font-size:0.7rem; font-weight:600; color:#f59e0b; }
+.lb-podium-item.first .avatar { width:65px; height:65px; font-size:2.2rem; background:linear-gradient(135deg,#ffd700,#ffb700); }
+.lb-podium-item.second .avatar { width:55px; height:55px; font-size:2rem; background:linear-gradient(135deg,#c0c0c0,#a8a8a8); }
+.lb-podium-item.third .avatar { width:50px; height:50px; font-size:1.8rem; background:linear-gradient(135deg,#cd7f32,#b87333); }
+
+.lb-list-item {
+  display:flex; align-items:center; justify-content:space-between; padding:6px 12px; border-radius:12px; margin-bottom:4px;
+}
+.lb-list-item .rank-num { font-weight:700; font-size:0.8rem; color:var(--text-muted); min-width:30px; transition:color 0.6s ease; }
+.lb-list-item .player-info { display:flex; align-items:center; gap:8px; flex:1; }
+.lb-list-item .player-avatar {
+  width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-weight:700; font-size:1.2rem; background:var(--gradient-main); color:#fff; overflow:hidden;
+}
+.lb-list-item .player-name { font-weight:600; font-size:0.85rem; color:var(--text-primary); transition:color 0.6s ease; }
+.lb-list-item .player-coins { font-weight:700; color:#f59e0b; font-size:0.8rem; }
+
+/* ============================================
+   REWARD POPUP
+   ============================================ */
+.reward-popup {
+  position:fixed; top:80px; right:16px; padding:10px 16px; font-size:0.85rem; font-weight:700;
+  border-radius:12px; text-align:center; box-shadow:0 8px 30px rgba(0,0,0,0.15); z-index:180;
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease, background 0.6s ease, color 0.6s ease;
+  opacity:0; color:var(--text-primary); background:var(--bg-card); border:1px solid var(--border-color);
+}
+.reward-popup.show { opacity:1; transform:translateY(-8px); }
+
+/* ============================================
+   AI CHATBOT
+   ============================================ */
+#aiChatToggle {
+  position:fixed; bottom:24px; right:24px; width:56px; height:56px; border-radius:50%;
+  background:var(--gradient-main); border:none; color:#fff; font-size:24px; cursor:pointer; z-index:150;
+  box-shadow:0 8px 30px rgba(123,58,246,0.4); transition:all 0.3s ease; display:none;
+}
+#aiChatToggle:hover { transform:scale(1.1); }
+
+#aiChatContainer {
+  position:fixed; bottom:96px; right:24px; width:340px; max-width:92vw; max-height:500px;
+  background:var(--bg-card); backdrop-filter:blur(16px); border-radius:20px; z-index:160;
+  display:none; flex-direction:column; box-shadow:0 20px 60px rgba(0,0,0,0.2); overflow:hidden;
+  border:1px solid var(--border-color); transition:background 0.6s ease, border-color 0.6s ease;
+}
+#aiChatContainer.open { display:flex; }
+
+#aiChatHeader { padding:12px 16px; background:var(--gradient-main); display:flex; justify-content:space-between; align-items:center; }
+#aiChatHeader h3 { font-size:0.85rem; font-weight:700; color:#fff; }
+#aiChatHeader .close-btn { background:rgba(255,255,255,0.2); border:none; color:#fff; width:26px; height:26px; border-radius:50%; cursor:pointer; font-size:13px; }
+#aiChatMessages { flex:1; padding:12px; overflow-y:auto; min-height:160px; max-height:280px; }
+.ai-message { margin-bottom:8px; padding:8px 14px; border-radius:14px; max-width:88%; font-size:0.8rem; line-height:1.5; word-wrap:break-word; }
+.ai-message.user { background:var(--gradient-main); color:#fff; margin-left:auto; }
+.ai-message.bot { background:var(--input-bg); color:var(--text-secondary); margin-right:auto; transition:background 0.6s ease, color 0.6s ease; }
+#aiChatInputArea { padding:8px 12px; border-top:1px solid var(--border-color); display:flex; gap:6px; transition:border-color 0.6s ease; }
+#aiChatInput { flex:1; padding:8px 12px; border-radius:12px; border:1px solid var(--input-border); font-size:0.8rem; outline:none; font-family:'Poppins',sans-serif; background:var(--input-bg); color:var(--text-primary); transition:background 0.6s ease, color 0.6s ease, border-color 0.6s ease; }
+#aiChatInput:focus { border-color:#7b3af6; }
+#aiChatSend { padding:8px 16px; border-radius:12px; border:none; background:var(--gradient-main); color:#fff; font-weight:700; cursor:pointer; font-size:0.8rem; }
+
+/* ============================================
+   ROADMAP
+   ============================================ */
+.roadmap-item {
+  display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--border-color);
+  transition:border-color 0.6s ease;
+}
+.roadmap-item .icon { font-size:1.3rem; min-width:35px; text-align:center; }
+.roadmap-item .content h4 { font-weight:700; font-size:0.9rem; color:var(--text-primary); transition:color 0.6s ease; }
+.roadmap-item .content p { font-size:0.8rem; color:var(--text-muted); margin-top:2px; transition:color 0.6s ease; }
+.roadmap-item .status { font-size:0.65rem; font-weight:700; padding:2px 10px; border-radius:20px; display:inline-block; margin-top:4px; }
+.roadmap-item .status.done { background:#4ade80; color:#0b6b3a; }
+.roadmap-item .status.in-progress { background:#fbbf24; color:#7a4e00; }
+.roadmap-item .status.upcoming { background:var(--input-bg); color:var(--text-muted); transition:background 0.6s ease, color 0.6s ease; }
+.roadmap-progress-bar { width:100%; height:3px; background:var(--input-bg); border-radius:10px; margin-top:6px; overflow:hidden; transition:background 0.6s ease; }
+.roadmap-progress-fill { height:100%; background:linear-gradient(90deg,#7b3af6,#00e5ff); border-radius:10px; transition:width 1s ease; }
+
+/* ============================================
+   FOOTER
+   ============================================ */
+.footer {
+  text-align:center; padding:20px; font-size:0.75rem; color:var(--text-muted);
+  border-top:1px solid var(--border-color); margin-top:20px; transition:color 0.6s ease, border-color 0.6s ease;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+@media(max-width:768px) and (orientation:landscape) {
+  .categories-grid { grid-template-columns:repeat(auto-fit, minmax(110px,1fr)); gap:8px; }
+  .category-card { min-height:70px; padding:10px 6px; }
+  .category-card .emoji { font-size:1.5rem; }
+  .category-card .name { font-size:0.65rem; }
+  .hero-section .greeting { font-size:1.3rem; }
+  #aiChatContainer { bottom:76px; right:10px; max-width:95vw; max-height:55vh; }
+  #aiChatToggle { width:46px; height:46px; font-size:20px; bottom:14px; right:14px; }
+  .quick-actions .action-btn { padding:6px 12px; font-size:10px; }
+  .header .logo span { font-size:14px; }
+  .logo img { width:30px; height:30px; }
+  .badge-item { font-size:9px; padding:2px 5px; }
+  .modal-overlay .modal { max-width:95%; padding:16px; }
+  .onboarding-container { padding:20px; }
+  .onboarding-container .avatar-grid { grid-template-columns:repeat(3,1fr); }
+  .shop-item-card { flex-wrap:wrap; }
+  .shop-item-card .item-action { width:100%; justify-content:flex-end; }
+  .profile-stats-grid { grid-template-columns:repeat(3,1fr); }
+  .achievement-grid { grid-template-columns:repeat(2,1fr); }
+  .profile-avatar { width:80px; height:80px; font-size:40px; }
+  .profile-avatar .level-badge-ring { width:28px; height:28px; font-size:10px; }
+}
+
+@media(max-width:480px) and (orientation:landscape) {
+  .categories-grid { grid-template-columns:repeat(4,1fr); gap:5px; }
+  .category-card { min-height:60px; padding:6px 4px; border-radius:10px; }
+  .category-card .emoji { font-size:1.2rem; }
+  .category-card .name { font-size:0.55rem; }
+  .hero-section .greeting { font-size:1.1rem; }
+  .hero-section .hero-stats .stat { font-size:10px; padding:4px 10px; }
+  .onboarding-container .avatar-grid { grid-template-columns:repeat(3,1fr); }
+  .theme-selector-grid { grid-template-columns:repeat(2,1fr); }
+  .profile-stats-grid { grid-template-columns:repeat(2,1fr); }
+  .achievement-grid { grid-template-columns:repeat(2,1fr); }
+}
+
+::-webkit-scrollbar { width:4px; }
+::-webkit-scrollbar-track { background:var(--input-bg); transition:background 0.6s ease; }
+::-webkit-scrollbar-thumb { background:var(--text-muted); border-radius:2px; transition:background 0.6s ease; }
+
+/* ============================================
+   FADE SLIDE UP ANIMATION
+   ============================================ */
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.profile-content {
+  animation: fadeSlideUp 0.4s ease;
+}
+</style>
+</head>
+<body>
+
+<!-- Landscape Overlay -->
+<div class="landscape-overlay" id="landscapeOverlay">
+  <div class="rotate-icon">📱</div>
+  <h2>Rotate Your Phone</h2>
+  <p>Please switch to <strong>landscape mode</strong> for the best Brain Rush experience!</p>
+</div>
+
+<!-- Animated Background -->
+<div class="pulse-glow"></div>
+<div class="animated-bg">
+  <div class="float-shape"></div>
+  <div class="float-shape"></div>
+  <div class="float-shape"></div>
+  <div class="float-shape"></div>
+  <div class="float-shape"></div>
+  <div class="float-icon">🧠</div>
+  <div class="float-icon">💡</div>
+  <div class="float-icon">⭐</div>
+  <div class="float-icon">🎯</div>
+  <div class="float-icon">📚</div>
+  <div class="float-icon">🏆</div>
+</div>
+
+<!-- Onboarding Page -->
+<div class="onboarding-page" id="onboardingPage">
+  <div class="onboarding-container">
+    <div class="onboarding-logo">
+      <div class="logo-icon">🧠</div>
+      <h1>Brain Rush</h1>
+      <p>Challenge your brain and earn rewards!</p>
+    </div>
+    <label>Choose Your Username</label>
+    <input type="text" id="onboardingUsername" placeholder="Enter username (2-20 characters)" maxlength="20" />
+    <label>Choose Your Avatar</label>
+    <div class="avatar-grid" id="avatarSelectGrid"></div>
+    <button class="btn-primary" id="onboardingBtn" onclick="completeOnboarding()">🚀 Start Brain Rush!</button>
+    <div class="onboarding-footer" id="onboardingStatus" style="text-align:center;margin-top:12px;font-size:0.8rem;color:var(--text-muted);"></div>
+  </div>
+</div>
+
+<!-- Header -->
+<header class="header" id="mainHeader">
+  <div class="header-left">
+    <a href="#" class="logo"><span>🧠 Brain Rush</span></a>
+  </div>
+  <div class="header-right">
+    <button class="profile-btn" onclick="openProfile()">
+      <span class="profile-avatar-mini" id="headerProfileAvatar">👤</span>
+    </button>
+    <div class="level-badge">⭐ <span id="levelDisplay">Lv.1</span></div>
+    <div class="badge-item">💰 <span class="value" id="coinCount">0</span></div>
+    <div class="badge-item">💎 <span class="value diamond" id="diamondCount">0</span></div>
+    <div class="badge-item">⚡ <span class="value" id="xpCount" style="color:#4ade80;">0</span></div>
+    <div class="streak-badge-header" id="streakBadge" style="display:none;">🔥 <span id="streakDisplay">0</span></div>
+    <button class="music-btn" id="musicToggle">🔊</button>
+    <button class="settings-btn" onclick="openSettings()">⚙️</button>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="main" id="mainContent">
+  <section class="hero-section">
+    <h1 class="greeting" id="greetingText">🧠 Welcome to Brain Rush!</h1>
+    <p class="sub-greeting" id="subGreeting">Challenge your brain and earn rewards!</p>
+    <div class="hero-stats">
+      <div class="stat">🎯 Games: <span id="gamesPlayed">0</span></div>
+      <div class="stat">🏆 Best: <span id="bestCategory">-</span></div>
+      <div class="stat">📊 Accuracy: <span id="accuracyDisplay">0%</span></div>
+    </div>
+  </section>
+
+  <div class="quick-actions">
+    <button class="action-btn primary" onclick="claimMysteryBox()">🎁 Mystery Box</button>
+    <button class="action-btn warm" onclick="openWheel()">🎡 Daily Wheel</button>
+    <button class="action-btn green" onclick="openRoadmap()">🗺️ Roadmap</button>
+    <button class="action-btn shop" onclick="openShop()">🏪 Shop</button>
+    <button class="action-btn leaderboard" onclick="openLeaderboard()">🏆 Leaderboard</button>
+  </div>
+
+  <div class="streak-wrap">
+    <div class="streak-info">
+      <span class="streak-label">🔥 Daily Streak</span>
+      <span class="streak-count" id="streakCountText">0 days</span>
+    </div>
+    <div class="streak-bar"><div class="streak-fill" id="streakFill"></div></div>
+    <div class="streak-info">
+      <span class="streak-next" id="streakNextMilestone"></span>
+    </div>
+  </div>
+
+  <section class="categories-section">
+    <div class="section-title">📚 <span>Choose Your Challenge</span></div>
+    <div class="categories-grid">
+      <a href="cars.html?category=cars" class="category-card"><span class="emoji">🚗</span><span class="name">Cars</span><span class="play-count" id="playCount-cars">0 played</span></a>
+      <a href="logic.html?category=math" class="category-card"><span class="emoji">🧮</span><span class="name">Math</span><span class="play-count" id="playCount-math">0 played</span></a>
+      <a href="history.html?category=history" class="category-card"><span class="emoji">📜</span><span class="name">History</span><span class="play-count" id="playCount-history">0 played</span></a>
+      <a href="riddle.html?category=riddle" class="category-card"><span class="emoji">🤔</span><span class="name">Riddles</span><span class="play-count" id="playCount-riddle">0 played</span></a>
+      <a href="science.html?category=science" class="category-card"><span class="emoji">🔬</span><span class="name">Science</span><span class="play-count" id="playCount-science">0 played</span></a>
+      <a href="geography.html?category=geography" class="category-card"><span class="emoji">🌍</span><span class="name">Geography</span><span class="play-count" id="playCount-geography">0 played</span></a>
+      <a href="countries.html?category=countries" class="category-card"><span class="emoji">🏳️</span><span class="name">Countries</span><span class="play-count" id="playCount-countries">0 played</span></a>
+      <a href="logos.html?category=logos" class="category-card"><span class="emoji">🏷️</span><span class="name">Logos</span><span class="play-count" id="playCount-logos">0 played</span></a>
+      <a href="food.html?category=food" class="category-card"><span class="emoji">🍕</span><span class="name">Food</span><span class="play-count" id="playCount-food">0 played</span></a>
+      <a href="teams.html?category=teams" class="category-card"><span class="emoji">⚽</span><span class="name">Teams</span><span class="play-count" id="playCount-teams">0 played</span></a>
+      <a href="cartoons.html?category=cartoons" class="category-card"><span class="emoji">🎬</span><span class="name">Cartoons</span><span class="play-count" id="playCount-cartoons">0 played</span></a>
+    </div>
+  </section>
+
+  <div class="footer">© 2025 Brain Rush | Premium Edition</div>
+</main>
+
+<!-- Reward Popup -->
+<div class="reward-popup" id="rewardPopup">+0 Coins!</div>
+
+<!-- Modals -->
+<!-- ===== EPIC PROFILE MODAL ===== -->
+<div class="modal-overlay" id="profileModal">
+  <div class="modal" style="max-width:700px;">
+    <div class="modal-header"><h2>👤 My Profile</h2><button class="close-btn" onclick="closeProfile()">✕</button></div>
+    <div class="modal-body profile-content" id="profileContent"></div>
+  </div>
+</div>
+
+<!-- SETTINGS MODAL - FIXED WITH AVATAR -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal" style="max-width:600px;">
+    <div class="modal-header"><h2>⚙️ Settings</h2><button class="close-btn" onclick="closeSettings()">✕</button></div>
+    <div class="modal-body" id="settingsContent">
+      <!-- ===== USER INFO ===== -->
+      <div style="display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg-card);border-radius:16px;margin-bottom:16px;border:1px solid var(--border-color);">
+        <div style="font-size:3rem;width:60px;height:60px;display:flex;align-items:center;justify-content:center;background:var(--gradient-main);border-radius:50%;color:#fff;" id="settingsAvatarDisplay">👤</div>
+        <div>
+          <div style="font-weight:700;font-size:1.1rem;color:var(--text-primary);" id="settingsUsernameDisplay">User</div>
+          <div style="display:flex;gap:12px;font-size:0.75rem;color:var(--text-muted);margin-top:4px;">
+            <span>💰 <span id="settingsCoinsDisplay">0</span></span>
+            <span>💎 <span id="settingsDiamondsDisplay">0</span></span>
+            <span>🔥 <span id="settingsStreakDisplay">0</span></span>
+          </div>
+        </div>
+      </div>
+      
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;">
+        <div style="background:var(--input-bg);padding:10px;border-radius:12px;text-align:center;">
+          <div style="font-size:1.2rem;font-weight:800;color:#f59e0b;" id="settingsCoins">0</div>
+          <div style="font-size:0.6rem;color:var(--text-muted);">Coins</div>
+        </div>
+        <div style="background:var(--input-bg);padding:10px;border-radius:12px;text-align:center;">
+          <div style="font-size:1.2rem;font-weight:800;color:#7b3af6;" id="settingsDiamonds">0</div>
+          <div style="font-size:0.6rem;color:var(--text-muted);">Diamonds</div>
+        </div>
+        <div style="background:var(--input-bg);padding:10px;border-radius:12px;text-align:center;">
+          <div style="font-size:1.2rem;font-weight:800;color:#ff6b6b;" id="settingsStreak">0</div>
+          <div style="font-size:0.6rem;color:var(--text-muted);">Streak</div>
+        </div>
+      </div>
+      
+      <div style="margin-bottom:16px;">
+        <h3 style="font-size:0.85rem;font-weight:700;color:var(--text-primary);margin-bottom:8px;">🎨 Choose Theme</h3>
+        <div class="theme-selector-grid" id="settingsThemeGrid"></div>
+      </div>
+      
+      <div style="height:1px;background:var(--border-color);margin:16px 0;"></div>
+      
+      <div style="margin-bottom:16px;">
+        <h3 style="font-size:0.85rem;font-weight:700;color:var(--text-primary);margin-bottom:8px;">⚙️ Preferences</h3>
+        
+        <div class="settings-toggle">
+          <div><div class="toggle-label">🔊 Sound Effects</div></div>
+          <label class="switch">
+            <input type="checkbox" id="soundToggle" checked onchange="toggleSound()">
+            <span class="slider"></span>
+          </label>
+        </div>
+        
+        <div class="settings-toggle">
+          <div><div class="toggle-label">🎵 Background Music</div></div>
+          <label class="switch">
+            <input type="checkbox" id="musicToggleSettings" checked onchange="toggleMusic()">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+      
+      <div style="height:1px;background:var(--border-color);margin:16px 0;"></div>
+      
+      <div style="margin-bottom:16px;">
+        <h3 style="font-size:0.85rem;font-weight:700;color:var(--text-primary);margin-bottom:8px;">💾 Data</h3>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button class="btn-secondary" onclick="exportData()" style="font-size:0.75rem;padding:10px 16px;">📤 Export</button>
+          <button class="btn-secondary" onclick="importData()" style="font-size:0.75rem;padding:10px 16px;">📥 Import</button>
+          <button class="btn-secondary" onclick="resetData()" style="font-size:0.75rem;padding:10px 16px;color:#ff4757;">🔄 Reset</button>
+        </div>
+      </div>
+      
+      <div style="text-align:center;padding:8px 0;">
+        <p style="font-size:0.6rem;color:var(--text-muted);">Brain Rush Premium v2.0 • 2026</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LEADERBOARD MODAL -->
+<div class="modal-overlay" id="leaderboardModal">
+  <div class="modal" style="max-width:600px;">
+    <div class="modal-header"><h2>🏆 Rushers League</h2><button class="close-btn" onclick="closeLeaderboard()">✕</button></div>
+    <div class="modal-body">
+      <div style="display:flex;justify-content:space-between;margin-bottom:12px;">
+        <span style="font-size:0.8rem;color:var(--text-muted);">👑 Top players ranked by coins</span>
+        <span id="lbTotalPlayers" style="font-size:0.75rem;color:var(--text-muted);font-weight:600;">0 players</span>
+      </div>
+      <button class="btn-secondary" onclick="syncLeaderboard();renderLeaderboard();" style="margin-bottom:12px;padding:6px 14px;font-size:0.75rem;">
+        🔄 Refresh
+      </button>
+      <div class="leaderboard-podium" id="lbPodium"></div>
+      <div id="lbList"></div>
+      <button class="btn-primary" onclick="closeLeaderboard()" style="margin-top:12px;">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- SHOP MODAL -->
+<div class="modal-overlay" id="shopModal">
+  <div class="modal" style="max-width:650px;">
+    <div class="modal-header"><h2>🏪 Premium Shop</h2><button class="close-btn" onclick="closeShop()">✕</button></div>
+    <div class="modal-body">
+      <div class="shop-balance">
+        <div class="bal-item">💰 Coins: <span id="shopCoins">0</span></div>
+        <div class="bal-item">💎 Diamonds: <span id="shopDiamonds">0</span></div>
+        <div class="bal-item">🎒 Items: <span id="shopInventory">0</span></div>
+      </div>
+      <div class="shop-tabs">
+        <button class="shop-tab active" onclick="switchShopTab('themes')">🎨 Themes</button>
+        <button class="shop-tab" onclick="switchShopTab('avatars')">🖼️ Avatars</button>
+        <button class="shop-tab" onclick="switchShopTab('powerups')">⚡ Power-ups</button>
+        <button class="shop-tab" onclick="switchShopTab('cosmetics')">✨ Cosmetics</button>
+        <button class="shop-tab" onclick="switchShopTab('passes')">🎫 Passes</button>
+      </div>
+      <div id="shopItemsContainer"></div>
+      <button class="btn-primary" onclick="closeShop()" style="margin-top:12px;">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="wheelModal">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-header"><h2>🎡 Daily Wheel</h2><button class="close-btn" onclick="closeWheel()">✕</button></div>
+    <div class="modal-body" style="display:flex;flex-direction:column;align-items:center;">
+      <canvas id="wheelCanvas" width="360" height="360" style="border-radius:50%;box-shadow:0 0 30px rgba(123,58,246,0.2);max-width:100%;"></canvas>
+      <p style="margin-top:12px;font-size:0.8rem;color:var(--text-muted);">Click the wheel to spin!</p>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="roadmapModal">
+  <div class="modal" style="max-width:650px;">
+    <div class="modal-header"><h2>🗺️ Brain Rush Roadmap</h2><button class="close-btn" onclick="closeRoadmap()">✕</button></div>
+    <div class="modal-body">
+      <div style="margin-bottom:12px;padding:12px;background:linear-gradient(135deg,rgba(123,58,246,0.08),rgba(0,229,255,0.08));border-radius:12px;text-align:center;">
+        <span style="font-weight:700;font-size:0.85rem;color:var(--text-primary);">Your Progress</span>
+        <div style="margin-top:6px;display:flex;gap:4px;justify-content:center;" id="roadmapProgress">
+          <div style="width:18px;height:5px;border-radius:10px;background:var(--text-muted);"></div>
+          <div style="width:18px;height:5px;border-radius:10px;background:var(--text-muted);"></div>
+          <div style="width:18px;height:5px;border-radius:10px;background:var(--text-muted);"></div>
+          <div style="width:18px;height:5px;border-radius:10px;background:var(--text-muted);"></div>
+          <div style="width:18px;height:5px;border-radius:10px;background:var(--text-muted);"></div>
+          <div style="width:18px;height:5px;border-radius:10px;background:var(--text-muted);"></div>
+          <div style="width:18px;height:5px;border-radius:10px;background:var(--text-muted);"></div>
+          <div style="width:18px;height:5px;border-radius:10px;background:var(--text-muted);"></div>
+          <div style="width:18px;height:5px;border-radius:10px;background:var(--text-muted);"></div>
+        </div>
+        <div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px;"><span id="roadmapCompleted">0</span>/9 completed</div>
+      </div>
+      <div class="roadmap-item" data-completed="true"><div class="icon">✅</div><div class="content"><h4>11 Trivia Categories</h4><span class="status done">Completed</span></div></div>
+      <div class="roadmap-item" data-completed="true"><div class="icon">✅</div><div class="content"><h4>Daily Mystery Box & Wheel</h4><span class="status done">Completed</span></div></div>
+      <div class="roadmap-item" data-completed="true"><div class="icon">✅</div><div class="content"><h4>Profile & Avatar System</h4><span class="status done">Completed</span></div></div>
+      <div class="roadmap-item" data-completed="true"><div class="icon">✅</div><div class="content"><h4>Rushers League Leaderboard</h4><span class="status done">Completed</span></div></div>
+      <div class="roadmap-item" data-completed="true"><div class="icon">✅</div><div class="content"><h4>Daily Streak System</h4><span class="status done">Completed</span></div></div>
+      <div class="roadmap-item" data-completed="true"><div class="icon">✅</div><div class="content"><h4>Shop & Theme System</h4><span class="status done">Completed</span></div></div>
+      <div class="roadmap-item" data-completed="true"><div class="icon">✅</div><div class="content"><h4>AI Assistant</h4><span class="status done">Completed</span></div></div>
+      <div class="roadmap-item" data-completed="false"><div class="icon">🚀</div><div class="content"><h4>Multiplayer Mode</h4><span class="status in-progress">In Progress</span></div></div>
+      <div class="roadmap-item" data-completed="false"><div class="icon">🎯</div><div class="content"><h4>Weekly Tournaments</h4><span class="status upcoming">Upcoming</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- AI Chatbot -->
+<button id="aiChatToggle">🤖</button>
+<div id="aiChatContainer">
+  <div id="aiChatHeader"><h3>🧠 Brain Rush AI</h3><button class="close-btn" id="aiChatClose">✕</button></div>
+  <div id="aiChatMessages"><div class="ai-message bot">👋 Hello! I'm your Brain Rush AI assistant. Ask me anything!</div></div>
+  <div id="aiChatInputArea"><input type="text" id="aiChatInput" placeholder="Ask me anything..." /><button id="aiChatSend">Send</button></div>
+</div>
+
+<!-- Audio -->
+<audio id="bgMusic" loop><source src="background-music.mp3" type="audio/mpeg"></audio>
+<audio id="clickSfx" preload="auto"><source src="click.mp3" type="audio/mpeg"></audio>
+<audio id="rewardSfx" preload="auto"><source src="reward.mp3" type="audio/mpeg"></audio>
+
+<script>
+// ==========================================
+// CONFIGURATION
+// ==========================================
+const API_URL = 'http://localhost:5000/api';
+
+// ==========================================
+// AVATARS - CUSTOMIZED
+// ==========================================
+const FREE_AVATARS = [
+  { id: 'default', emoji: '👤', name: 'Default' },
+  { id: 'pirate', emoji: '🏴‍☠️', name: 'Pirate' },
+  { id: 'wizard', emoji: '🧙', name: 'Wizard' },
+  { id: 'astronaut', emoji: '👨‍🚀', name: 'Astronaut' },
+  { id: 'superhero', emoji: '🦸', name: 'Superhero' },
+  { id: 'ninja', emoji: '🥷', name: 'Ninja' },
+  { id: 'robot', emoji: '🤖', name: 'Robot' },
+  { id: 'alien', emoji: '👽', name: 'Alien' }
+];
+
+const LOCKED_AVATARS = [
+  { id: 'crown', emoji: '👑', name: 'King/Queen', cost: 25, currency: 'diamond' },
+  { id: 'fire', emoji: '🔥', name: 'Fire Spirit', cost: 30, currency: 'diamond' },
+  { id: 'ghost', emoji: '👻', name: 'Ghost', cost: 20, currency: 'diamond' },
+  { id: 'dragon', emoji: '🐉', name: 'Dragon', cost: 40, currency: 'diamond' },
+  { id: 'unicorn', emoji: '🦄', name: 'Unicorn', cost: 35, currency: 'diamond' },
+  { id: 'phoenix', emoji: '🐦‍🔥', name: 'Phoenix', cost: 50, currency: 'diamond' }
+];
+
+const ALL_AVATARS = [...FREE_AVATARS, ...LOCKED_AVATARS];
+
+// ==========================================
+// SHOP DATA
+// ==========================================
+const SHOP_DATA = {
+  themes: [
+    { id: 'dark', emoji: '🌙', name: 'Dark Theme', desc: 'Sleek dark mode with purple neon glow', cost: 100, currency: 'coin' },
+    { id: 'ocean', emoji: '🌊', name: 'Ocean Theme', desc: 'Deep blue ocean vibes with cyan highlights', cost: 150, currency: 'coin' },
+    { id: 'forest', emoji: '🌿', name: 'Forest Theme', desc: 'Calming green nature with emerald tones', cost: 150, currency: 'coin' },
+    { id: 'sunset', emoji: '🌅', name: 'Sunset Theme', desc: 'Warm golden and pink sunset hues', cost: 200, currency: 'diamond' },
+    { id: 'cyber', emoji: '💠', name: 'Cyber Theme', desc: 'Neon cyberpunk with cyan and pink', cost: 250, currency: 'diamond' }
+  ],
+  avatars: LOCKED_AVATARS,
+  powerups: [
+    { id: 'hint', emoji: '💡', name: 'Hint', desc: 'Remove 2 wrong answers', cost: 20, currency: 'coin', stackable: true },
+    { id: 'extratime', emoji: '⏰', name: 'Extra Time', desc: '+15 seconds on next question', cost: 30, currency: 'coin', stackable: true },
+    { id: 'skip', emoji: '🔄', name: 'Skip Question', desc: 'Skip any question without penalty', cost: 50, currency: 'coin', stackable: true },
+    { id: 'doublecoins', emoji: '💰', name: '2x Coins', desc: 'Double coins for 1 question', cost: 75, currency: 'coin', stackable: true },
+    { id: 'streakshield', emoji: '🛡️', name: 'Streak Shield', desc: 'Protect your streak for 1 day', cost: 100, currency: 'coin', stackable: true }
+  ],
+  cosmetics: [
+    { id: 'gold_frame', emoji: '👑', name: 'Gold Frame', desc: 'Premium gold frame for avatar', cost: 20, currency: 'diamond' },
+    { id: 'rainbow_badge', emoji: '🌈', name: 'Rainbow Badge', desc: 'Colorful animated badge', cost: 30, currency: 'diamond' },
+    { id: 'sparkle_effect', emoji: '✨', name: 'Sparkle Effect', desc: 'Sparkle effect on avatar', cost: 15, currency: 'diamond' }
+  ],
+  passes: [
+    { id: 'vip_pass', emoji: '💎', name: 'VIP Pass', desc: 'VIP badge + early access for 1 week', cost: 100, currency: 'diamond' },
+    { id: 'tournament_entry', emoji: '🏆', name: 'Tournament Entry', desc: 'Enter weekly tournament', cost: 200, currency: 'coin' },
+    { id: 'double_xp', emoji: '🚀', name: 'Double XP Pass', desc: '2x XP for 24 hours', cost: 50, currency: 'diamond' }
+  ]
+};
+
+// ==========================================
+// USER STATE
+// ==========================================
+let username = localStorage.getItem('username') || '';
+let equippedAvatar = localStorage.getItem('equippedAvatar') || 'default';
+let ownedAvatars = JSON.parse(localStorage.getItem('ownedAvatars') || '["default"]');
+let ownedThemes = JSON.parse(localStorage.getItem('ownedThemes') || '[]');
+let activeTheme = localStorage.getItem('activeTheme') || 'default';
+let coins = parseInt(localStorage.getItem('totalCoins') || '100');
+let diamonds = parseInt(localStorage.getItem('totalDiamonds') || '5');
+let streakDays = parseInt(localStorage.getItem('streakDays') || '0');
+let inventory = JSON.parse(localStorage.getItem('shop_inventory') || '[]');
+let isOnboarded = localStorage.getItem('isOnboarded') === 'true';
+let xp = parseInt(localStorage.getItem('totalXP') || '0');
+let level = parseInt(localStorage.getItem('userLevel') || '1');
+let gameHistory = JSON.parse(localStorage.getItem('gameHistory') || '[]');
+let authToken = localStorage.getItem('authToken') || '';
+
+// ==========================================
+// HELPER FUNCTIONS
+// ==========================================
+function getAvatarEmoji(id) {
+  const av = ALL_AVATARS.find(a => a.id === id);
+  return av ? av.emoji : '👤';
+}
+function getAvatarName(id) {
+  const av = ALL_AVATARS.find(a => a.id === id);
+  return av ? av.name : 'Default';
+}
+function getThemeEmoji(id) {
+  const theme = SHOP_DATA.themes.find(t => t.id === id);
+  return theme ? theme.emoji : '🎨';
+}
+function getThemeName(id) {
+  const theme = SHOP_DATA.themes.find(t => t.id === id);
+  return theme ? theme.name : 'Theme';
+}
+function getItemQty(itemId) {
+  const entry = inventory.find(i => i.id === itemId || i === itemId);
+  if (!entry) return 0;
+  if (typeof entry === 'string') return 1;
+  return entry.qty || 1;
+}
+function countInventoryItems() {
+  let total = 0;
+  inventory.forEach(item => {
+    if (typeof item === 'string') total += 1;
+    else total += (item.qty || 1);
+  });
+  return total;
+}
+function isThemeOwned(themeId) { return ownedThemes.includes(themeId); }
+function isAvatarOwned(avatarId) { return ownedAvatars.includes(avatarId); }
+
+// ==========================================
+// GAME STATS - FIXED ACCURACY
+// ==========================================
+function updateGameStats() {
+  document.getElementById('gamesPlayed').textContent = gameHistory.length;
+  
+  let totalCorrect = 0, totalQuestions = 0;
+  gameHistory.forEach(g => { 
+    totalCorrect += (g.correct || 0); 
+    totalQuestions += (g.total || 0); 
+  });
+  
+  const accuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+  document.getElementById('accuracyDisplay').textContent = accuracy + '%';
+  
+  // Best category (most played)
+  if (gameHistory.length > 0) {
+    const catCount = {};
+    gameHistory.forEach(g => { 
+      const cat = g.category || 'unknown'; 
+      catCount[cat] = (catCount[cat] || 0) + 1; 
+    });
+    let bestCat = '-', maxCount = 0;
+    for (const [cat, count] of Object.entries(catCount)) {
+      if (count > maxCount) { 
+        maxCount = count; 
+        bestCat = cat.charAt(0).toUpperCase() + cat.slice(1); 
+      }
+    }
+    document.getElementById('bestCategory').textContent = bestCat;
+  }
+  
+  // Update play counts
+  const categories = ['math','history','riddle','science','geography','countries','cars','logos','food','teams','cartoons'];
+  categories.forEach(cat => {
+    const count = gameHistory.filter(g => g.category === cat).length;
+    const el = document.getElementById('playCount-' + cat);
+    if (el) el.textContent = count + ' played';
+  });
+}
+
+// ==========================================
+// THEME FUNCTIONS
+// ==========================================
+function applyTheme(themeId) {
+  activeTheme = themeId;
+  localStorage.setItem('activeTheme', themeId);
+  document.body.className = '';
+  if (themeId !== 'default') document.body.classList.add('theme-' + themeId);
+  updateSettingsThemeSelector();
+  showRewardPopup('🎨 ' + getThemeName(themeId) + ' applied!');
+  syncToServer();
+}
+
+function buyTheme(themeId) {
+  const theme = SHOP_DATA.themes.find(t => t.id === themeId);
+  if (!theme) return;
+  if (isThemeOwned(themeId)) { applyTheme(themeId); return; }
+  const currency = theme.currency === 'coin' ? coins : diamonds;
+  if (currency < theme.cost) { alert('❌ Not enough ' + theme.currency + 's!'); return; }
+  if (theme.currency === 'coin') { coins -= theme.cost; localStorage.setItem('totalCoins', coins); }
+  else { diamonds -= theme.cost; localStorage.setItem('totalDiamonds', diamonds); }
+  ownedThemes.push(themeId);
+  localStorage.setItem('ownedThemes', JSON.stringify(ownedThemes));
+  applyTheme(themeId);
+  updateAllDisplays();
+  renderShopItems(currentShopTab);
+  updateSettingsThemeSelector();
+  showRewardPopup('🎨 Purchased ' + theme.emoji + ' ' + theme.name + '!');
+  spawnConfetti(20);
+  syncToServer();
+}
+
+function updateSettingsThemeSelector() {
+  const container = document.getElementById('settingsThemeGrid');
+  if (!container) return;
+  const allThemes = [
+    { id: 'default', emoji: '☀️', name: 'Default', color: '#f0f2f8' },
+    { id: 'dark', emoji: '🌙', name: 'Dark', color: '#0a0a1a' },
+    { id: 'ocean', emoji: '🌊', name: 'Ocean', color: '#0a1628' },
+    { id: 'forest', emoji: '🌿', name: 'Forest', color: '#0a1a0a' },
+    { id: 'sunset', emoji: '🌅', name: 'Sunset', color: '#1a0a14' },
+    { id: 'cyber', emoji: '💠', name: 'Cyber', color: '#0a0a14' }
+  ];
+  container.innerHTML = allThemes.map(theme => {
+    const owned = theme.id === 'default' || isThemeOwned(theme.id);
+    const active = activeTheme === theme.id;
+    return `<div class="theme-card ${active ? 'active' : ''}" 
+                 onclick="${owned ? "applyTheme('"+theme.id+"')" : "openShop();setTimeout(()=>switchShopTab('themes'),300);"}">
+      <div class="theme-preview-box ${theme.id}" style="background:${theme.color};color:#fff;">${theme.emoji}</div>
+      <div class="theme-name">${theme.name}</div>
+      <div class="theme-status">${active ? '✅ Active' : (owned ? 'Owned' : '🔒')}</div>
+    </div>`;
+  }).join('');
+}
+
+// ==========================================
+// SYNC TO SERVER
+// ==========================================
+async function syncToServer() {
+  if (!authToken || !username) return;
+  try {
+    await fetch(`${API_URL}/user/${username}/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify({
+        coins, diamonds, xp, level,
+        avatar: equippedAvatar,
+        activeTheme: activeTheme,
+        ownedAvatars: ownedAvatars,
+        ownedThemes: ownedThemes,
+        inventory: inventory
+      })
+    });
+  } catch (error) {
+    console.log('⚠️ Sync failed');
+  }
+}
+
+// ==========================================
+// ONBOARDING
+// ==========================================
+function showOnboardingPage() {
+  document.getElementById('onboardingPage').style.display = 'flex';
+  document.getElementById('mainContent').style.display = 'none';
+  document.getElementById('mainHeader').style.display = 'none';
+  document.getElementById('aiChatToggle').style.display = 'none';
+  const grid = document.getElementById('avatarSelectGrid');
+  grid.innerHTML = FREE_AVATARS.map(av => `
+    <div class="avatar-option ${equippedAvatar === av.id ? 'active' : ''}" onclick="selectAvatar('${av.id}')" id="avatar-${av.id}">
+      <span class="avatar-emoji">${av.emoji}</span>
+      <span class="avatar-name">${av.name}</span>
+    </div>
+  `).join('');
+  if (username) document.getElementById('onboardingUsername').value = username;
+}
+
+function selectAvatar(id) {
+  equippedAvatar = id;
+  document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('active'));
+  const selected = document.getElementById('avatar-' + id);
+  if (selected) selected.classList.add('active');
+}
+
+async function completeOnboarding() {
+  const nameInput = document.getElementById('onboardingUsername');
+  const newUsername = nameInput.value.trim();
+  const status = document.getElementById('onboardingStatus');
+  const btn = document.getElementById('onboardingBtn');
+  
+  if (!newUsername || newUsername.length < 2) {
+    status.textContent = '❌ Please enter a username (2-20 characters)';
+    status.style.color = '#ff4757';
+    return;
+  }
+  
+  btn.disabled = true;
+  status.textContent = '⏳ Creating account...';
+  
+  try {
+    const response = await fetch(`${API_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        username: newUsername, 
+        email: `${newUsername}@brainrush.game`,
+        password: 'default123' 
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      username = newUsername;
+      authToken = data.token;
+      localStorage.setItem('username', username);
+      localStorage.setItem('authToken', authToken);
+      localStorage.setItem('equippedAvatar', equippedAvatar);
+      localStorage.setItem('isOnboarded', 'true');
+      
+      coins = data.user.coins || 100;
+      diamonds = data.user.diamonds || 5;
+      streakDays = data.user.streakDays || 0;
+      xp = data.user.xp || 0;
+      level = data.user.level || 1;
+      
+      localStorage.setItem('totalCoins', coins);
+      localStorage.setItem('totalDiamonds', diamonds);
+      localStorage.setItem('streakDays', streakDays);
+      localStorage.setItem('totalXP', xp);
+      localStorage.setItem('userLevel', level);
+      
+      status.textContent = '✅ Welcome ' + username + '!';
+      status.style.color = '#1fb97a';
+      
+      setTimeout(() => {
+        showGamePage();
+        initGame();
+        updateAllDisplays();
+        showRewardPopup('🎉 Welcome to Brain Rush, ' + username + '!');
+        spawnConfetti(40);
+        btn.disabled = false;
+      }, 500);
+    } else {
+      status.textContent = '❌ ' + (data.error || 'Registration failed');
+      status.style.color = '#ff4757';
+      btn.disabled = false;
+    }
+  } catch (error) {
+    status.textContent = '⚠️ Server not available. Playing offline mode.';
+    status.style.color = '#f59e0b';
+    
+    username = newUsername;
+    localStorage.setItem('username', username);
+    localStorage.setItem('equippedAvatar', equippedAvatar);
+    localStorage.setItem('isOnboarded', 'true');
+    coins = 100;
+    diamonds = 5;
+    streakDays = 1;
+    localStorage.setItem('totalCoins', '100');
+    localStorage.setItem('totalDiamonds', '5');
+    localStorage.setItem('streakDays', '1');
+    
+    setTimeout(() => {
+      showGamePage();
+      initGame();
+      updateAllDisplays();
+      btn.disabled = false;
+    }, 500);
+  }
+}
+
+function showGamePage() {
+  document.getElementById('onboardingPage').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+  document.getElementById('mainHeader').style.display = 'flex';
+  document.getElementById('aiChatToggle').style.display = 'block';
+}
+
+// ==========================================
+// REFRESH USER DATA
+// ==========================================
+async function refreshUserData() {
+  if (!authToken) return false;
+  try {
+    const response = await fetch(`${API_URL}/auth/verify`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    const data = await response.json();
+    if (data.valid) {
+      const user = data.user;
+      coins = user.coins || 0;
+      diamonds = user.diamonds || 0;
+      xp = user.xp || 0;
+      level = user.level || 1;
+      streakDays = user.streakDays || 0;
+      equippedAvatar = user.equippedAvatar || 'default';
+      ownedAvatars = user.ownedAvatars || ['default'];
+      ownedThemes = user.ownedThemes || [];
+      
+      localStorage.setItem('totalCoins', coins);
+      localStorage.setItem('totalDiamonds', diamonds);
+      localStorage.setItem('totalXP', xp);
+      localStorage.setItem('userLevel', level);
+      localStorage.setItem('streakDays', streakDays);
+      localStorage.setItem('equippedAvatar', equippedAvatar);
+      localStorage.setItem('ownedAvatars', JSON.stringify(ownedAvatars));
+      localStorage.setItem('ownedThemes', JSON.stringify(ownedThemes));
+      
+      updateAllDisplays();
+      return true;
+    }
+    return false;
+  } catch (error) {
+    return false;
+  }
+}
+
+// ==========================================
+// SHOP FUNCTIONS
+// ==========================================
+let currentShopTab = 'themes';
+
+function openShop() {
+  document.getElementById('shopModal').classList.add('active');
+  updateShopUI();
+  renderShopItems(currentShopTab);
+}
+function closeShop() { document.getElementById('shopModal').classList.remove('active'); }
+
+function switchShopTab(tab) {
+  currentShopTab = tab;
+  document.querySelectorAll('.shop-tab').forEach(el => el.classList.remove('active'));
+  const tabs = document.querySelectorAll('.shop-tab');
+  const map = { themes: 0, avatars: 1, powerups: 2, cosmetics: 3, passes: 4 };
+  if (tabs[map[tab]]) { tabs[map[tab]].classList.add('active'); }
+  renderShopItems(tab);
+}
+
+function updateShopUI() {
+  document.getElementById('shopCoins').textContent = coins;
+  document.getElementById('shopDiamonds').textContent = diamonds;
+  document.getElementById('shopInventory').textContent = countInventoryItems();
+}
+
+function renderShopItems(tab) {
+  const container = document.getElementById('shopItemsContainer');
+  const items = SHOP_DATA[tab] || [];
+  if (items.length === 0) { 
+    container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">No items in this category.</p>'; 
+    return; 
+  }
+  
+  let html = '';
+  const titles = { themes: '🎨 Themes', avatars: '🖼️ Avatars', powerups: '⚡ Power-ups', cosmetics: '✨ Cosmetics', passes: '🎫 Passes' };
+  html += `<div class="shop-category-title">${titles[tab] || ''}</div>`;
+  
+  items.forEach(item => {
+    const isOwned = tab === 'themes' ? isThemeOwned(item.id) : 
+                    tab === 'avatars' ? isAvatarOwned(item.id) : 
+                    getItemQty(item.id) > 0;
+    const isEquipped = tab === 'themes' ? activeTheme === item.id : 
+                       tab === 'avatars' ? equippedAvatar === item.id : false;
+    const hasCurrency = item.currency === 'coin' ? coins >= item.cost : diamonds >= item.cost;
+    
+    const displayEmoji = item.emoji || '🎁';
+    const displayName = item.name || 'Item';
+    
+    let actionHtml = '';
+    
+    if (tab === 'themes') {
+      const themeColors = { dark: '#0a0a1a', ocean: '#0a1628', forest: '#0a1a0a', sunset: '#1a0a14', cyber: '#0a0a14' };
+      const previewStyle = `background:${themeColors[item.id] || '#1a1a2e'}; color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.5rem; border-radius:12px; width:50px; height:50px;`;
+      
+      if (isOwned) {
+        actionHtml = `<button class="btn-equip" onclick="applyTheme('${item.id}')" ${isEquipped ? 'disabled' : ''}>${isEquipped ? '✅ Active' : 'Apply'}</button>`;
+      } else {
+        actionHtml = `<span class="price">${item.currency === 'coin' ? '💰' : '💎'} ${item.cost}</span>
+                      <button class="btn-buy ${item.currency}" onclick="buyTheme('${item.id}')" ${!hasCurrency ? 'disabled' : ''}>
+                        ${!hasCurrency ? '❌' : 'Buy'}
+                      </button>`;
+      }
+      
+      html += `<div class="shop-item-card">
+        <div class="theme-preview" style="${previewStyle}">${displayEmoji}</div>
+        <div class="item-info">
+          <h4>${displayEmoji} ${displayName}</h4>
+          <p>${item.desc}</p>
+          ${isEquipped ? '<span class="badge equipped">⭐ Active</span>' : ''}
+        </div>
+        <div class="item-action">${actionHtml}</div>
+      </div>`;
+    } else {
+      if (isOwned) {
+        actionHtml = `<span class="owned-tag">✅ Owned</span>`;
+      } else {
+        actionHtml = `<span class="price">${item.currency === 'coin' ? '💰' : '💎'} ${item.cost}</span>
+                      <button class="btn-buy ${item.currency}" onclick="buyItem('${item.id}')" ${!hasCurrency ? 'disabled' : ''}>
+                        ${!hasCurrency ? '❌' : 'Buy'}
+                      </button>`;
+      }
+      
+      html += `<div class="shop-item-card">
+        <div class="item-icon" style="font-size:2rem;">${displayEmoji}</div>
+        <div class="item-info">
+          <h4>${displayEmoji} ${displayName}</h4>
+          <p>${item.desc}</p>
+          ${isOwned ? '<span class="badge owned">✅ Owned</span>' : ''}
+        </div>
+        <div class="item-action">${actionHtml}</div>
+      </div>`;
+    }
+  });
+  container.innerHTML = html;
+}
+
+function buyItem(itemId) {
+  let item = null;
+  for (let cat in SHOP_DATA) {
+    const found = SHOP_DATA[cat].find(i => i.id === itemId);
+    if (found) { item = found; break; }
+  }
+  if (!item) { alert('Item not found!'); return; }
+  const isStackable = item.stackable === true;
+  const alreadyOwned = isStackable ? false : getItemQty(itemId) > 0;
+  if (alreadyOwned) { alert('You already own this!'); return; }
+  const currency = item.currency === 'coin' ? coins : diamonds;
+  if (currency < item.cost) { alert(`❌ Not enough ${item.currency}s!`); return; }
+  if (item.currency === 'coin') { coins -= item.cost; localStorage.setItem('totalCoins', coins); }
+  else { diamonds -= item.cost; localStorage.setItem('totalDiamonds', diamonds); }
+  if (isStackable) {
+    const existing = inventory.find(i => (i.id || i) === itemId);
+    if (existing) {
+      if (typeof existing === 'string') { const idx = inventory.indexOf(existing); inventory[idx] = { id: itemId, qty: 2 }; }
+      else { existing.qty = (existing.qty || 1) + 1; }
+    } else { inventory.push({ id: itemId, qty: 1 }); }
+  } else { inventory.push(itemId); }
+  localStorage.setItem('shop_inventory', JSON.stringify(inventory));
+  updateAllDisplays(); updateShopUI(); renderShopItems(currentShopTab);
+  showRewardPopup('✅ Purchased ' + (item.emoji || '') + ' ' + item.name + '!');
+  spawnConfetti(20);
+  syncToServer();
+}
+
+function buyAvatar(avatarId) {
+  const avatar = LOCKED_AVATARS.find(a => a.id === avatarId);
+  if (!avatar) return;
+  if (isAvatarOwned(avatarId)) { equipAvatar(avatarId); return; }
+  const currency = avatar.currency === 'coin' ? coins : diamonds;
+  if (currency < avatar.cost) { alert(`❌ Not enough ${avatar.currency}s!`); return; }
+  if (avatar.currency === 'coin') { coins -= avatar.cost; localStorage.setItem('totalCoins', coins); }
+  else { diamonds -= avatar.cost; localStorage.setItem('totalDiamonds', diamonds); }
+  ownedAvatars.push(avatarId);
+  localStorage.setItem('ownedAvatars', JSON.stringify(ownedAvatars));
+  equipAvatar(avatarId);
+  updateAllDisplays(); updateShopUI(); renderShopItems(currentShopTab);
+  showRewardPopup('🖼️ Avatar: ' + avatar.emoji + ' ' + avatar.name);
+  spawnConfetti(20);
+  syncToServer();
+}
+
+function equipAvatar(avatarId) {
+  if (!isAvatarOwned(avatarId)) { alert('❌ You don\'t own this avatar!'); return; }
+  equippedAvatar = avatarId;
+  localStorage.setItem('equippedAvatar', avatarId);
+  updateAllDisplays(); renderShopItems(currentShopTab);
+  showRewardPopup('🖼️ Avatar equipped: ' + getAvatarEmoji(avatarId) + ' ' + getAvatarName(avatarId));
+  syncToServer();
+}
+
+// ==========================================
+// GAME FUNCTIONS
+// ==========================================
+function initGame() {
+  updateAllDisplays();
+  updateStreak();
+  updateGameStats();
+  const savedTheme = localStorage.getItem('activeTheme') || 'default';
+  if (savedTheme !== 'default' && isThemeOwned(savedTheme)) { applyTheme(savedTheme); }
+  else if (savedTheme === 'default') { document.body.className = ''; }
+  updateSettingsThemeSelector();
+  updateRoadmapProgress();
+}
+
+function updateAllDisplays() {
+  document.getElementById('coinCount').textContent = coins;
+  document.getElementById('diamondCount').textContent = diamonds;
+  document.getElementById('greetingText').textContent = '👋 Welcome back, ' + username + '!';
+  document.getElementById('xpCount').textContent = xp;
+  document.getElementById('levelDisplay').textContent = 'Lv.' + level;
+  const avatar = getAvatarEmoji(equippedAvatar);
+  document.getElementById('headerProfileAvatar').textContent = avatar;
+  document.getElementById('shopCoins').textContent = coins;
+  document.getElementById('shopDiamonds').textContent = diamonds;
+  document.getElementById('shopInventory').textContent = countInventoryItems();
+  document.getElementById('streakDisplay').textContent = streakDays;
+  document.getElementById('streakCountText').textContent = streakDays + ' days';
+  document.getElementById('streakBadge').style.display = streakDays > 0 ? 'flex' : 'none';
+  
+  // Update settings if open
+  if (document.getElementById('settingsModal').classList.contains('active')) {
+    renderSettings();
+  }
+  
+  // Update profile if open
+  if (document.getElementById('profileModal').classList.contains('active')) {
+    renderProfile();
+  }
+}
+
+function updateStreak() {
+  const today = new Date().toDateString();
+  const lastLogin = localStorage.getItem('lastLoginDate') || '';
+  if (lastLogin !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    if (lastLogin === yesterday) streakDays++;
+    else streakDays = 1;
+    localStorage.setItem('streakDays', streakDays);
+    localStorage.setItem('lastLoginDate', today);
+  }
+  document.getElementById('streakFill').style.width = Math.min((streakDays % 7) / 7 * 100, 100) + '%';
+  const nextMilestone = Math.ceil(streakDays / 7) * 7;
+  const daysLeft = nextMilestone - streakDays;
+  document.getElementById('streakNextMilestone').textContent = daysLeft > 0 ? `🔥 ${daysLeft} day${daysLeft>1?'s':''} until ${nextMilestone}-day bonus!` : '🎉 Milestone reached!';
+}
+
+function updateRoadmapProgress() {
+  const items = document.querySelectorAll('.roadmap-item');
+  let completed = 0;
+  items.forEach(item => { if (item.dataset.completed === 'true') completed++; });
+  document.getElementById('roadmapCompleted').textContent = completed;
+  const dots = document.querySelectorAll('#roadmapProgress div');
+  const total = dots.length;
+  const progress = Math.min((completed / total) * 100, 100);
+  dots.forEach((dot, index) => {
+    const position = (index + 1) / total * 100;
+    dot.style.background = position <= progress ? 'linear-gradient(90deg,#7b3af6,#00e5ff)' : 'var(--text-muted)';
+  });
+}
+
+// ==========================================
+// LEADERBOARD - CONNECTED TO DATABASE
+// ==========================================
+async function renderLeaderboard() {
+  try {
+    const response = await fetch(`${API_URL}/game/leaderboard`, {
+      headers: {
+        'Authorization': authToken ? `Bearer ${authToken}` : ''
+      }
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      renderLeaderboardData(data);
+      return;
+    }
+  } catch (error) {
+    console.log('⚠️ Database leaderboard failed, using local');
+  }
+  
+  const players = JSON.parse(localStorage.getItem('rushersLeague') || '[]');
+  players.sort((a, b) => (b.coins || 0) - (a.coins || 0));
+  renderLeaderboardData(players);
+}
+
+function renderLeaderboardData(players) {
+  // Ensure current user is in leaderboard with latest coins
+  if (username && username !== 'Guest') {
+    const exists = players.some(p => (p.username || p.name) === username);
+    if (!exists) {
+      players.push({
+        username: username,
+        name: username,
+        coins: coins,
+        diamonds: diamonds,
+        level: level,
+        avatar: equippedAvatar,
+        gamesPlayed: gameHistory.length
+      });
+    } else {
+      // Update existing user's coins
+      const userIndex = players.findIndex(p => (p.username || p.name) === username);
+      if (userIndex !== -1) {
+        players[userIndex].coins = coins;
+        players[userIndex].diamonds = diamonds;
+        players[userIndex].level = level;
+        players[userIndex].avatar = equippedAvatar;
+        players[userIndex].gamesPlayed = gameHistory.length;
+      }
+    }
+    localStorage.setItem('rushersLeague', JSON.stringify(players));
+  }
+  
+  players.sort((a, b) => (b.coins || 0) - (a.coins || 0));
+  
+  const podium = document.getElementById('lbPodium');
+  const top3 = players.slice(0, 3);
+  
+  if (top3.length === 0) {
+    podium.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);">No players yet. Be the first!</div>';
+  } else {
+    const medals = ['🥇', '🥈', '🥉'];
+    const classes = ['first', 'second', 'third'];
+    podium.innerHTML = top3.map((p, i) => `
+      <div class="lb-podium-item ${classes[i]}">
+        <div class="rank">${medals[i]}</div>
+        <div class="avatar" style="font-size:${i===0?'2.2rem':i===1?'2rem':'1.8rem'};">${getAvatarEmoji(p.avatar || 'default')}</div>
+        <div class="name">${p.username || p.name}</div>
+        <div class="coins">${p.coins || 0}💰</div>
+      </div>
+    `).join('');
+  }
+  
+  const list = document.getElementById('lbList');
+  list.innerHTML = '';
+  
+  players.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'lb-list-item';
+    const isYou = (p.username || p.name) === username;
+    if (isYou) div.style.background = 'rgba(123,58,246,0.12)';
+    
+    div.innerHTML = `
+      <span class="rank-num">${i + 1}</span>
+      <div class="player-info">
+        <div class="player-avatar" style="font-size:1.2rem;">${getAvatarEmoji(p.avatar || 'default')}</div>
+        <span class="player-name">${p.username || p.name}${isYou ? ' ⭐ YOU' : ''}</span>
+      </div>
+      <span class="player-coins">${p.coins || 0}💰</span>
+    `;
+    list.appendChild(div);
+  });
+  
+  document.getElementById('lbTotalPlayers').textContent = players.length + ' players';
+}
+
+async function syncLeaderboard() {
+  let players = JSON.parse(localStorage.getItem('rushersLeague') || '[]');
+  
+  // Update current user
+  const idx = players.findIndex(p => (p.username || p.name) === username);
+  
+  if (idx !== -1) {
+    players[idx].coins = coins;
+    players[idx].diamonds = diamonds;
+    players[idx].level = level;
+    players[idx].avatar = equippedAvatar;
+    players[idx].gamesPlayed = gameHistory.length;
+  } else if (username && username !== 'Guest') {
+    players.push({
+      username: username,
+      name: username,
+      coins: coins,
+      diamonds: diamonds,
+      level: level,
+      avatar: equippedAvatar,
+      gamesPlayed: gameHistory.length
+    });
+  }
+  
+  players.sort((a, b) => (b.coins || 0) - (a.coins || 0));
+  localStorage.setItem('rushersLeague', JSON.stringify(players));
+  localStorage.setItem('totalCoins', coins);
+  localStorage.setItem('totalDiamonds', diamonds);
+  
+  // Sync to database
+  if (authToken && username) {
+    try {
+      await fetch(`${API_URL}/user/${username}/update`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`
+        },
+        body: JSON.stringify({
+          coins, diamonds, xp, level,
+          avatar: equippedAvatar,
+          activeTheme: activeTheme,
+          ownedAvatars: ownedAvatars,
+          ownedThemes: ownedThemes,
+          inventory: inventory
+        })
+      });
+      console.log('✅ Leaderboard synced to database');
+    } catch (error) {
+      console.log('⚠️ Database sync failed');
+    }
+  }
+  
+  if (document.getElementById('leaderboardModal').classList.contains('active')) {
+    await renderLeaderboard();
+  }
+}
+
+async function openLeaderboard() {
+  document.getElementById('leaderboardModal').classList.add('active');
+  await renderLeaderboard();
+}
+function closeLeaderboard() { document.getElementById('leaderboardModal').classList.remove('active'); }
+
+// ==========================================
+// 🎯 EPIC PROFILE RENDER
+// ==========================================
+function renderProfile() {
+  const container = document.getElementById('profileContent');
+  const avatar = getAvatarEmoji(equippedAvatar);
+  const history = gameHistory || [];
+  
+  // Calculate stats
+  let totalCorrect = 0, totalQuestions = 0, totalCoinsEarned = 0;
+  history.forEach(g => { 
+    totalCorrect += (g.correct || 0); 
+    totalQuestions += (g.total || 0);
+    totalCoinsEarned += (g.coinsEarned || 0);
+  });
+  const accuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+  const totalGames = history.length;
+  
+  // Level progress
+  const nextLevelXP = Math.floor(100 * Math.pow(level + 1, 1.5));
+  const currentLevelXP = Math.floor(100 * Math.pow(level, 1.5));
+  const xpProgress = Math.min(((xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100, 100);
+  
+  // 12 Achievements
+  const achievements = [
+    { id: 'first_game', icon: '🎮', name: 'First Game', unlocked: totalGames >= 1, progress: Math.min((totalGames / 1) * 100, 100), color: '#4ade80' },
+    { id: '10_games', icon: '🏆', name: '10 Games', unlocked: totalGames >= 10, progress: Math.min((totalGames / 10) * 100, 100), color: '#fbbf24' },
+    { id: '50_games', icon: '👑', name: '50 Games', unlocked: totalGames >= 50, progress: Math.min((totalGames / 50) * 100, 100), color: '#f59e0b' },
+    { id: '100_games', icon: '💎', name: '100 Games', unlocked: totalGames >= 100, progress: Math.min((totalGames / 100) * 100, 100), color: '#7b3af6' },
+    { id: 'streak_7', icon: '🔥', name: '7 Day Streak', unlocked: streakDays >= 7, progress: Math.min((streakDays / 7) * 100, 100), color: '#ff6b6b' },
+    { id: 'streak_30', icon: '⚡', name: '30 Day Streak', unlocked: streakDays >= 30, progress: Math.min((streakDays / 30) * 100, 100), color: '#ffa94d' },
+    { id: '100_coins', icon: '💰', name: '100 Coins', unlocked: coins >= 100, progress: Math.min((coins / 100) * 100, 100), color: '#f59e0b' },
+    { id: '1000_coins', icon: '🪙', name: '1000 Coins', unlocked: coins >= 1000, progress: Math.min((coins / 1000) * 100, 100), color: '#ffd700' },
+    { id: '5000_coins', icon: '💎', name: '5000 Coins', unlocked: coins >= 5000, progress: Math.min((coins / 5000) * 100, 100), color: '#7b3af6' },
+    { id: 'perfect_game', icon: '⭐', name: 'Perfect Game', unlocked: history.some(g => g.correct === g.total && g.total >= 5), progress: history.some(g => g.correct === g.total && g.total >= 5) ? 100 : 0, color: '#00e5ff' },
+    { id: 'category_master', icon: '🧠', name: 'Category Master', unlocked: new Set(history.map(g => g.category)).size >= 5, progress: Math.min((new Set(history.map(g => g.category)).size / 5) * 100, 100), color: '#a78bfa' },
+    { id: 'quiz_king', icon: '👑', name: 'Quiz King', unlocked: totalGames >= 25 && accuracy >= 80, progress: Math.min(((totalGames / 25) * 100 + (accuracy / 80) * 100) / 2, 100), color: '#ff6bff' }
+  ];
+  
+  const unlockedCount = achievements.filter(a => a.unlocked).length;
+  const recentGames = history.slice(-8).reverse();
+  
+  container.innerHTML = `
+    <div style="padding:8px 0;animation:fadeSlideUp 0.4s ease;">
+      
+      <!-- ===== AVATAR SECTION ===== -->
+      <div style="text-align:center;">
+        <div class="profile-avatar-container">
+          <div class="profile-avatar-ring"></div>
+          <div class="profile-avatar">
+            ${avatar}
+            <div class="level-badge-ring">${level}</div>
+          </div>
+        </div>
+        
+        <h3 style="font-size:1.8rem;font-weight:900;color:var(--text-primary);margin-bottom:2px;">${username}</h3>
+        <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:2px;">🏅 Brain Rush Player</p>
+        <p style="color:var(--text-muted);font-size:0.75rem;">🎨 Theme: ${getThemeName(activeTheme)}</p>
+        
+        <!-- XP Progress Bar -->
+        <div style="margin:10px auto;max-width:280px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:var(--text-muted);">
+            <span>⚡ Level ${level}</span>
+            <span>${xp} / ${nextLevelXP} XP</span>
+          </div>
+          <div style="width:100%;height:4px;background:var(--border-color);border-radius:10px;overflow:hidden;margin-top:2px;">
+            <div style="height:100%;width:${xpProgress}%;background:var(--gradient-main);border-radius:10px;transition:width 0.8s ease;"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ===== STATS GRID ===== -->
+      <div class="profile-stats-grid">
+        <div class="profile-stat-card gold"><span class="stat-icon">💰</span><div class="stat-value">${coins}</div><div class="stat-label">Coins</div></div>
+        <div class="profile-stat-card purple"><span class="stat-icon">💎</span><div class="stat-value">${diamonds}</div><div class="stat-label">Diamonds</div></div>
+        <div class="profile-stat-card red"><span class="stat-icon">🔥</span><div class="stat-value">${streakDays}</div><div class="stat-label">Streak</div></div>
+        <div class="profile-stat-card blue"><span class="stat-icon">📊</span><div class="stat-value">${accuracy}%</div><div class="stat-label">Accuracy</div></div>
+        <div class="profile-stat-card green"><span class="stat-icon">🎮</span><div class="stat-value">${totalGames}</div><div class="stat-label">Games</div></div>
+      </div>
+      
+      <!-- ===== ACHIEVEMENTS ===== -->
+      <div style="margin-top:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <h4 style="font-size:0.85rem;font-weight:700;color:var(--text-primary);">🏆 Achievements (${unlockedCount}/${achievements.length})</h4>
+          <span style="font-size:0.65rem;color:var(--text-muted);">${Math.round((unlockedCount/achievements.length)*100)}%</span>
+        </div>
+        <div class="achievement-grid">
+          ${achievements.map(a => `
+            <div class="achievement-badge ${a.unlocked ? 'unlocked' : 'locked'}">
+              <span class="ach-icon">${a.icon}</span>
+              <div class="ach-name">${a.name}</div>
+              <div class="ach-progress">
+                <div class="ach-fill" style="width:${a.progress}%;background:${a.color};"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      
+      <!-- ===== RECENT GAMES ===== -->
+      <div style="margin-top:16px;text-align:left;">
+        <h4 style="font-size:0.85rem;font-weight:700;color:var(--text-primary);margin-bottom:8px;">📜 Recent Games</h4>
+        ${recentGames.length === 0 ? 
+          '<p style="color:var(--text-muted);font-size:0.8rem;text-align:center;">No games played yet. Start playing! 🎮</p>' :
+          `<div class="history-timeline">
+            ${recentGames.map(g => `
+              <div class="history-item ${g.correct >= g.total/2 ? 'correct' : 'wrong'}">
+                <span class="h-category">${(g.category||'unknown').charAt(0).toUpperCase()+g.category.slice(1)}</span>
+                <span class="h-result ${g.correct >= g.total/2 ? 'correct' : 'wrong'}">${g.correct}/${g.total}</span>
+                <span class="h-coins">+${g.coinsEarned||0}💰</span>
+              </div>
+            `).join('')}
+          </div>`
+        }
+      </div>
+      
+      <!-- ===== OWNED ITEMS ===== -->
+      <div style="margin-top:12px;text-align:left;">
+        <h4 style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">🖼️ Owned Avatars (${ownedAvatars.length})</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          ${ownedAvatars.map(id => `<span style="background:var(--input-bg);padding:2px 10px;border-radius:20px;font-size:0.65rem;transition:background 0.6s ease;">${getAvatarEmoji(id)} ${getAvatarName(id)}${id === equippedAvatar ? ' ✅' : ''}</span>`).join('')}
+        </div>
+      </div>
+      
+      <div style="margin-top:8px;text-align:left;">
+        <h4 style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">🎨 Owned Themes (${ownedThemes.length})</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          ${ownedThemes.length === 0 ? '<span style="font-size:0.65rem;color:var(--text-muted);">No themes purchased yet.</span>' : 
+            ownedThemes.map(id => `<span style="background:var(--input-bg);padding:2px 10px;border-radius:20px;font-size:0.65rem;transition:background 0.6s ease;">${getThemeEmoji(id)} ${getThemeName(id)}${id === activeTheme ? ' ✅' : ''}</span>`).join('')}
+        </div>
+      </div>
+      
+      <!-- ===== ACTION BUTTONS ===== -->
+      <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;justify-content:center;">
+        <button class="btn-secondary" onclick="closeProfile();openShop();" style="font-size:0.75rem;padding:8px 16px;">🖼️ Change Avatar</button>
+        <button class="btn-secondary" onclick="closeProfile();openSettings();" style="font-size:0.75rem;padding:8px 16px;">🎨 Change Theme</button>
+        <button class="btn-secondary" onclick="closeProfile();" style="font-size:0.75rem;padding:8px 16px;">✕ Close</button>
+      </div>
+    </div>
+  `;
+}
+
+// ==========================================
+// SETTINGS - FIXED WITH AVATAR
+// ==========================================
+function openSettings() {
+  document.getElementById('settingsModal').classList.add('active');
+  renderSettings();
+}
+function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); }
+
+function renderSettings() {
+  // Update user info in settings
+  const avatar = getAvatarEmoji(equippedAvatar);
+  document.getElementById('settingsAvatarDisplay').textContent = avatar;
+  document.getElementById('settingsUsernameDisplay').textContent = username || 'User';
+  document.getElementById('settingsCoinsDisplay').textContent = coins;
+  document.getElementById('settingsDiamondsDisplay').textContent = diamonds;
+  document.getElementById('settingsStreakDisplay').textContent = streakDays;
+  
+  document.getElementById('settingsCoins').textContent = coins;
+  document.getElementById('settingsDiamonds').textContent = diamonds;
+  document.getElementById('settingsStreak').textContent = streakDays;
+  
+  // Render theme selector
+  const container = document.getElementById('settingsThemeGrid');
+  if (!container) return;
+  
+  const allThemes = [
+    { id: 'default', emoji: '☀️', name: 'Default', color: '#f0f2f8' },
+    { id: 'dark', emoji: '🌙', name: 'Dark', color: '#0a0a1a' },
+    { id: 'ocean', emoji: '🌊', name: 'Ocean', color: '#0a1628' },
+    { id: 'forest', emoji: '🌿', name: 'Forest', color: '#0a1a0a' },
+    { id: 'sunset', emoji: '🌅', name: 'Sunset', color: '#1a0a14' },
+    { id: 'cyber', emoji: '💠', name: 'Cyber', color: '#0a0a14' }
+  ];
+  
+  container.innerHTML = allThemes.map(theme => {
+    const owned = theme.id === 'default' || isThemeOwned(theme.id);
+    const active = activeTheme === theme.id;
+    return `
+      <div class="theme-card ${active ? 'active' : ''}" 
+           onclick="${owned ? "applyTheme('"+theme.id+"')" : "openShop();setTimeout(()=>switchShopTab('themes'),300);"}">
+        <div class="theme-preview-box ${theme.id}" style="background:${theme.color};color:#fff;">${theme.emoji}</div>
+        <div class="theme-name">${theme.name}</div>
+        <div class="theme-status">${active ? '✅ Active' : (owned ? 'Owned' : '🔒')}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ==========================================
+// SETTINGS TOGGLES
+// ==========================================
+function toggleSound() {
+  const checked = document.getElementById('soundToggle').checked;
+  localStorage.setItem('soundEnabled', checked ? '1' : '0');
+  showRewardPopup(checked ? '🔊 Sound On' : '🔇 Sound Off');
+}
+
+function toggleMusic() {
+  const checked = document.getElementById('musicToggleSettings').checked;
+  localStorage.setItem('musicEnabled', checked ? '1' : '0');
+  const music = document.getElementById('bgMusic');
+  if (checked) {
+    music.play().catch(()=>{});
+    document.getElementById('musicToggle').textContent = '🔊';
+  } else {
+    music.pause();
+    document.getElementById('musicToggle').textContent = '🔇';
+  }
+  showRewardPopup(checked ? '🎵 Music On' : '🔇 Music Off');
+}
+
+// ==========================================
+// EXPORT / IMPORT DATA
+// ==========================================
+function exportData() {
+  const data = {
+    username, coins, diamonds, xp, level, streakDays,
+    equippedAvatar, ownedAvatars, ownedThemes, activeTheme, inventory, gameHistory,
+    timestamp: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `brainrush_backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showRewardPopup('📤 Data exported!');
+}
+
+function importData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (!confirm('⚠️ Import will overwrite current data. Continue?')) return;
+        Object.keys(data).forEach(key => {
+          if (key !== 'timestamp') {
+            localStorage.setItem(key, typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key]);
+          }
+        });
+        showRewardPopup('📥 Data imported! Refreshing...');
+        setTimeout(() => location.reload(), 1000);
+      } catch (err) {
+        alert('❌ Invalid file format!');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// ==========================================
+// PROFILE & SETTINGS OPEN/CLOSE
+// ==========================================
+function openProfile() {
+  document.getElementById('profileModal').classList.add('active');
+  renderProfile();
+}
+function closeProfile() {
+  document.getElementById('profileModal').classList.remove('active');
+}
+
+// ==========================================
+// MYSTERY BOX
+// ==========================================
+function claimMysteryBox() {
+  const last = localStorage.getItem('lastBox');
+  if (last && Date.now() - new Date(last).getTime() < 24 * 60 * 60 * 1000) { 
+    alert('🎁 Mystery Box available every 24 hours!'); 
+    return; 
+  }
+  const amount = Math.floor(Math.random() * 50) + 10;
+  const isCoin = Math.random() > 0.5;
+  if (isCoin) { coins += amount; localStorage.setItem('totalCoins', coins); showRewardPopup('+' + amount + ' 🪙 Coins!'); }
+  else { diamonds += amount; localStorage.setItem('totalDiamonds', diamonds); showRewardPopup('+' + amount + ' 💎 Diamonds!'); }
+  localStorage.setItem('lastBox', new Date().toISOString());
+  updateAllDisplays(); 
+  syncToServer(); 
+  syncLeaderboard();
+  spawnConfetti(30);
+  try { document.getElementById('rewardSfx').play(); } catch(e) {}
+}
+
+// ==========================================
+// WHEEL
+// ==========================================
+function openWheel() {
+  document.getElementById('wheelModal').classList.add('active');
+  setTimeout(drawWheel, 100);
+}
+function closeWheel() { document.getElementById('wheelModal').classList.remove('active'); }
+
+function drawWheel() {
+  const canvas = document.getElementById('wheelCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const segments = [
+    { label: '💰 10', type: 'coin', amount: 10, color: '#ffcd6d' },
+    { label: '💰 20', type: 'coin', amount: 20, color: '#ff71a7' },
+    { label: '💎 10', type: 'diamond', amount: 10, color: '#50fa7b' },
+    { label: '💎 20', type: 'diamond', amount: 20, color: '#8be9fd' },
+    { label: '💰 50', type: 'coin', amount: 50, color: '#ffb347' },
+    { label: '💎 50', type: 'diamond', amount: 50, color: '#9b59b6' },
+    { label: '💰 100', type: 'coin', amount: 100, color: '#f5e05a' },
+    { label: '💎 100', type: 'diamond', amount: 100, color: '#3498db' }
+  ];
+  const radius = canvas.width / 2, center = radius, segmentAngle = (2 * Math.PI) / segments.length;
+  let rotation = 0, spinning = false;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    segments.forEach((seg, i) => {
+      const start = i * segmentAngle + rotation, end = (i + 1) * segmentAngle + rotation;
+      ctx.beginPath(); ctx.moveTo(center, center); ctx.arc(center, center, radius - 2, start, end); ctx.closePath();
+      ctx.fillStyle = seg.color; ctx.fill();
+      ctx.save(); ctx.translate(center, center); ctx.rotate((i + 0.5) * segmentAngle + rotation);
+      ctx.textAlign = 'center'; ctx.fillStyle = '#222'; ctx.font = 'bold 14px Poppins, sans-serif';
+      ctx.fillText(seg.label, radius * 0.7, 6); ctx.restore();
+    });
+    ctx.fillStyle = '#ff4757'; ctx.beginPath();
+    ctx.moveTo(center, center - radius + 10); ctx.lineTo(center + 12, center - radius + 28); ctx.lineTo(center - 12, center - radius + 28); ctx.closePath(); ctx.fill();
+  }
+  draw();
+  canvas.onclick = function() {
+    if (spinning) return;
+    try { document.getElementById('clickSfx').play(); } catch(e) {}
+    const last = localStorage.getItem('lastWheel');
+    if (last && Date.now() - new Date(last).getTime() < 24 * 60 * 60 * 1000) { 
+      alert('🎡 Daily Wheel available every 24 hours!'); 
+      return; 
+    }
+    spinning = true;
+    let velocity = 0.6 + Math.random() * 0.3, deceleration = 0.985;
+    function spin() {
+      if (velocity < 0.005) {
+        spinning = false;
+        const finalRotation = ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+        let index = Math.floor(((2 * Math.PI - finalRotation) % (2 * Math.PI)) / segmentAngle) % segments.length;
+        if (index < 0) index += segments.length;
+        const reward = segments[index];
+        if (reward.type === 'coin') { 
+          coins += reward.amount; 
+          localStorage.setItem('totalCoins', coins); 
+          showRewardPopup('+' + reward.amount + ' 🪙 Coins!');
+          syncToServer();
+        } else { 
+          diamonds += reward.amount; 
+          localStorage.setItem('totalDiamonds', diamonds); 
+          showRewardPopup('+' + reward.amount + ' 💎 Diamonds!');
+        }
+        localStorage.setItem('lastWheel', new Date().toISOString());
+        updateAllDisplays(); 
+        syncToServer();
+        syncLeaderboard();
+        spawnConfetti(30);
+        try { document.getElementById('rewardSfx').play(); } catch(e) {}
+        return;
+      }
+      rotation += velocity; velocity *= deceleration; draw(); requestAnimationFrame(spin);
+    }
+    spin();
+  };
+}
+
+// ==========================================
+// ROADMAP
+// ==========================================
+function openRoadmap() {
+  document.getElementById('roadmapModal').classList.add('active');
+  updateRoadmapProgress();
+}
+function closeRoadmap() { document.getElementById('roadmapModal').classList.remove('active'); }
+
+// ==========================================
+// RESET DATA
+// ==========================================
+function resetData() {
+  if (!confirm('⚠️ Reset ALL data? This cannot be undone.')) return;
+  if (!confirm('❗ FINAL WARNING: Continue?')) return;
+  localStorage.clear();
+  location.reload();
+}
+
+// ==========================================
+// REWARD POPUP / CONFETTI
+// ==========================================
+function showRewardPopup(text) {
+  const popup = document.getElementById('rewardPopup');
+  popup.textContent = text;
+  popup.classList.add('show');
+  setTimeout(() => popup.classList.remove('show'), 1600);
+}
+
+function spawnConfetti(count) {
+  count = count || 28;
+  for (let i = 0; i < count; i++) {
+    const div = document.createElement('div');
+    div.style.cssText = `position:fixed; width:${Math.random()*6+4}px; height:${Math.random()*6+4}px; background:hsl(${Math.random()*360},88%,60%); left:${20+Math.random()*60}%; top:-10px; z-index:9999; pointer-events:none; border-radius:2px; opacity:${0.85-Math.random()*0.4}; transform:rotate(${Math.random()*360}deg);`;
+    document.body.appendChild(div);
+    let top = -10;
+    const fall = setInterval(() => {
+      top += Math.random() * 10 + 2;
+      div.style.top = top + 'px';
+      div.style.left = (parseFloat(div.style.left) + Math.random() * 4 - 2) + '%';
+      if (top > window.innerHeight + 50) { div.remove(); clearInterval(fall); }
+    }, 30);
+  }
+}
+
+// ==========================================
+// AI CHATBOT
+// ==========================================
+const chatToggle = document.getElementById('aiChatToggle');
+const chatContainer = document.getElementById('aiChatContainer');
+const chatClose = document.getElementById('aiChatClose');
+const chatMessages = document.getElementById('aiChatMessages');
+const chatInput = document.getElementById('aiChatInput');
+const chatSend = document.getElementById('aiChatSend');
+let chatHistory = [];
+
+chatToggle.addEventListener('click', () => { chatContainer.classList.toggle('open'); if (chatContainer.classList.contains('open')) chatInput.focus(); });
+chatClose.addEventListener('click', () => chatContainer.classList.remove('open'));
+
+function addMessage(role, content) {
+  const div = document.createElement('div');
+  div.className = 'ai-message ' + role;
+  div.textContent = content;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+async function sendAIMessage(message) {
+  if (!message.trim()) return;
+  addMessage('user', message);
+  chatInput.value = '';
+  chatSend.disabled = true;
+  try {
+    const response = await fetch(`${API_URL}/ai/chat`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': authToken ? `Bearer ${authToken}` : ''
+      },
+      body: JSON.stringify({ 
+        message, 
+        history: chatHistory.slice(-5),
+        username: username || 'Guest'
+      })
+    });
+    const data = await response.json();
+    if (data.response) { addMessage('bot', data.response); chatHistory.push({ role: 'user', content: message }); chatHistory.push({ role: 'assistant', content: data.response }); }
+    else { addMessage('bot', 'I\'m here to help! 🧠'); }
+  } catch (error) {
+    const fallbacks = ["I'm here to help! 🧠", "Earn coins by playing trivia!", "Build your streak daily for bonuses! 🔥", "Check the leaderboard to see your rank!", "Visit the shop to buy themes, avatars, and power-ups! 🏪"];
+    addMessage('bot', fallbacks[Math.floor(Math.random() * fallbacks.length)]);
+  }
+  chatSend.disabled = false;
+}
+chatSend.addEventListener('click', () => sendAIMessage(chatInput.value));
+chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendAIMessage(chatInput.value); });
+
+// ==========================================
+// MUSIC
+// ==========================================
+const music = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+const musicEnabled = localStorage.getItem('musicEnabled') === '1';
+if (musicEnabled) { music.play().catch(()=>{}); musicToggle.textContent = '🔊'; }
+else { musicToggle.textContent = '🔇'; }
+musicToggle.addEventListener('click', function() {
+  if (music.paused) { music.play().catch(()=>{}); musicToggle.textContent = '🔊'; localStorage.setItem('musicEnabled', '1'); }
+  else { music.pause(); musicToggle.textContent = '🔇'; localStorage.setItem('musicEnabled', '0'); }
+});
+
+// ==========================================
+// FORCE LANDSCAPE
+// ==========================================
+function checkOrientation() {
+  const overlay = document.getElementById('landscapeOverlay');
+  const isMobile = window.innerWidth <= 1024;
+  const isPortrait = window.innerHeight > window.innerWidth;
+  if (isMobile && isPortrait) { overlay.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+  else { overlay.style.display = 'none'; document.body.style.overflow = ''; }
+}
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', () => setTimeout(checkOrientation, 300));
+checkOrientation();
+
+// ==========================================
+// KEYBOARD SHORTCUTS
+// ==========================================
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { document.querySelectorAll('.modal-overlay.active').forEach(el => el.classList.remove('active')); chatContainer.classList.remove('open'); }
+});
+
+// ==========================================
+// GAME RESULT LISTENER
+// ==========================================
+window.addEventListener('gameResult', function(e) {
+  if (e.detail) {
+    const detail = e.detail;
+    
+    gameHistory.push({
+      category: detail.category,
+      score: detail.score || 0,
+      correct: detail.correct || 0,
+      total: detail.total || 0,
+      coinsEarned: detail.coinsEarned || 0,
+      date: new Date().toISOString()
+    });
+    localStorage.setItem('gameHistory', JSON.stringify(gameHistory));
+    
+    if (detail.coinsEarned) {
+      coins += detail.coinsEarned;
+      localStorage.setItem('totalCoins', coins);
+    }
+    
+    if (detail.correct) {
+      const earnedXP = detail.correct * 10 + (detail.coinsEarned || 0);
+      xp += earnedXP;
+      localStorage.setItem('totalXP', xp);
+      
+      let leveledUp = false;
+      while (xp >= Math.floor(100 * Math.pow(level + 1, 1.5))) {
+        level++;
+        leveledUp = true;
+        const bonus = level * 50;
+        coins += bonus;
+        localStorage.setItem('totalCoins', coins);
+        if (leveledUp) {
+          showRewardPopup(`🎉 Level Up! You're now Level ${level}! +${bonus} coins!`);
+          spawnConfetti(40);
+        }
+      }
+      localStorage.setItem('userLevel', level);
+    }
+    
+    updateAllDisplays();
+    updateGameStats();
+    syncToServer();
+    syncLeaderboard();
+    updateStreak();
+  }
+});
+
+// ==========================================
+// INIT
+// ==========================================
+async function init() {
+  console.log('🧠 Brain Rush Premium Starting...');
+  
+  const savedTheme = localStorage.getItem('activeTheme') || 'default';
+  if (savedTheme !== 'default' && isThemeOwned(savedTheme)) {
+    document.body.classList.add('theme-' + savedTheme);
+  }
+  
+  if (isOnboarded && username) {
+    const refreshed = await refreshUserData();
+    if (refreshed) {
+      console.log('👤 Synced with server: ' + username);
+    } else {
+      console.log('👤 Playing offline: ' + username);
+    }
+    showGamePage();
+    initGame();
+    updateAllDisplays();
+  } else {
+    showOnboardingPage();
+    console.log('👤 New user - showing onboarding');
+  }
+}
+
+// Expose functions globally
+window.openProfile = openProfile; window.closeProfile = closeProfile;
+window.openSettings = openSettings; window.closeSettings = closeSettings;
+window.openLeaderboard = openLeaderboard; window.closeLeaderboard = closeLeaderboard;
+window.openShop = openShop; window.closeShop = closeShop;
+window.switchShopTab = switchShopTab; window.buyItem = buyItem;
+window.buyAvatar = buyAvatar; window.equipAvatar = equipAvatar;
+window.buyTheme = buyTheme; window.applyTheme = applyTheme;
+window.openWheel = openWheel; window.closeWheel = closeWheel;
+window.claimMysteryBox = claimMysteryBox;
+window.openRoadmap = openRoadmap; window.closeRoadmap = closeRoadmap;
+window.resetData = resetData; window.spawnConfetti = spawnConfetti; window.showRewardPopup = showRewardPopup;
+window.completeOnboarding = completeOnboarding; window.selectAvatar = selectAvatar;
+window.toggleSound = toggleSound; window.toggleMusic = toggleMusic;
+window.exportData = exportData; window.importData = importData;
+window.syncLeaderboard = syncLeaderboard; window.renderLeaderboard = renderLeaderboard;
+window.syncToServer = syncToServer;
+
+console.log('🎨 5 Amazing Themes Available!');
+console.log('🖼️ 8 free avatars + 6 locked avatars in shop!');
+console.log('⚡ Power-ups show "Owned" status!');
+console.log('✅ Leaderboard connected to database!');
+console.log('✅ EPIC Profile with 12 achievements!');
+
+init();
+</script>
+</body>
+</html>

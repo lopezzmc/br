@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Brain Rush | Roadmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* ---------- Base ---------- */
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+html,body{height:100%;}
+body{min-height:100vh;color:#fff;overflow-x:hidden;position:relative;background:#111 url('fallback-image.jpg') center/cover fixed no-repeat;}
+video#bg-video{position:fixed;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:-2;pointer-events:none;}
+.overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.45);z-index:-1;}
+
+/* ---------- Top HUD ---------- */
+.top-hud {position: fixed; top: 0; left: 0; width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 10px 20px; background: rgba(0,0,0,0.35); backdrop-filter: blur(8px); z-index: 20; gap: 10px;}
+.top-hud .logo {display: flex; align-items: center; gap: 8px;}
+.top-hud .logo img {width: 44px; height: 44px; border-radius:10px;}
+.top-hud .logo h1 {font-size:1.3rem; background: linear-gradient(to right,#ff79c6,#8be9fd,#50fa7b); -webkit-background-clip: text; color: transparent; animation: titleGradient 4s linear infinite; white-space: nowrap;}
+.top-hud .settings {display:flex;align-items:center;justify-content:center;font-size:1.2rem;width:48px;height:48px;border-radius:24px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,0.4);transition:.25s;}
+.top-hud .settings:hover{background:#fff;color:#ff69b4;transform:scale(1.05);}
+.top-hud .right-hud{display:flex;gap:10px;align-items:center;}
+.top-hud .coins, .top-hud .diamonds{display:flex;align-items:center;gap:8px;font-size:1rem;padding:6px 12px;border-radius:18px;background:rgba(255,255,255,0.12);box-shadow:0 6px 10px rgba(0,0,0,0.35);cursor:pointer;position:relative;}
+.coin-emoji, .diamond-emoji{font-size:20px;animation:coinBounce 1.2s infinite ease-in-out;}
+
+/* ---------- Hero ---------- */
+.hero{text-align:center;margin-top:86px;padding:18px;display:flex;flex-wrap:wrap;justify-content:center;gap:12px;}
+.hero h2{width:100%;font-size:2.2rem;font-weight:800;color:#fff;text-shadow:0 4px 10px rgba(0,0,0,0.6);margin-bottom:6px;}
+.hero button{padding:12px 18px;font-size:1rem;font-weight:700;color:#222;border-radius:18px;cursor:pointer;box-shadow:0 10px 28px rgba(0,0,0,0.45);transition: transform 0.25s, box-shadow 0.25s; background:linear-gradient(145deg,#ff71a7,#50fa7b,#8be9fd);}
+.hero button:hover{transform:scale(1.03);box-shadow:0 18px 48px rgba(0,0,0,0.55);}
+
+/* ---------- Roadmap Container ---------- */
+#roadmap-container{position:relative;width:90%;max-width:1200px;margin:36px auto;background:rgba(0,0,0,0.3);border-radius:16px;padding:24px;overflow:hidden;box-shadow:0 0 36px rgba(0,0,0,0.6);}
+.roadmap-node{position:absolute;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;cursor:pointer;transition:all 0.5s ease;box-shadow:0 4px 12px rgba(0,0,0,0.5);}
+.roadmap-node.locked{background:#555;color:#ccc;cursor:not-allowed;}
+.roadmap-node.unlocked{background:#ffcd6d;color:#222;}
+.roadmap-node.completed{background:#4ade80;color:#111;box-shadow:0 0 12px #4ade80;}
+.roadmap-node.milestone{border:3px solid #ff71a7;}
+
+/* Connecting lines */
+.roadmap-line{position:absolute;height:4px;background:linear-gradient(to right,#ff71a7,#50fa7b,#8be9fd);z-index:0;}
+
+/* Avatar */
+#roadmap-avatar{position:absolute;width:40px;height:40px;border-radius:50%;background:url('avatar.png') center/cover no-repeat;transition:left 1s ease, top 1s ease;z-index:10;pointer-events:none;}
+
+/* Reward popup */
+.reward-popup{position:fixed;top:86px;right:16px;padding:10px 14px;font-size:1rem;font-weight:800;border-radius:12px;text-align:center;box-shadow:0 8px 20px rgba(0,0,0,0.45);z-index:9999;transition:transform 0.35s ease, opacity 0.35s ease;opacity:0;color:#222;background:linear-gradient(90deg,#fff7b2,#dff7ff);}
+.reward-popup.show{opacity:1;transform:translateY(-8px);}
+
+/* Confetti */
+.confetti-piece {position:absolute;width:7px;height:7px;z-index:9999;pointer-events:none;border-radius:2px;}
+
+/* Animations */
+@keyframes coinBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-4px);} }
+@keyframes titleGradient{0%{filter:hue-rotate(0deg) brightness(1.05);}50%{filter:hue-rotate(180deg) brightness(1.2);}100%{filter:hue-rotate(360deg) brightness(1.05);} }
+
+</style>
+</head>
+<body>
+
+<video autoplay muted playsinline loop id="bg-video">
+  <source src="background.mp4" type="video/mp4">
+</video>
+<div class="overlay"></div>
+
+<div class="top-hud">
+  <div class="logo">
+    <img src="logo.png" alt="Brain Rush Logo">
+    <h1>Brain Rush</h1>
+  </div>
+  <div class="right-hud">
+    <div class="coins" title="Your Rush Coins"><span class="coin-emoji">💰</span><span id="coin-count">0</span> Rush</div>
+    <div class="diamonds" title="Your Diamonds"><span class="diamond-emoji">💎</span><span id="diamond-count">0</span></div>
+    <div class="settings" id="settings-btn" title="Settings">⚙️</div>
+  </div>
+</div>
+
+<section class="hero">
+  <h2>Your Brain Challenge Roadmap 🧠</h2>
+  <p>Complete challenges to progress along the roadmap and earn rewards!</p>
+  <button id="home-btn">🏠 Home</button>
+</section>
+
+<div id="roadmap-container"></div>
+<div id="roadmap-avatar"></div>
+
+<!-- Reward popup -->
+<div class="reward-popup" id="reward-popup">+0 Rush Coins!</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const coinDisplay = document.getElementById('coin-count');
+  const diamondDisplay = document.getElementById('diamond-count');
+  const rewardPopup = document.getElementById('reward-popup');
+  const roadmapContainer = document.getElementById('roadmap-container');
+  const avatar = document.getElementById('roadmap-avatar');
+  const homeBtn = document.getElementById('home-btn');
+
+  let coins = parseInt(localStorage.getItem('totalCoins') || '0', 10);
+  let diamonds = parseInt(localStorage.getItem('totalDiamonds') || '0', 10);
+  coinDisplay.textContent = coins;
+  diamondDisplay.textContent = diamonds;
+
+  homeBtn.addEventListener('click', ()=>{window.location.href='index.html';});
+
+  // Confetti
+  function spawnConfetti(count = 28){
+    for(let i=0;i<count;i++){
+      const div=document.createElement('div');
+      div.className='confetti-piece';
+      div.style.background=`hsl(${Math.random()*360},88%,60%)`;
+      div.style.left=`${20+Math.random()*60}%`;
+      div.style.top='-10px';
+      const size=4+Math.random()*6; div.style.width=`${size}px`; div.style.height=`${size}px`;
+      document.body.appendChild(div);
+      const falling = setInterval(()=>{
+        let top=parseFloat(div.style.top);
+        div.style.top=(top+Math.random()*10)+'px';
+        div.style.left=(parseFloat(div.style.left)+Math.random()*4-2)+'%';
+        if(top>window.innerHeight+50){div.remove(); clearInterval(falling);}
+      },30);
+    }
+  }
+
+  function showRewardPopup(text){
+    rewardPopup.textContent=text;
+    rewardPopup.classList.add('show');
+    setTimeout(()=>rewardPopup.classList.remove('show'),1600);
+  }
+
+  function addCoins(amount){
+    coins+=amount;
+    localStorage.setItem('totalCoins',coins);
+    coinDisplay.textContent=coins;
+  }
+
+  // ---------- Roadmap Data ----------
+  const roadmapData = [
+    {id:1,x:10,y:20,status:'unlocked',milestone:false},
+    {id:2,x:25,y:30,status:'locked',milestone:false},
+    {id:3,x:40,y:40,status:'locked',milestone:true},
+    {id:4,x:55,y:35,status:'locked',milestone:false},
+    {id:5,x:70,y:50,status:'locked',milestone:true},
+    {id:6,x:85,y:60,status:'locked',milestone:false}
+  ];
+
+  const roadmapProgress = JSON.parse(localStorage.getItem('roadmapProgress')||'{}');
+  roadmapData.forEach(node=>{if(roadmapProgress[node.id]) node.status=roadmapProgress[node.id];});
+
+  function renderRoadmap(){
+    roadmapContainer.innerHTML='';
+    for(let i=0;i<roadmapData.length;i++){
+      const node=roadmapData[i];
+      const div=document.createElement('div');
+      div.className='roadmap-node '+node.status+(node.milestone?' milestone':'');
+      div.style.left=`${node.x}%`;
+      div.style.top=`${node.y}%`;
+      div.textContent=i+1;
+      roadmapContainer.appendChild(div);
+
+      // Connecting line
+      if(i>0){
+        const prev=roadmapData[i-1];
+        const line=document.createElement('div');
+        line.className='roadmap-line';
+        const left=Math.min(prev.x,node.x);
+        const top=Math.min(prev.y,node.y);
+        const width=Math.hypot(node.x-prev.x,node.y-prev.y)*10;
+        line.style.left=`${left}%`;
+        line.style.top=`${top}%`;
+        line.style.width=`${width}px`;
+        roadmapContainer.appendChild(line);
+      }
+
+      div.addEventListener('click',()=>{
+        if(node.status==='locked') return;
+        node.status='completed';
+        roadmapProgress[node.id]='completed';
+        if(roadmapData[i+1]){roadmapData[i+1].status='unlocked'; roadmapProgress[roadmapData[i+1].id]='unlocked';}
+        localStorage.setItem('roadmapProgress',JSON.stringify(roadmapProgress));
+        // Reward
+        let reward=node.milestone?50:10+Math.floor(Math.random()*20);
+        addCoins(reward);
+        showRewardPopup(`+${reward} Rush Coins!`);
+        spawnConfetti(node.milestone?30:18);
+        updateRoadmap();
+      });
+    }
+    moveAvatar();
+  }
+
+  function moveAvatar(){
+    const completedNodes = roadmapData.filter(n=>n.status==='completed'||n.status==='unlocked');
+    const lastNode = completedNodes[completedNodes.length-1] || roadmapData[0];
+    avatar.style.left=`calc(${lastNode.x}% - 20px)`;
+    avatar.style.top=`calc(${lastNode.y}% - 20px)`;
+  }
+
+  function updateRoadmap(){ renderRoadmap(); }
+
+  renderRoadmap();
+});
+</script>
+</body>
+</html>

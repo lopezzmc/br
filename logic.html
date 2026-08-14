@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>Brain Rush — Math</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@400;700;900&display=swap"
+    rel="stylesheet">
+  <style>
+    /* ============================================
+       ALL STYLES (FULL COPY - KEPT COMPLETE)
+       ============================================ */
+    *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+    html,body{height:100%;margin:0;background:#f0f0f0;color:#111;overflow:hidden;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;-webkit-font-smoothing:antialiased;-webkit-touch-callout:none;touch-action:manipulation;overflow-x:hidden;}
+    .bg{position:fixed;inset:0;background:url('https://media.istockphoto.com/id/1469529416/vector/decorative-lined-paper-with-children-two-pages-funny-vector-illustration-eps.jpg?s=612x612&w=0&k=20&c=R9ntFhhrR3Hf8jlql_b-5ES_19Cxsjjx1HcbyScyf68=') center/cover no-repeat;z-index:0;filter:brightness(.98);}
+    .overlay{position:fixed;inset:0;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,0));}
+    .stage{position:relative;z-index:2;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:8px;}
+    .book{width:100%;max-width:1400px;border-radius:10px;padding:8px;position:relative;background:none;box-shadow:none;border:none;}
+
+    /* ===== LANDSCAPE OVERLAY ===== */
+    .landscape-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: linear-gradient(135deg, #0f0e17 0%, #1a1a2e 100%);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .landscape-overlay .rotate-icon { font-size:120px; margin-bottom:24px; animation:rotatePhone 2.5s ease-in-out infinite; filter:drop-shadow(0 0 40px rgba(123,58,246,0.5)); }
+    @keyframes rotatePhone {
+      0%,100%{transform:rotate(0deg) scale(1);}
+      25%{transform:rotate(90deg) scale(1.1);}
+      50%{transform:rotate(90deg) scale(1.1);}
+      75%{transform:rotate(0deg) scale(1);}
+    }
+    .landscape-overlay h2 { font-size:2rem; font-weight:900; color:#fff; margin-bottom:12px; background:linear-gradient(135deg,#7b3af6,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .landscape-overlay p { color:#a7a9be; font-size:1.1rem; max-width:420px; line-height:1.8; }
+
+    .header{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:4px;flex-wrap:wrap;}
+    .leftHeader{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+    .logoBox{width:40px;height:40px;border-radius:8px;background:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 15px rgba(0,0,0,0.06);overflow:hidden;border:1px solid rgba(0,0,0,0.04)}
+    .logoBox img{width:80%;height:80%;object-fit:contain;display:block;}
+    .titleWrap{display:flex;flex-direction:column;gap:0px}
+    .title{font-family:"Patrick Hand",Inter,system-ui,sans-serif;font-size:16px;margin:0;font-weight:900;color:#111;line-height:1.1;}
+    .subtitle{font-size:8px;color:#888;font-weight:700;opacity:.8;margin-top:0px;font-family:Inter;letter-spacing:0.3px;text-transform:uppercase;}
+    .coins{display:flex;align-items:center;gap:4px;padding:3px 8px;border-radius:10px;background:#fff;box-shadow:0 4px 15px rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.03);font-weight:900;}
+    .coins .coinEmoji{font-size:12px;margin-right:1px;}
+    .coins #headerCoins{font-size:11px;color:#222;}
+    .qcount{font-weight:900;color:#222;padding:2px 8px;background:rgba(255,255,255,0.8);border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.02);font-size:10px;}
+
+    .streak-badge{display:flex;align-items:center;gap:4px;padding:2px 10px;border-radius:20px;background:linear-gradient(135deg,#ff6b6b,#ffa94d);color:#fff;font-weight:900;font-size:10px;box-shadow:0 2px 10px rgba(255,107,107,0.3);animation:streakPulse 1.5s ease-in-out infinite;}
+    .streak-badge .streak-fire{font-size:12px;}
+    .streak-badge.hidden{display:none;}
+    @keyframes streakPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+
+    .menu-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #222;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      letter-spacing: 2px;
+      line-height: 1;
+      font-family: Inter, sans-serif;
+      position: relative;
+    }
+    .menu-btn:hover { transform: scale(1.08); box-shadow: 0 4px 20px rgba(123,58,246,0.15); border-color: rgba(123,58,246,0.2); }
+    .menu-btn:active { transform: scale(0.92); }
+    .menu-btn .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background: #ff6b6b;
+      color: #fff;
+      font-size: 8px;
+      font-weight: 800;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-family: Inter, sans-serif;
+    }
+    .menu-btn .badge.show { display: flex; animation: badgePulse 1s ease-in-out infinite; }
+    @keyframes badgePulse { 0%,100%{transform:scale(1);}50%{transform:scale(1.15);} }
+
+    .menu-dropdown {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 8px;
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 14px;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 12px 48px rgba(0,0,0,0.12);
+      padding: 6px;
+      z-index: 1000;
+      min-width: 180px;
+      opacity: 0;
+      transform: translateY(-10px) scale(0.96);
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      display: none;
+    }
+    .menu-dropdown.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+      display: block;
+    }
+    .menu-dropdown .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: 600;
+      font-size: 13px;
+      color: #222;
+      font-family: Inter, sans-serif;
+      width: 100%;
+      border: none;
+      background: transparent;
+      text-align: left;
+    }
+    .menu-dropdown .menu-item:hover { background: rgba(123,58,246,0.08); }
+    .menu-dropdown .menu-item:active { transform: scale(0.96); }
+    .menu-dropdown .menu-item .icon { font-size: 16px; width: 24px; text-align: center; }
+    .menu-dropdown .menu-item .count {
+      margin-left: auto;
+      background: rgba(123,58,246,0.12);
+      padding: 1px 8px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #7b3af6;
+    }
+    .menu-dropdown .menu-item .count.empty { background: rgba(255,71,87,0.12); color: #ff4757; }
+    .menu-dropdown .menu-divider { height: 1px; background: rgba(0,0,0,0.06); margin: 4px 10px; }
+    .menu-dropdown .menu-item.danger { color: #ff4757; }
+    .menu-dropdown .menu-item.danger:hover { background: rgba(255,71,87,0.08); }
+
+    .card{margin-top:4px;background:none;border-radius:12px;padding:8px;min-height:80vh;display:flex;flex-direction:column;gap:6px;align-items:stretch;width:100%;position:relative;}
+
+    .timer-section{display:flex;justify-content:space-between;align-items:center;padding:2px 0;gap:8px;flex-wrap:wrap;}
+    .timer-compact{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,0.85);padding:4px 14px 4px 10px;border-radius:30px;box-shadow:0 4px 20px rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.03);}
+    .timer-compact .mini-circle{position:relative;width:36px;height:36px;flex-shrink:0;}
+    .timer-compact .mini-circle svg{width:100%;height:100%;transform:rotate(-90deg);}
+    .timer-compact .mini-circle .ring-bg{fill:none;stroke:rgba(0,0,0,0.06);stroke-width:4;}
+    .timer-compact .mini-circle .ring-progress{fill:none;stroke:#7b3af6;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 0.3s cubic-bezier(0.4,0,0.2,1),stroke 0.3s ease;filter:drop-shadow(0 0 3px rgba(123,58,246,0.15));}
+    .timer-compact .mini-circle .ring-pulse{fill:none;stroke:#ff6b6b;stroke-width:2;stroke-linecap:round;opacity:0;transition:opacity 0.3s ease;}
+    .timer-compact.warning .mini-circle .ring-pulse{opacity:0.6;animation:pulseRing 0.8s ease-in-out infinite;}
+    .timer-compact.danger .mini-circle .ring-pulse{opacity:1;animation:pulseRing 0.4s ease-in-out infinite;}
+    @keyframes pulseRing{0%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.12);opacity:0.2;}100%{transform:scale(1);opacity:0.6;}}
+    .timer-compact .mini-circle .timer-num{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:14px;font-weight:900;color:#222;font-family:"Patrick Hand",Inter,sans-serif;line-height:1;transition:color 0.3s ease;}
+    .timer-compact .mini-circle .timer-num.warning{color:#ff6b6b;}
+    .timer-compact .mini-circle .timer-num.danger{color:#ff0000;animation:numPulse 0.5s ease-in-out infinite alternate;}
+    @keyframes numPulse{from{transform:translate(-50%,-50%) scale(1);}to{transform:translate(-50%,-50%) scale(1.15);}}
+    .timer-compact .timer-status-text{font-size:10px;font-weight:700;color:#888;font-family:Inter,sans-serif;min-width:40px;white-space:nowrap;transition:color 0.3s ease;}
+    .timer-compact .timer-status-text.warning{color:#ff6b6b;}
+    .timer-compact .timer-status-text.danger{color:#ff0000;}
+    .timer-compact .timer-status-text.correct{color:#1fb97a;}
+    .timer-compact .timer-status-text.wrong{color:#ff4757;}
+    .timer-compact.warning .ring-progress{stroke:#ffa94d;filter:drop-shadow(0 0 6px rgba(255,169,77,0.3));}
+    .timer-compact.danger .ring-progress{stroke:#ff6b6b;filter:drop-shadow(0 0 8px rgba(255,107,107,0.4));}
+    .timer-compact.correct .ring-progress{stroke:#1fb97a;filter:drop-shadow(0 0 8px rgba(31,185,122,0.3));}
+    .timer-compact.wrong .ring-progress{stroke:#ff4757;filter:drop-shadow(0 0 8px rgba(255,71,87,0.3));}
+
+    .question{font-family:"Patrick Hand",Inter,system-ui,sans-serif;font-size:1.2rem;font-weight:900;color:#000;text-align:center;margin:2px 0;line-height:1.4;padding:10px 12px;position:relative;z-index:10;min-height:45px;}
+    .question::before{content:'';position:absolute;inset:-8px;background:rgba(255,255,255,0.92);border-radius:14px;z-index:-1;}
+    .question.pop{animation:questionPop 0.3s ease;}
+    @keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);}}
+
+    .choices{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0;width:100%;}
+    .choice{
+      min-height:44px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      user-select:none;
+      font-weight:900;
+      font-size:0.85rem;
+      font-family:"Patrick Hand",Inter,sans-serif;
+      color:#fff;
+      background:linear-gradient(-45deg,#1a9850,#2ecc71,#27ae60,#1a9850);
+      background-size:400% 400%;
+      border:3px solid #057d05;
+      box-shadow:none;
+      transition:all .25s ease;
+      position:relative;
+      overflow:hidden;
+      animation:gradientBG 8s ease infinite;
+      padding:0 10px;
+      text-align:center;
+      touch-action:manipulation;
+      -webkit-touch-callout:none;
+      word-break:break-word;
+      line-height:1.3;
+    }
+    @keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    .choice:active{transform:scale(0.92);}
+    .choice.correct{border-color:#00ff00;background:linear-gradient(-45deg,#1a9850,#2ecc71);box-shadow:0 0 20px #00ff00,0 0 40px rgba(0,255,0,0.2);animation:correctPulse 0.5s ease;}
+    .choice.wrong{border-color:#ff0000;background:linear-gradient(-45deg,#c62828,#ef5350);animation:wrongShake 0.5s ease;}
+    @keyframes correctPulse{0%{transform:scale(1);}50%{transform:scale(1.08);}100%{transform:scale(1);}}
+    @keyframes wrongShake{0%{transform:translateX(0);}25%{transform:translateX(-8px);}50%{transform:translateX(8px);}75%{transform:translateX(-4px);}100%{transform:translateX(0);}}
+
+    .feedback{min-height:20px;font-weight:800;text-align:center;color:#333;padding:2px;font-size:0.8rem;}
+
+    .floating-emoji{position:fixed;font-size:40px;pointer-events:none;z-index:200;animation:floatUp 1.2s ease-out forwards;}
+    @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(0.5) rotate(0deg);}50%{opacity:1;transform:translateY(-80px) scale(1.2) rotate(20deg);}100%{opacity:0;transform:translateY(-160px) scale(0.8) rotate(-10deg);}}
+
+    .progressWrap{margin-top:2px;display:flex;flex-direction:column;gap:4px;align-items:stretch;}
+    .progressBar{height:5px;background:linear-gradient(90deg,rgba(0,0,0,.02),rgba(0,0,0,.01));border-radius:999px;overflow:hidden;}
+    .progressFill{height:100%;width:0%;background:linear-gradient(90deg,rgba(123,58,246,.85),rgba(0,229,255,.8));transition:width .5s ease;}
+
+    .final{position:absolute;inset:0;z-index:12;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.98));border-radius:10px;padding:16px;box-shadow:0 40px 120px rgba(0,0,0,.08);text-align:center;display:none;animation:finalPop 0.5s ease;}
+    @keyframes finalPop{0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);}100%{transform:scale(1);opacity:1;}}
+    .final h2{font-family:"Patrick Hand",Inter;font-size:1.5rem;margin:2px 0;color:#0b6b3a;}
+    .final .score{font-weight:900;color:#222;font-size:0.9rem;}
+    .final .btns{display:flex;gap:8px;margin-top:4px;flex-wrap:wrap;justify-content:center;}
+    .btn{padding:8px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:900;background:linear-gradient(90deg,#7b3af6,#00e5ff);color:#fff;box-shadow:0 12px 36px rgba(0,0,0,.12);touch-action:manipulation;min-height:38px;min-width:80px;font-size:0.8rem;transition:transform 0.2s ease;}
+    .btn:active{transform:scale(0.92);}
+    .btn:hover{transform:scale(1.05);}
+
+    .confetti{position:fixed;width:6px;height:6px;top:-20px;pointer-events:none;z-index:40;opacity:.95;border-radius:2px;transform:translateY(0) rotate(0deg);animation:confettiFall 2000ms linear forwards;}
+    @keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:.95;}}
+
+    @media(max-width:380px){
+      .timer-compact{padding:3px 8px 3px 6px;gap:4px;}
+      .timer-compact .mini-circle{width:28px;height:28px;}
+      .timer-compact .mini-circle .timer-num{font-size:11px;}
+      .timer-compact .timer-status-text{font-size:7px;min-width:28px;}
+      .question{font-size:1rem;padding:6px 8px;min-height:38px;}
+      .choice{min-height:34px;font-size:0.7rem;border-width:2px;padding:0 6px;}
+      .choices{gap:5px;}
+      .logoBox{width:30px;height:30px;}
+      .title{font-size:13px;}
+      .coins{padding:2px 5px;}
+      .coins .coinEmoji{font-size:9px;}
+      .coins #headerCoins{font-size:9px;}
+      .qcount{font-size:8px;padding:2px 5px;}
+      .streak-badge{font-size:7px;padding:1px 6px;}
+      .streak-badge .streak-fire{font-size:9px;}
+      .floating-emoji{font-size:28px;}
+      .menu-btn{width:28px;height:28px;font-size:14px;}
+      .menu-dropdown{min-width:150px;right:0;top:100%;}
+      .menu-dropdown .menu-item{font-size:12px;padding:8px 12px;}
+    }
+    @media(min-width:381px) and (max-width:480px){
+      .timer-compact .mini-circle{width:36px;height:36px;}
+      .timer-compact .mini-circle .timer-num{font-size:14px;}
+      .question{font-size:1.1rem;}
+      .choice{min-height:40px;font-size:0.78rem;}
+    }
+    @media(min-width:481px) and (max-width:768px){
+      .timer-compact .mini-circle{width:40px;height:40px;}
+      .timer-compact .mini-circle .timer-num{font-size:16px;}
+      .question{font-size:1.3rem;}
+      .choice{min-height:46px;font-size:0.9rem;}
+    }
+    @media(min-width:769px){
+      .timer-compact .mini-circle{width:48px;height:48px;}
+      .timer-compact .mini-circle .timer-num{font-size:20px;}
+      .timer-compact{padding:6px 20px 6px 14px;gap:14px;}
+      .timer-compact .timer-status-text{font-size:12px;min-width:50px;}
+      .question{font-size:1.8rem;padding:14px 24px;}
+      .choice{min-height:56px;font-size:1rem;}
+      .choices{gap:12px;}
+      .logoBox{width:52px;height:52px;}
+      .title{font-size:20px;}
+      .coins{padding:6px 14px;}
+      .coins .coinEmoji{font-size:15px;}
+      .coins #headerCoins{font-size:13px;}
+      .qcount{font-size:11px;padding:4px 10px;}
+      .header{gap:10px;}
+      .menu-btn{width:36px;height:36px;font-size:18px;}
+      .menu-dropdown{min-width:220px;}
+    }
+  </style>
+</head>
+
+<body>
+  <!-- LANDSCAPE OVERLAY -->
+  <div class="landscape-overlay" id="landscapeOverlay">
+    <div class="rotate-icon">📱</div>
+    <h2>Rotate Your Phone</h2>
+    <p>Please switch to <strong>landscape mode</strong> for the best Brain Rush experience!</p>
+    <p style="font-size:0.8rem;color:#6c6e8a;margin-top:8px;">🔄 The game works best in landscape on mobile devices</p>
+  </div>
+
+  <div class="bg" aria-hidden="true"></div>
+  <div class="overlay" aria-hidden="true"></div>
+
+  <div class="stage">
+    <div class="book" role="main" aria-label="Brain Rush math game">
+      <div class="header">
+        <div class="leftHeader">
+          <div class="logoBox"><img src="logo.png" alt="logo" onerror="this.style.display='none'"></div>
+          <div class="titleWrap">
+            <div class="title">Brain Rush</div>
+            <div class="subtitle">Math</div>
+          </div>
+          <div>
+            <div class="qcount" id="qcount">1/10</div>
+          </div>
+        </div>
+        <div class="header-right" style="position:relative;">
+          <div class="streak-badge hidden" id="streakBadge">
+            <span class="streak-fire">🔥</span>
+            <span id="streakCount">0</span>
+          </div>
+          <div class="coins"><span class="coinEmoji">💰</span> <span id="headerCoins">0</span></div>
+          
+          <!-- 3-DOT MENU BUTTON -->
+          <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">
+            ⋮
+            <span class="badge" id="menuBadge">!</span>
+          </button>
+          
+          <!-- MENU DROPDOWN -->
+          <div class="menu-dropdown" id="menuDropdown">
+            <button class="menu-item" onclick="useHint()">
+              <span class="icon">💡</span>
+              Hint
+              <span class="count" id="hintCountDisplay">0</span>
+            </button>
+            <button class="menu-item" onclick="useExtraTime()">
+              <span class="icon">⏰</span>
+              +15s Time
+              <span class="count" id="timeCountDisplay">0</span>
+            </button>
+            <button class="menu-item" onclick="skipQuestion()">
+              <span class="icon">🔄</span>
+              Skip Question
+              <span class="count" id="skipCountDisplay">0</span>
+            </button>
+            <button class="menu-item" onclick="useDoubleCoins()">
+              <span class="icon">💰</span>
+              2x Coins
+              <span class="count" id="doubleCountDisplay">0</span>
+            </button>
+            <div class="menu-divider"></div>
+            <button class="menu-item" onclick="goHome()">
+              <span class="icon">🏠</span>
+              Home
+            </button>
+            <button class="menu-item danger" onclick="resetGame()">
+              <span class="icon">🔄</span>
+              Reset Game
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="card">
+        <!-- ===== COMPACT TIMER ===== -->
+        <div class="timer-section">
+          <div class="timer-compact" id="timerCompact">
+            <div class="mini-circle">
+              <svg viewBox="0 0 100 100">
+                <circle class="ring-bg" cx="50" cy="50" r="42" />
+                <circle class="ring-progress" id="ringProgress" cx="50" cy="50" r="42" 
+                  stroke-dasharray="263.89" stroke-dashoffset="0" />
+                <circle class="ring-pulse" id="ringPulse" cx="50" cy="50" r="42" 
+                  stroke-dasharray="263.89" stroke-dashoffset="0" />
+              </svg>
+              <span class="timer-num" id="timerNum">15</span>
+            </div>
+            <span class="timer-status-text" id="timerStatusText">⏳ Go!</span>
+          </div>
+        </div>
+
+        <!-- ===== QUESTION ===== -->
+        <div class="question" id="question">Loading…</div>
+
+        <!-- ===== CHOICES ===== -->
+        <div class="choices" id="choices" role="list" aria-live="polite"></div>
+
+        <!-- ===== FEEDBACK ===== -->
+        <div class="feedback" id="feedback" aria-live="polite"></div>
+
+        <!-- ===== PROGRESS ===== -->
+        <div class="progressWrap">
+          <div class="progressBar">
+            <div class="progressFill" id="progressFill"></div>
+          </div>
+        </div>
+
+        <!-- ===== FINAL ===== -->
+        <div id="final" class="final">
+          <h2>🎉 You're a Math Genius!</h2>
+          <div class="score" id="finalScore">You got 0 / 10 correct</div>
+          <div style="margin-top:4px;">
+            <div class="score" id="coinSummary">Earned 0 🪙</div>
+          </div>
+          <div class="btns">
+            <button class="btn" id="playAgain">🔄 Play Again</button>
+            <button class="btn" id="goHomeBtn">🏠 Home</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="coinPop" id="coinPop"></div>
+
+  <audio id="clickS" preload="auto"><source src="click.mp3" type="audio/mpeg"></audio>
+  <audio id="coinS" preload="auto"><source src="coin.mp3" type="audio/mpeg"></audio>
+  <audio id="cheerS" preload="auto"><source src="cheer.mp3" type="audio/mpeg"></audio>
+  <audio id="wrongS" preload="auto"><source src="wrong.mp3" type="audio/mpeg"></audio>
+  <audio id="bgMusic" loop><source src="background-music.mp3" type="audio/mpeg"></audio>
+
+  <script>
+    // ============================================
+    // 🔒 FORCE LANDSCAPE MODE
+    // ============================================
+    async function forceLandscapeMode() {
+      const overlay = document.getElementById('landscapeOverlay');
+      const isMobile = window.innerWidth <= 1024;
+      const isPortrait = window.innerHeight > window.innerWidth;
+      
+      try {
+        if (screen.orientation && screen.orientation.lock) {
+          await screen.orientation.lock('landscape');
+          console.log('🔒 Landscape locked!');
+        }
+      } catch (e) {
+        console.log('⚠️ Orientation lock failed:', e.message);
+      }
+      
+      if (isMobile && isPortrait) {
+        overlay.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+      } else {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+
+    setTimeout(() => {
+      const overlay = document.getElementById('landscapeOverlay');
+      if (window.innerWidth > window.innerHeight) {
+        overlay.style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }, 500);
+
+    function handleOrientationChange() {
+      setTimeout(forceLandscapeMode, 300);
+    }
+
+    forceLandscapeMode();
+    window.addEventListener('resize', forceLandscapeMode);
+    window.addEventListener('orientationchange', handleOrientationChange);
+    document.addEventListener('DOMContentLoaded', forceLandscapeMode);
+
+    // ============================================
+    // BACKEND INTEGRATION
+    // ============================================
+    const API_URL = 'http://localhost:5000/api';
+    let authToken = localStorage.getItem('authToken');
+
+    // ============================================
+    // POWER-UP SYSTEM - SHOP INVENTORY INTEGRATION
+    // ============================================
+    function getShopInventory() {
+      try {
+        const raw = localStorage.getItem('shop_inventory');
+        if (!raw) return [];
+        const parsed = JSON.parse(raw);
+        return parsed.map(item => {
+          if (typeof item === 'string') return { id: item, qty: 1 };
+          return { id: item.id, qty: item.qty || 1 };
+        });
+      } catch {
+        return [];
+      }
+    }
+
+    function saveShopInventory(inventory) {
+      localStorage.setItem('shop_inventory', JSON.stringify(inventory));
+      window.shopInventory = inventory;
+    }
+
+    function getPowerupQty(powerupId) {
+      const inventory = getShopInventory();
+      const found = inventory.find(item => item.id === powerupId);
+      return found ? found.qty : 0;
+    }
+
+    function usePowerup(powerupId) {
+      const inventory = getShopInventory();
+      const found = inventory.find(item => item.id === powerupId);
+      if (!found || found.qty <= 0) return false;
+      found.qty--;
+      const updated = inventory.filter(item => item.qty > 0);
+      saveShopInventory(updated);
+      return true;
+    }
+
+    // ============================================
+    // MENU SYSTEM
+    // ============================================
+    let menuOpen = false;
+
+    function toggleMenu() {
+      menuOpen = !menuOpen;
+      document.getElementById('menuDropdown').classList.toggle('open', menuOpen);
+      if (menuOpen) updateMenuCounts();
+    }
+
+    document.addEventListener('click', function(e) {
+      const menuBtn = document.getElementById('menuBtn');
+      const dropdown = document.getElementById('menuDropdown');
+      if (!menuBtn.contains(e.target) && !dropdown.contains(e.target)) {
+        menuOpen = false;
+        dropdown.classList.remove('open');
+      }
+    });
+
+    function goHome() {
+      menuOpen = false;
+      document.getElementById('menuDropdown').classList.remove('open');
+      window.location.href = 'index.html';
+    }
+
+    function resetGame() {
+      if (confirm('🔄 Reset this game?')) {
+        menuOpen = false;
+        document.getElementById('menuDropdown').classList.remove('open');
+        location.reload();
+      }
+    }
+
+    // ============================================
+    // POWER-UP USAGE FUNCTIONS
+    // ============================================
+    function useHint() {
+      menuOpen = false;
+      document.getElementById('menuDropdown').classList.remove('open');
+      
+      if (!usePowerup('hint')) {
+        showFeedback('💡 No hints left! Buy in Shop!', '#ff4757');
+        return;
+      }
+      
+      if (!currentSet || currentQ >= currentSet.length) return;
+      
+      const correctIndex = currentSet[currentQ].a;
+      const btns = choicesEl.children;
+      let wrongIndices = [];
+      for (let i = 0; i < btns.length; i++) {
+        if (i !== correctIndex && btns[i].style.pointerEvents !== 'none') {
+          wrongIndices.push(i);
+        }
+      }
+      
+      if (wrongIndices.length === 0) {
+        showFeedback('🤔 No wrong answers to remove!', '#ffa94d');
+        return;
+      }
+      
+      updateMenuCounts();
+      
+      for (let i = 0; i < 2 && wrongIndices.length > 0; i++) {
+        const idx = wrongIndices.splice(Math.floor(Math.random() * wrongIndices.length), 1)[0];
+        if (btns[idx]) {
+          btns[idx].style.opacity = '0.3';
+          btns[idx].style.pointerEvents = 'none';
+          btns[idx].style.textDecoration = 'line-through';
+        }
+      }
+      
+      showFeedback('💡 Removed 2 wrong answers!', '#7b3af6');
+      
+      const active = document.querySelectorAll('.choice:not([style*="pointer-events: none"])');
+      if (active.length === 1) {
+        active[0].classList.add('correct');
+        showFeedback('🎯 Only correct answer remains!', '#4ade80');
+      }
+    }
+
+    function useExtraTime() {
+      menuOpen = false;
+      document.getElementById('menuDropdown').classList.remove('open');
+      
+      if (!usePowerup('extratime')) {
+        showFeedback('⏰ No extra time left!', '#ff4757');
+        return;
+      }
+      
+      updateMenuCounts();
+      timeLeft += 15;
+      updateTimerVisual();
+      showFeedback('⏰ +15 seconds added!', '#7b3af6');
+    }
+
+    function skipQuestion() {
+      menuOpen = false;
+      document.getElementById('menuDropdown').classList.remove('open');
+      
+      if (!usePowerup('skip')) {
+        showFeedback('🔄 No skips left!', '#ff4757');
+        return;
+      }
+      
+      if (isAnswered) return;
+      isAnswered = true;
+      clearInterval(timerInterval);
+      
+      updateMenuCounts();
+      showFeedback('🔄 Skipped!', '#ffa94d');
+      currentQ++;
+      if (currentQ < currentSet.length) {
+        setTimeout(loadQuestion, 500);
+      } else {
+        setTimeout(finishQuiz, 500);
+      }
+    }
+
+    function useDoubleCoins() {
+      menuOpen = false;
+      document.getElementById('menuDropdown').classList.remove('open');
+      
+      if (!usePowerup('doublecoins')) {
+        showFeedback('💰 No 2x coins left!', '#ff4757');
+        return;
+      }
+      
+      updateMenuCounts();
+      window.doubleCoinsActive = true;
+      showFeedback('💰 2x Coins ACTIVE for next correct answer!', '#f59e0b');
+    }
+
+    function updateMenuCounts() {
+      document.getElementById('hintCountDisplay').textContent = getPowerupQty('hint');
+      document.getElementById('hintCountDisplay').className = 'count' + (getPowerupQty('hint') <= 0 ? ' empty' : '');
+      document.getElementById('timeCountDisplay').textContent = getPowerupQty('extratime');
+      document.getElementById('timeCountDisplay').className = 'count' + (getPowerupQty('extratime') <= 0 ? ' empty' : '');
+      document.getElementById('skipCountDisplay').textContent = getPowerupQty('skip');
+      document.getElementById('skipCountDisplay').className = 'count' + (getPowerupQty('skip') <= 0 ? ' empty' : '');
+      document.getElementById('doubleCountDisplay').textContent = getPowerupQty('doublecoins');
+      document.getElementById('doubleCountDisplay').className = 'count' + (getPowerupQty('doublecoins') <= 0 ? ' empty' : '');
+      
+      const badge = document.getElementById('menuBadge');
+      const total = getPowerupQty('hint') + getPowerupQty('extratime') + getPowerupQty('skip') + getPowerupQty('doublecoins');
+      badge.classList.toggle('show', total > 0);
+      badge.textContent = total > 9 ? '9+' : total;
+    }
+
+    // ============================================
+    // COIN SYNC
+    // ============================================
+    async function syncCoinsToBackend(amount) {
+      if (!authToken) return false;
+      try {
+        const response = await fetch(API_URL + '/user/update-resources', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken
+          },
+          body: JSON.stringify({ coins: amount })
+        });
+        const data = await response.json();
+        if (data.coins !== undefined) {
+          window.dispatchEvent(new CustomEvent('coinsUpdated', { 
+            detail: { coins: data.coins } 
+          }));
+          return true;
+        }
+      } catch (error) {
+        console.error('❌ Coin sync error:', error);
+        return false;
+      }
+    }
+
+    // ============================================
+    // 🔀 SHUFFLE FUNCTION
+    // ============================================
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    // ============================================
+    // MATH BANK - Reduced for speed
+    // ============================================
+    const BANK = [
+      { q: "What is 7 + 5?", choices: ["11", "12", "13", "14"], a: 1 },
+      { q: "What is 9 × 3?", choices: ["27", "26", "29", "24"], a: 0 },
+      { q: "What is 15 ÷ 3?", choices: ["4", "5", "6", "7"], a: 1 },
+      { q: "What is 8 × 7?", choices: ["54", "56", "58", "60"], a: 1 },
+      { q: "What is 100 − 45?", choices: ["55", "65", "45", "50"], a: 0 },
+      { q: "What is 9²?", choices: ["81", "72", "91", "79"], a: 0 },
+      { q: "What is √144?", choices: ["10", "11", "12", "13"], a: 2 },
+      { q: "What is 35 + 46?", choices: ["81", "82", "80", "79"], a: 0 },
+      { q: "What is 63 ÷ 7?", choices: ["8", "9", "10", "7"], a: 1 },
+      { q: "What is 18 × 2?", choices: ["36", "34", "38", "32"], a: 0 },
+      { q: "What is 50% of 200?", choices: ["50", "100", "150", "200"], a: 1 },
+      { q: "What is 7 × 8?", choices: ["54", "56", "58", "60"], a: 1 },
+      { q: "What is 12²?", choices: ["144", "124", "142", "154"], a: 0 },
+      { q: "What is 81 ÷ 9?", choices: ["7", "8", "9", "10"], a: 2 },
+      { q: "What is 25 + 36?", choices: ["61", "60", "62", "63"], a: 0 }
+    ];
+
+    // ============================================
+    // FUN MESSAGES
+    // ============================================
+    const correctMessages = ["🎉 Amazing!", "⭐ You're a star!", "🧠 Brain power!", "💪 Keep it up!", "✨ Brilliant!", "🎯 Nailed it!", "🏆 You rock!", "🌟 Genius!"];
+    const wrongMessages = ["😅 Oops! Try again!", "🤔 Almost!", "💪 Don't give up!", "🧠 Learning is fun!", "⭐ You're still a star!", "🎯 Keep practicing!"];
+    const correctEmojis = ["🎉", "⭐", "🌟", "💪", "✨", "🏆", "💎", "🔥"];
+    const wrongEmojis = ["😅", "🤔", "💪", "🧠", "⭐", "🎯"];
+
+    // ============================================
+    // GAME ENGINE
+    // ============================================
+    let currentSet = [], currentQ = 0, score = 0;
+    let totalCoins = Number(localStorage.getItem('totalCoins')) || 0;
+    let pointsPerQ = 10;
+    let timeLeft = 15, timerInterval;
+    let isAnswered = false;
+    let streak = 0;
+    const TOTAL_TIME = 15;
+    let doubleCoinsActive = false;
+
+    const questionEl = document.getElementById('question');
+    const choicesEl = document.getElementById('choices');
+    const progressFill = document.getElementById('progressFill');
+    const qcountEl = document.getElementById('qcount');
+    const finalEl = document.getElementById('final');
+    const finalScoreEl = document.getElementById('finalScore');
+    const coinSummaryEl = document.getElementById('coinSummary');
+    const headerCoinsEl = document.getElementById('headerCoins');
+    const streakBadge = document.getElementById('streakBadge');
+    const streakCount = document.getElementById('streakCount');
+    const playAgainBtn = document.getElementById('playAgain');
+    const goHomeBtn = document.getElementById('goHomeBtn');
+    const clickS = document.getElementById('clickS');
+    const coinS = document.getElementById('coinS');
+    const cheerS = document.getElementById('cheerS');
+    const wrongS = document.getElementById('wrongS');
+    const bgMusic = document.getElementById('bgMusic');
+
+    const timerCompact = document.getElementById('timerCompact');
+    const ringProgress = document.getElementById('ringProgress');
+    const ringPulse = document.getElementById('ringPulse');
+    const timerNum = document.getElementById('timerNum');
+    const timerStatusText = document.getElementById('timerStatusText');
+
+    headerCoinsEl.textContent = totalCoins;
+    const circumference = 2 * Math.PI * 42;
+
+    // ====== STREAK ======
+    function updateStreak(isCorrect) {
+      if (isCorrect) {
+        streak++;
+        streakBadge.classList.remove('hidden');
+        streakCount.textContent = streak;
+        if (streak >= 3) {
+          const bonus = Math.min(streak, 5);
+          totalCoins += bonus;
+          localStorage.setItem('totalCoins', totalCoins);
+          headerCoinsEl.textContent = totalCoins;
+          syncCoinsToBackend(bonus);
+          showFloatingEmoji('🔥');
+          const fb = document.getElementById('feedback');
+          fb.textContent = `🔥 ${streak} in a row! +${bonus} bonus!`;
+          fb.style.color = '#ff6b6b';
+          setTimeout(() => { fb.textContent = ''; fb.style.color = '#333'; }, 1500);
+        }
+      } else {
+        streak = 0;
+        streakBadge.classList.add('hidden');
+      }
+    }
+
+    function showFloatingEmoji(emoji) {
+      const el = document.createElement('div');
+      el.className = 'floating-emoji';
+      el.textContent = emoji;
+      el.style.left = (40 + Math.random() * 20) + '%';
+      el.style.top = '40%';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1200);
+    }
+
+    function miniConfetti() {
+      const colors = ['#ff6b6b', '#ffd93d', '#6bcb77', '#4d96ff', '#ff6bff', '#ffa94d'];
+      for (let i = 0; i < 15; i++) {
+        const c = document.createElement('div');
+        c.className = 'confetti';
+        c.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        c.style.left = (10 + Math.random() * 80) + 'vw';
+        c.style.animationDuration = (0.8 + Math.random() * 1) + 's';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 2000);
+      }
+    }
+
+    function newSet() {
+      const shuffledBank = shuffleArray([...BANK]);
+      currentSet = shuffledBank.slice(0, 10).map(q => {
+        const choicesWithIndex = q.choices.map((text, idx) => ({ text, isCorrect: idx === q.a }));
+        const shuffledChoices = shuffleArray([...choicesWithIndex]);
+        const newCorrectIndex = shuffledChoices.findIndex(c => c.isCorrect);
+        return {
+          q: q.q,
+          choices: shuffledChoices.map(c => c.text),
+          a: newCorrectIndex
+        };
+      });
+      currentQ = 0;
+      score = 0;
+    }
+
+    function loadQuestion() {
+      if (currentQ >= currentSet.length) { finishQuiz(); return; }
+      
+      isAnswered = false;
+      
+      questionEl.textContent = currentSet[currentQ].q;
+      questionEl.classList.remove('pop');
+      void questionEl.offsetWidth;
+      questionEl.classList.add('pop');
+      
+      choicesEl.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+      currentSet[currentQ].choices.forEach((c, i) => {
+        let btn = document.createElement('div');
+        btn.className = 'choice';
+        btn.textContent = `${letters[i]}. ${c}`;
+        btn.dataset.index = i;
+        btn.addEventListener('click', (e) => { e.preventDefault(); selectAnswer(btn, i, currentSet[currentQ].a); });
+        btn.addEventListener('touchend', (e) => { e.preventDefault(); selectAnswer(btn, i, currentSet[currentQ].a); });
+        choicesEl.appendChild(btn);
+      });
+      qcountEl.textContent = `${currentQ + 1}/10`;
+      progressFill.style.width = `${(currentQ / 10) * 100}%`;
+      startTimer();
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeLeft = TOTAL_TIME;
+      updateTimerVisual();
+      
+      timerCompact.className = 'timer-compact';
+      timerNum.className = 'timer-num';
+      timerStatusText.className = 'timer-status-text';
+      timerStatusText.textContent = '⏳ Go!';
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        updateTimerVisual();
+        
+        if (timeLeft <= 5 && timeLeft > 3) {
+          timerCompact.className = 'timer-compact warning';
+          timerNum.className = 'timer-num warning';
+          timerStatusText.className = 'timer-status-text warning';
+          timerStatusText.textContent = '⚠️ Hurry!';
+        } else if (timeLeft <= 3 && timeLeft > 0) {
+          timerCompact.className = 'timer-compact danger';
+          timerNum.className = 'timer-num danger';
+          timerStatusText.className = 'timer-status-text danger';
+          timerStatusText.textContent = '🔥 GO!';
+        }
+        
+        if (timeLeft <= 0 && !isAnswered) {
+          clearInterval(timerInterval);
+          timerStatusText.textContent = '⏰ Time!';
+          timerStatusText.className = 'timer-status-text danger';
+          timerCompact.className = 'timer-compact danger';
+          
+          const correct = currentSet[currentQ].a;
+          Array.from(choicesEl.children).forEach((btn, idx) => {
+            if (idx === correct) btn.classList.add('correct');
+            btn.style.pointerEvents = 'none';
+          });
+          setTimeout(() => {
+            currentQ++;
+            loadQuestion();
+          }, 1500);
+        }
+      }, 1000);
+    }
+
+    function updateTimerVisual() {
+      const percentage = (timeLeft / TOTAL_TIME) * 100;
+      const offset = circumference - (percentage / 100) * circumference;
+      
+      ringProgress.style.strokeDashoffset = offset;
+      ringPulse.style.strokeDashoffset = offset;
+      timerNum.textContent = timeLeft;
+      
+      if (percentage > 60) {
+        ringProgress.style.stroke = '#7b3af6';
+      } else if (percentage > 33) {
+        ringProgress.style.stroke = '#ffa94d';
+      } else {
+        ringProgress.style.stroke = '#ff6b6b';
+      }
+    }
+
+    function selectAnswer(btn, i, correct) {
+      if (isAnswered) return;
+      isAnswered = true;
+      
+      if (bgMusic.paused) bgMusic.play();
+      clickS.currentTime = 0; clickS.play();
+      clearInterval(timerInterval);
+
+      if (i === correct) {
+        btn.classList.add('correct');
+        score++;
+        
+        let coinsEarned = pointsPerQ;
+        if (window.doubleCoinsActive) {
+          coinsEarned = pointsPerQ * 2;
+          window.doubleCoinsActive = false;
+          showFeedback('💰 2x Coins! +' + coinsEarned, '#f59e0b');
+        }
+        
+        totalCoins += coinsEarned;
+        localStorage.setItem('totalCoins', totalCoins);
+        headerCoinsEl.textContent = totalCoins;
+        syncCoinsToBackend(coinsEarned);
+        
+        window.dispatchEvent(new CustomEvent('coinsUpdated', { 
+          detail: { coins: totalCoins } 
+        }));
+        
+        coinS.currentTime = 0; coinS.play();
+        coinPop(coinsEarned);
+        updateStreak(true);
+        const msg = correctMessages[Math.floor(Math.random() * correctMessages.length)];
+        const emoji = correctEmojis[Math.floor(Math.random() * correctEmojis.length)];
+        showFloatingEmoji(emoji);
+        timerCompact.className = 'timer-compact correct';
+        timerNum.className = 'timer-num';
+        timerNum.style.color = '#1fb97a';
+        timerStatusText.className = 'timer-status-text correct';
+        timerStatusText.textContent = msg;
+        ringProgress.style.stroke = '#1fb97a';
+        const fb = document.getElementById('feedback');
+        fb.textContent = `✅ ${msg}`;
+        fb.style.color = '#1fb97a';
+        setTimeout(() => { fb.textContent = ''; fb.style.color = '#333'; }, 1000);
+        miniConfetti();
+        Array.from(choicesEl.children).forEach(ch => ch.style.pointerEvents = 'none');
+        setTimeout(() => {
+          currentQ++;
+          loadQuestion();
+        }, 800);
+      } else {
+        btn.classList.add('wrong');
+        updateStreak(false);
+        const msg = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+        const emoji = wrongEmojis[Math.floor(Math.random() * wrongEmojis.length)];
+        showFloatingEmoji(emoji);
+        timerCompact.className = 'timer-compact wrong';
+        timerNum.className = 'timer-num';
+        timerNum.style.color = '#ff4757';
+        timerStatusText.className = 'timer-status-text wrong';
+        timerStatusText.textContent = '😅 Try again!';
+        ringProgress.style.stroke = '#ff4757';
+        const fb = document.getElementById('feedback');
+        fb.textContent = `❌ ${msg}`;
+        fb.style.color = '#ff4757';
+        setTimeout(() => { fb.textContent = ''; fb.style.color = '#333'; }, 1200);
+        if (wrongS) { wrongS.currentTime = 0; wrongS.play(); }
+        Array.from(choicesEl.children).forEach((ch, idx) => {
+          if (idx === correct) ch.classList.add('correct');
+          ch.style.pointerEvents = 'none';
+        });
+        setTimeout(() => {
+          currentQ++;
+          loadQuestion();
+        }, 1500);
+      }
+    }
+
+    function finishQuiz() {
+      finalEl.style.display = 'flex';
+      const messages = ['🧠 Math Wizard!', '🌟 You\'re a Genius!', '💪 Math Champion!', '🏆 You Rock!', '🎉 Amazing Math Skills!'];
+      document.querySelector('.final h2').textContent = `🎉 ${messages[Math.floor(Math.random() * messages.length)]}`;
+      finalScoreEl.textContent = `You got ${score} / 10 correct!`;
+      coinSummaryEl.textContent = `Earned ${score * pointsPerQ} 🪙 coins!`;
+      cheerS.currentTime = 0; cheerS.play();
+      progressFill.style.width = '100%';
+      
+      for (let i = 0; i < 100; i++) {
+        setTimeout(() => {
+          const c = document.createElement('div');
+          c.className = 'confetti';
+          c.style.backgroundColor = `hsl(${Math.random() * 360},100%,50%)`;
+          c.style.left = `${Math.random() * 100}vw`;
+          c.style.animationDuration = `${Math.random() * 2 + 1.5}s`;
+          document.body.appendChild(c);
+          setTimeout(() => c.remove(), 2500);
+        }, i * 30);
+      }
+      
+      if (authToken) {
+        try {
+          const timeSpent = 60;
+          fetch(`${API_URL}/game/save-result`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${authToken}`
+            },
+            body: JSON.stringify({
+              category: 'math',
+              score: score * 10,
+              questionsAnswered: 10,
+              correctAnswers: score,
+              timeSpent: timeSpent
+            })
+          })
+          .then(res => res.json())
+          .then(data => console.log('✅ Game saved:', data))
+          .catch(err => console.error('❌ Save error:', err));
+        } catch (e) {
+          console.error('❌ Save error:', e);
+        }
+      }
+    }
+
+    playAgainBtn.addEventListener('click', () => {
+      finalEl.style.display = 'none';
+      score = 0;
+      streak = 0;
+      doubleCoinsActive = false;
+      streakBadge.classList.add('hidden');
+      newSet();
+      loadQuestion();
+      updateMenuCounts();
+    });
+
+    goHomeBtn.addEventListener('click', () => window.location.href = "index.html");
+
+    function coinPop(amount) {
+      const pop = document.createElement('div');
+      pop.textContent = `+${amount} 🪙`;
+      pop.style.cssText = `
+        position: fixed; top: 20px; right: 20px; 
+        font-weight: 900; font-size: 18px;
+        color: #fbc531; z-index: 100; 
+        opacity: 1; transition: all 1s ease-out;
+        pointer-events: none;
+        background: rgba(0,0,0,0.7);
+        padding: 6px 14px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      `;
+      document.body.appendChild(pop);
+      setTimeout(() => { pop.style.transform = 'translateY(-50px)'; pop.style.opacity = '0'; }, 50);
+      setTimeout(() => pop.remove(), 1000);
+    }
+
+    function showFeedback(message, color) {
+      const fb = document.getElementById('feedback');
+      fb.textContent = message;
+      fb.style.color = color || '#333';
+      setTimeout(() => { fb.textContent = ''; fb.style.color = '#333'; }, 2000);
+    }
+
+    // ============================================
+    // LISTEN FOR COIN UPDATES
+    // ============================================
+    window.addEventListener('coinsUpdated', (e) => {
+      if (e.detail && e.detail.coins !== undefined) {
+        totalCoins = e.detail.coins;
+        headerCoinsEl.textContent = totalCoins;
+        localStorage.setItem('totalCoins', totalCoins);
+      }
+    });
+
+    // ============================================
+    // INIT
+    // ============================================
+    authToken = localStorage.getItem('authToken');
+    newSet();
+    loadQuestion();
+    updateMenuCounts();
+
+    console.log('🧮 Math loaded with:');
+    console.log('✅ Forced landscape mode');
+    console.log('✅ Shuffled answer options (ABCD)');
+    console.log('✅ Shop power-ups integration');
+    console.log(`📦 Inventory:`, getShopInventory());
+  </script>
+</body>
+
+</html>

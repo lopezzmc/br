@@ -1,0 +1,41 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Backend",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/brainrush-backend/server.js",
+            "envFile": "${workspaceFolder}/brainrush-backend/.env",
+            "console": "integratedTerminal",
+            "skipFiles": [
+                "<node_internals>/**"
+            ]
+        },
+        {
+            "name": "Run Backend (nodemon)",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "nodemon",
+            "runtimeArgs": [
+                "${workspaceFolder}/brainrush-backend/server.js"
+            ],
+            "envFile": "${workspaceFolder}/brainrush-backend/.env",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Open index.html in Edge",
+            "request": "launch",
+            "type": "msedge",
+            "url": "file:///C:/Users/Admin/OneDrive/Br/index.html",
+            "webRoot": "${workspaceFolder}"
+        },
+        {
+            "name": "Open index.html with Live Server",
+            "request": "launch",
+            "type": "msedge",
+            "url": "http://127.0.0.1:5500/index.html",
+            "webRoot": "${workspaceFolder}"
+        }
+    ]
+}
