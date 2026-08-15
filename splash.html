@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Brain Rush</title>
 <style>
+    /* GAMING APP STYLE */
+    body { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e) !important; font-family: "Poppins", sans-serif !important; min-height: 100vh !important; overflow-y: auto !important; }
+    .card, .book, .onboarding-container, .modal { background: rgba(255,255,255,0.05) !important; backdrop-filter: blur(20px) !important; border: 1px solid rgba(255,255,255,0.1) !important; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5) !important; }
+    .btn, .choice, .action-btn, .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important; border: none !important; box-shadow: 0 8px 32px rgba(102,126,234,0.4) !important; color: #fff !important; font-weight: 700 !important; }
+    .btn:hover, .choice:hover { transform: translateY(-3px) !important; box-shadow: 0 12px 40px rgba(102,126,234,0.6) !important; }
+    .header { background: rgba(0,0,0,0.3) !important; backdrop-filter: blur(12px) !important; border-bottom: 2px solid rgba(102,126,234,0.3) !important; }
+    .title, h1, h2, .greeting { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important; -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important; background-clip: text !important; }
+    .category-card { background: rgba(255,255,255,0.05) !important; backdrop-filter: blur(10px) !important; border: 1px solid rgba(255,255,255,0.1) !important; border-radius: 16px !important; transition: all 0.3s ease !important; }
+    .category-card:hover { transform: translateY(-10px) scale(1.02) !important; box-shadow: 0 20px 60px rgba(102,126,234,0.3) !important; border-color: #667eea !important; }
+    @media (max-width: 768px) { .choice { font-size: 0.9rem !important; padding: 14px 20px !important; min-height: 52px !important; } .question { font-size: 1.2rem !important; } .category-card { min-height: 100px !important; } .category-card .emoji { font-size: 2.5rem !important; } }
+
   * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
   body, html { height: 100%; width: 100%; overflow: hidden; background: #1a1a2e; }
 
