@@ -1251,5 +1251,1320 @@ let ownedAvatars = JSON.parse(localStorage.getItem('ownedAvatars') || '["default
 let ownedThemes = JSON.parse(localStorage.getItem('ownedThemes') || '[]');
 let activeTheme = localStorage.getItem('activeTheme') || 'default';
 let coins = parseInt(localStorage.getItem('totalCoins') || '100');
-let diamonds = 
-Document content too long to display in full
+let diamonds = parseInt(localStorage.getItem('totalDiamonds') || '5');
+let streakDays = parseInt(localStorage.getItem('streakDays') || '0');
+let inventory = JSON.parse(localStorage.getItem('shop_inventory') || '[]');
+let isOnboarded = localStorage.getItem('isOnboarded') === 'true';
+let xp = parseInt(localStorage.getItem('totalXP') || '0');
+let level = parseInt(localStorage.getItem('userLevel') || '1');
+let gameHistory = JSON.parse(localStorage.getItem('gameHistory') || '[]');
+let authToken = localStorage.getItem('authToken') || '';
+
+// ==========================================
+// HELPER FUNCTIONS
+// ==========================================
+function getAvatarEmoji(id) {
+  const av = ALL_AVATARS.find(a => a.id === id);
+  return av ? av.emoji : '👤';
+}
+function getAvatarName(id) {
+  const av = ALL_AVATARS.find(a => a.id === id);
+  return av ? av.name : 'Default';
+}
+function getThemeEmoji(id) {
+  const theme = SHOP_DATA.themes.find(t => t.id === id);
+  return theme ? theme.emoji : '🎨';
+}
+function getThemeName(id) {
+  const theme = SHOP_DATA.themes.find(t => t.id === id);
+  return theme ? theme.name : 'Theme';
+}
+function getItemQty(itemId) {
+  const entry = inventory.find(i => i.id === itemId || i === itemId);
+  if (!entry) return 0;
+  if (typeof entry === 'string') return 1;
+  return entry.qty || 1;
+}
+function countInventoryItems() {
+  let total = 0;
+  inventory.forEach(item => {
+    if (typeof item === 'string') total += 1;
+    else total += (item.qty || 1);
+  });
+  return total;
+}
+function isThemeOwned(themeId) { return ownedThemes.includes(themeId); }
+function isAvatarOwned(avatarId) { return ownedAvatars.includes(avatarId); }
+
+// ==========================================
+// GAME STATS - FIXED ACCURACY
+// ==========================================
+function updateGameStats() {
+  document.getElementById('gamesPlayed').textContent = gameHistory.length;
+  
+  let totalCorrect = 0, totalQuestions = 0;
+  gameHistory.forEach(g => { 
+    totalCorrect += (g.correct || 0); 
+    totalQuestions += (g.total || 0); 
+  });
+  
+  const accuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+  document.getElementById('accuracyDisplay').textContent = accuracy + '%';
+  
+  // Best category (most played)
+  if (gameHistory.length > 0) {
+    const catCount = {};
+    gameHistory.forEach(g => { 
+      const cat = g.category || 'unknown'; 
+      catCount[cat] = (catCount[cat] || 0) + 1; 
+    });
+    let bestCat = '-', maxCount = 0;
+    for (const [cat, count] of Object.entries(catCount)) {
+      if (count > maxCount) { 
+        maxCount = count; 
+        bestCat = cat.charAt(0).toUpperCase() + cat.slice(1); 
+      }
+    }
+    document.getElementById('bestCategory').textContent = bestCat;
+  }
+  
+  // Update play counts
+  const categories = ['math','history','riddle','science','geography','countries','cars','logos','food','teams','cartoons'];
+  categories.forEach(cat => {
+    const count = gameHistory.filter(g => g.category === cat).length;
+    const el = document.getElementById('playCount-' + cat);
+    if (el) el.textContent = count + ' played';
+  });
+}
+
+// ==========================================
+// THEME FUNCTIONS
+// ==========================================
+function applyTheme(themeId) {
+  activeTheme = themeId;
+  localStorage.setItem('activeTheme', themeId);
+  document.body.className = '';
+  if (themeId !== 'default') document.body.classList.add('theme-' + themeId);
+  updateSettingsThemeSelector();
+  showRewardPopup('🎨 ' + getThemeName(themeId) + ' applied!');
+  syncToServer();
+}
+
+function buyTheme(themeId) {
+  const theme = SHOP_DATA.themes.find(t => t.id === themeId);
+  if (!theme) return;
+  if (isThemeOwned(themeId)) { applyTheme(themeId); return; }
+  const currency = theme.currency === 'coin' ? coins : diamonds;
+  if (currency < theme.cost) { alert('❌ Not enough ' + theme.currency + 's!'); return; }
+  if (theme.currency === 'coin') { coins -= theme.cost; localStorage.setItem('totalCoins', coins); }
+  else { diamonds -= theme.cost; localStorage.setItem('totalDiamonds', diamonds); }
+  ownedThemes.push(themeId);
+  localStorage.setItem('ownedThemes', JSON.stringify(ownedThemes));
+  applyTheme(themeId);
+  updateAllDisplays();
+  renderShopItems(currentShopTab);
+  updateSettingsThemeSelector();
+  showRewardPopup('🎨 Purchased ' + theme.emoji + ' ' + theme.name + '!');
+  spawnConfetti(20);
+  syncToServer();
+}
+
+function updateSettingsThemeSelector() {
+  const container = document.getElementById('settingsThemeGrid');
+  if (!container) return;
+  const allThemes = [
+    { id: 'default', emoji: '☀️', name: 'Default', color: '#f0f2f8' },
+    { id: 'dark', emoji: '🌙', name: 'Dark', color: '#0a0a1a' },
+    { id: 'ocean', emoji: '🌊', name: 'Ocean', color: '#0a1628' },
+    { id: 'forest', emoji: '🌿', name: 'Forest', color: '#0a1a0a' },
+    { id: 'sunset', emoji: '🌅', name: 'Sunset', color: '#1a0a14' },
+    { id: 'cyber', emoji: '💠', name: 'Cyber', color: '#0a0a14' }
+  ];
+  container.innerHTML = allThemes.map(theme => {
+    const owned = theme.id === 'default' || isThemeOwned(theme.id);
+    const active = activeTheme === theme.id;
+    return `<div class="theme-card ${active ? 'active' : ''}" 
+                 onclick="${owned ? "applyTheme('"+theme.id+"')" : "openShop();setTimeout(()=>switchShopTab('themes'),300);"}">
+      <div class="theme-preview-box ${theme.id}" style="background:${theme.color};color:#fff;">${theme.emoji}</div>
+      <div class="theme-name">${theme.name}</div>
+      <div class="theme-status">${active ? '✅ Active' : (owned ? 'Owned' : '🔒')}</div>
+    </div>`;
+  }).join('');
+}
+
+// ==========================================
+// SYNC TO SERVER
+// ==========================================
+async function syncToServer() {
+  if (!authToken || !username) return;
+  try {
+    await fetch(`${API_URL}/user/${username}/update`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`
+      },
+      body: JSON.stringify({
+        coins, diamonds, xp, level,
+        avatar: equippedAvatar,
+        activeTheme: activeTheme,
+        ownedAvatars: ownedAvatars,
+        ownedThemes: ownedThemes,
+        inventory: inventory
+      })
+    });
+  } catch (error) {
+    console.log('⚠️ Sync failed');
+  }
+}
+
+// ==========================================
+// ONBOARDING
+// ==========================================
+function showOnboardingPage() {
+  document.getElementById('onboardingPage').style.display = 'flex';
+  document.getElementById('mainContent').style.display = 'none';
+  document.getElementById('mainHeader').style.display = 'none';
+  document.getElementById('aiChatToggle').style.display = 'none';
+  const grid = document.getElementById('avatarSelectGrid');
+  grid.innerHTML = FREE_AVATARS.map(av => `
+    <div class="avatar-option ${equippedAvatar === av.id ? 'active' : ''}" onclick="selectAvatar('${av.id}')" id="avatar-${av.id}">
+      <span class="avatar-emoji">${av.emoji}</span>
+      <span class="avatar-name">${av.name}</span>
+    </div>
+  `).join('');
+  if (username) document.getElementById('onboardingUsername').value = username;
+}
+
+function selectAvatar(id) {
+  equippedAvatar = id;
+  document.querySelectorAll('.avatar-option').forEach(el => el.classList.remove('active'));
+  const selected = document.getElementById('avatar-' + id);
+  if (selected) selected.classList.add('active');
+}
+
+async function completeOnboarding() {
+  const nameInput = document.getElementById('onboardingUsername');
+  const newUsername = nameInput.value.trim();
+  const status = document.getElementById('onboardingStatus');
+  const btn = document.getElementById('onboardingBtn');
+  
+  if (!newUsername || newUsername.length < 2) {
+    status.textContent = '❌ Please enter a username (2-20 characters)';
+    status.style.color = '#ff4757';
+    return;
+  }
+  
+  btn.disabled = true;
+  status.textContent = '⏳ Creating account...';
+  
+  try {
+    const response = await fetch(`${API_URL}/auth/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        username: newUsername, 
+        email: `${newUsername}@brainrush.game`,
+        password: 'default123' 
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success) {
+      username = newUsername;
+      authToken = data.token;
+      localStorage.setItem('username', username);
+      localStorage.setItem('authToken', authToken);
+      localStorage.setItem('equippedAvatar', equippedAvatar);
+      localStorage.setItem('isOnboarded', 'true');
+      
+      coins = data.user.coins || 100;
+      diamonds = data.user.diamonds || 5;
+      streakDays = data.user.streakDays || 0;
+      xp = data.user.xp || 0;
+      level = data.user.level || 1;
+      
+      localStorage.setItem('totalCoins', coins);
+      localStorage.setItem('totalDiamonds', diamonds);
+      localStorage.setItem('streakDays', streakDays);
+      localStorage.setItem('totalXP', xp);
+      localStorage.setItem('userLevel', level);
+      
+      status.textContent = '✅ Welcome ' + username + '!';
+      status.style.color = '#1fb97a';
+      
+      setTimeout(() => {
+        showGamePage();
+        initGame();
+        updateAllDisplays();
+        showRewardPopup('🎉 Welcome to Brain Rush, ' + username + '!');
+        spawnConfetti(40);
+        btn.disabled = false;
+      }, 500);
+    } else {
+      status.textContent = '❌ ' + (data.error || 'Registration failed');
+      status.style.color = '#ff4757';
+      btn.disabled = false;
+    }
+  } catch (error) {
+    status.textContent = '⚠️ Server not available. Playing offline mode.';
+    status.style.color = '#f59e0b';
+    
+    username = newUsername;
+    localStorage.setItem('username', username);
+    localStorage.setItem('equippedAvatar', equippedAvatar);
+    localStorage.setItem('isOnboarded', 'true');
+    coins = 100;
+    diamonds = 5;
+    streakDays = 1;
+    localStorage.setItem('totalCoins', '100');
+    localStorage.setItem('totalDiamonds', '5');
+    localStorage.setItem('streakDays', '1');
+    
+    setTimeout(() => {
+      showGamePage();
+      initGame();
+      updateAllDisplays();
+      btn.disabled = false;
+    }, 500);
+  }
+}
+
+function showGamePage() {
+  document.getElementById('onboardingPage').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'block';
+  document.getElementById('mainHeader').style.display = 'flex';
+  document.getElementById('aiChatToggle').style.display = 'block';
+}
+
+// ==========================================
+// REFRESH USER DATA
+// ==========================================
+async function refreshUserData() {
+  if (!authToken) return false;
+  try {
+    const response = await fetch(`${API_URL}/auth/verify`, {
+      headers: { 'Authorization': `Bearer ${authToken}` }
+    });
+    const data = await response.json();
+    if (data.valid) {
+      const user = data.user;
+      coins = user.coins || 0;
+      diamonds = user.diamonds || 0;
+      xp = user.xp || 0;
+      level = user.level || 1;
+      streakDays = user.streakDays || 0;
+      equippedAvatar = user.equippedAvatar || 'default';
+      ownedAvatars = user.ownedAvatars || ['default'];
+      ownedThemes = user.ownedThemes || [];
+      
+      localStorage.setItem('totalCoins', coins);
+      localStorage.setItem('totalDiamonds', diamonds);
+      localStorage.setItem('totalXP', xp);
+      localStorage.setItem('userLevel', level);
+      localStorage.setItem('streakDays', streakDays);
+      localStorage.setItem('equippedAvatar', equippedAvatar);
+      localStorage.setItem('ownedAvatars', JSON.stringify(ownedAvatars));
+      localStorage.setItem('ownedThemes', JSON.stringify(ownedThemes));
+      
+      updateAllDisplays();
+      return true;
+    }
+    return false;
+  } catch (error) {
+    return false;
+  }
+}
+
+// ==========================================
+// SHOP FUNCTIONS
+// ==========================================
+let currentShopTab = 'themes';
+
+function openShop() {
+  document.getElementById('shopModal').classList.add('active');
+  updateShopUI();
+  renderShopItems(currentShopTab);
+}
+function closeShop() { document.getElementById('shopModal').classList.remove('active'); }
+
+function switchShopTab(tab) {
+  currentShopTab = tab;
+  document.querySelectorAll('.shop-tab').forEach(el => el.classList.remove('active'));
+  const tabs = document.querySelectorAll('.shop-tab');
+  const map = { themes: 0, avatars: 1, powerups: 2, cosmetics: 3, passes: 4 };
+  if (tabs[map[tab]]) { tabs[map[tab]].classList.add('active'); }
+  renderShopItems(tab);
+}
+
+function updateShopUI() {
+  document.getElementById('shopCoins').textContent = coins;
+  document.getElementById('shopDiamonds').textContent = diamonds;
+  document.getElementById('shopInventory').textContent = countInventoryItems();
+}
+
+function renderShopItems(tab) {
+  const container = document.getElementById('shopItemsContainer');
+  const items = SHOP_DATA[tab] || [];
+  if (items.length === 0) { 
+    container.innerHTML = '<p style="text-align:center;color:var(--text-muted);padding:20px;">No items in this category.</p>'; 
+    return; 
+  }
+  
+  let html = '';
+  const titles = { themes: '🎨 Themes', avatars: '🖼️ Avatars', powerups: '⚡ Power-ups', cosmetics: '✨ Cosmetics', passes: '🎫 Passes' };
+  html += `<div class="shop-category-title">${titles[tab] || ''}</div>`;
+  
+  items.forEach(item => {
+    const isOwned = tab === 'themes' ? isThemeOwned(item.id) : 
+                    tab === 'avatars' ? isAvatarOwned(item.id) : 
+                    getItemQty(item.id) > 0;
+    const isEquipped = tab === 'themes' ? activeTheme === item.id : 
+                       tab === 'avatars' ? equippedAvatar === item.id : false;
+    const hasCurrency = item.currency === 'coin' ? coins >= item.cost : diamonds >= item.cost;
+    
+    const displayEmoji = item.emoji || '🎁';
+    const displayName = item.name || 'Item';
+    
+    let actionHtml = '';
+    
+    if (tab === 'themes') {
+      const themeColors = { dark: '#0a0a1a', ocean: '#0a1628', forest: '#0a1a0a', sunset: '#1a0a14', cyber: '#0a0a14' };
+      const previewStyle = `background:${themeColors[item.id] || '#1a1a2e'}; color:#fff; display:flex; align-items:center; justify-content:center; font-size:1.5rem; border-radius:12px; width:50px; height:50px;`;
+      
+      if (isOwned) {
+        actionHtml = `<button class="btn-equip" onclick="applyTheme('${item.id}')" ${isEquipped ? 'disabled' : ''}>${isEquipped ? '✅ Active' : 'Apply'}</button>`;
+      } else {
+        actionHtml = `<span class="price">${item.currency === 'coin' ? '💰' : '💎'} ${item.cost}</span>
+                      <button class="btn-buy ${item.currency}" onclick="buyTheme('${item.id}')" ${!hasCurrency ? 'disabled' : ''}>
+                        ${!hasCurrency ? '❌' : 'Buy'}
+                      </button>`;
+      }
+      
+      html += `<div class="shop-item-card">
+        <div class="theme-preview" style="${previewStyle}">${displayEmoji}</div>
+        <div class="item-info">
+          <h4>${displayEmoji} ${displayName}</h4>
+          <p>${item.desc}</p>
+          ${isEquipped ? '<span class="badge equipped">⭐ Active</span>' : ''}
+        </div>
+        <div class="item-action">${actionHtml}</div>
+      </div>`;
+    } else {
+      if (isOwned) {
+        actionHtml = `<span class="owned-tag">✅ Owned</span>`;
+      } else {
+        actionHtml = `<span class="price">${item.currency === 'coin' ? '💰' : '💎'} ${item.cost}</span>
+                      <button class="btn-buy ${item.currency}" onclick="buyItem('${item.id}')" ${!hasCurrency ? 'disabled' : ''}>
+                        ${!hasCurrency ? '❌' : 'Buy'}
+                      </button>`;
+      }
+      
+      html += `<div class="shop-item-card">
+        <div class="item-icon" style="font-size:2rem;">${displayEmoji}</div>
+        <div class="item-info">
+          <h4>${displayEmoji} ${displayName}</h4>
+          <p>${item.desc}</p>
+          ${isOwned ? '<span class="badge owned">✅ Owned</span>' : ''}
+        </div>
+        <div class="item-action">${actionHtml}</div>
+      </div>`;
+    }
+  });
+  container.innerHTML = html;
+}
+
+function buyItem(itemId) {
+  let item = null;
+  for (let cat in SHOP_DATA) {
+    const found = SHOP_DATA[cat].find(i => i.id === itemId);
+    if (found) { item = found; break; }
+  }
+  if (!item) { alert('Item not found!'); return; }
+  const isStackable = item.stackable === true;
+  const alreadyOwned = isStackable ? false : getItemQty(itemId) > 0;
+  if (alreadyOwned) { alert('You already own this!'); return; }
+  const currency = item.currency === 'coin' ? coins : diamonds;
+  if (currency < item.cost) { alert(`❌ Not enough ${item.currency}s!`); return; }
+  if (item.currency === 'coin') { coins -= item.cost; localStorage.setItem('totalCoins', coins); }
+  else { diamonds -= item.cost; localStorage.setItem('totalDiamonds', diamonds); }
+  if (isStackable) {
+    const existing = inventory.find(i => (i.id || i) === itemId);
+    if (existing) {
+      if (typeof existing === 'string') { const idx = inventory.indexOf(existing); inventory[idx] = { id: itemId, qty: 2 }; }
+      else { existing.qty = (existing.qty || 1) + 1; }
+    } else { inventory.push({ id: itemId, qty: 1 }); }
+  } else { inventory.push(itemId); }
+  localStorage.setItem('shop_inventory', JSON.stringify(inventory));
+  updateAllDisplays(); updateShopUI(); renderShopItems(currentShopTab);
+  showRewardPopup('✅ Purchased ' + (item.emoji || '') + ' ' + item.name + '!');
+  spawnConfetti(20);
+  syncToServer();
+}
+
+function buyAvatar(avatarId) {
+  const avatar = LOCKED_AVATARS.find(a => a.id === avatarId);
+  if (!avatar) return;
+  if (isAvatarOwned(avatarId)) { equipAvatar(avatarId); return; }
+  const currency = avatar.currency === 'coin' ? coins : diamonds;
+  if (currency < avatar.cost) { alert(`❌ Not enough ${avatar.currency}s!`); return; }
+  if (avatar.currency === 'coin') { coins -= avatar.cost; localStorage.setItem('totalCoins', coins); }
+  else { diamonds -= avatar.cost; localStorage.setItem('totalDiamonds', diamonds); }
+  ownedAvatars.push(avatarId);
+  localStorage.setItem('ownedAvatars', JSON.stringify(ownedAvatars));
+  equipAvatar(avatarId);
+  updateAllDisplays(); updateShopUI(); renderShopItems(currentShopTab);
+  showRewardPopup('🖼️ Avatar: ' + avatar.emoji + ' ' + avatar.name);
+  spawnConfetti(20);
+  syncToServer();
+}
+
+function equipAvatar(avatarId) {
+  if (!isAvatarOwned(avatarId)) { alert('❌ You don\'t own this avatar!'); return; }
+  equippedAvatar = avatarId;
+  localStorage.setItem('equippedAvatar', avatarId);
+  updateAllDisplays(); renderShopItems(currentShopTab);
+  showRewardPopup('🖼️ Avatar equipped: ' + getAvatarEmoji(avatarId) + ' ' + getAvatarName(avatarId));
+  syncToServer();
+}
+
+// ==========================================
+// GAME FUNCTIONS
+// ==========================================
+function initGame() {
+  updateAllDisplays();
+  updateStreak();
+  updateGameStats();
+  const savedTheme = localStorage.getItem('activeTheme') || 'default';
+  if (savedTheme !== 'default' && isThemeOwned(savedTheme)) { applyTheme(savedTheme); }
+  else if (savedTheme === 'default') { document.body.className = ''; }
+  updateSettingsThemeSelector();
+  updateRoadmapProgress();
+}
+
+function updateAllDisplays() {
+  document.getElementById('coinCount').textContent = coins;
+  document.getElementById('diamondCount').textContent = diamonds;
+  document.getElementById('greetingText').textContent = '👋 Welcome back, ' + username + '!';
+  document.getElementById('xpCount').textContent = xp;
+  document.getElementById('levelDisplay').textContent = 'Lv.' + level;
+  const avatar = getAvatarEmoji(equippedAvatar);
+  document.getElementById('headerProfileAvatar').textContent = avatar;
+  document.getElementById('shopCoins').textContent = coins;
+  document.getElementById('shopDiamonds').textContent = diamonds;
+  document.getElementById('shopInventory').textContent = countInventoryItems();
+  document.getElementById('streakDisplay').textContent = streakDays;
+  document.getElementById('streakCountText').textContent = streakDays + ' days';
+  document.getElementById('streakBadge').style.display = streakDays > 0 ? 'flex' : 'none';
+  
+  // Update settings if open
+  if (document.getElementById('settingsModal').classList.contains('active')) {
+    renderSettings();
+  }
+  
+  // Update profile if open
+  if (document.getElementById('profileModal').classList.contains('active')) {
+    renderProfile();
+  }
+}
+
+function updateStreak() {
+  const today = new Date().toDateString();
+  const lastLogin = localStorage.getItem('lastLoginDate') || '';
+  if (lastLogin !== today) {
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    if (lastLogin === yesterday) streakDays++;
+    else streakDays = 1;
+    localStorage.setItem('streakDays', streakDays);
+    localStorage.setItem('lastLoginDate', today);
+  }
+  document.getElementById('streakFill').style.width = Math.min((streakDays % 7) / 7 * 100, 100) + '%';
+  const nextMilestone = Math.ceil(streakDays / 7) * 7;
+  const daysLeft = nextMilestone - streakDays;
+  document.getElementById('streakNextMilestone').textContent = daysLeft > 0 ? `🔥 ${daysLeft} day${daysLeft>1?'s':''} until ${nextMilestone}-day bonus!` : '🎉 Milestone reached!';
+}
+
+function updateRoadmapProgress() {
+  const items = document.querySelectorAll('.roadmap-item');
+  let completed = 0;
+  items.forEach(item => { if (item.dataset.completed === 'true') completed++; });
+  document.getElementById('roadmapCompleted').textContent = completed;
+  const dots = document.querySelectorAll('#roadmapProgress div');
+  const total = dots.length;
+  const progress = Math.min((completed / total) * 100, 100);
+  dots.forEach((dot, index) => {
+    const position = (index + 1) / total * 100;
+    dot.style.background = position <= progress ? 'linear-gradient(90deg,#7b3af6,#00e5ff)' : 'var(--text-muted)';
+  });
+}
+
+// ==========================================
+// LEADERBOARD - CONNECTED TO DATABASE
+// ==========================================
+async function renderLeaderboard() {
+  try {
+    const response = await fetch(`${API_URL}/game/leaderboard`, {
+      headers: {
+        'Authorization': authToken ? `Bearer ${authToken}` : ''
+      }
+    });
+    
+    if (response.ok) {
+      const data = await response.json();
+      renderLeaderboardData(data);
+      return;
+    }
+  } catch (error) {
+    console.log('⚠️ Database leaderboard failed, using local');
+  }
+  
+  const players = JSON.parse(localStorage.getItem('rushersLeague') || '[]');
+  players.sort((a, b) => (b.coins || 0) - (a.coins || 0));
+  renderLeaderboardData(players);
+}
+
+function renderLeaderboardData(players) {
+  // Ensure current user is in leaderboard with latest coins
+  if (username && username !== 'Guest') {
+    const exists = players.some(p => (p.username || p.name) === username);
+    if (!exists) {
+      players.push({
+        username: username,
+        name: username,
+        coins: coins,
+        diamonds: diamonds,
+        level: level,
+        avatar: equippedAvatar,
+        gamesPlayed: gameHistory.length
+      });
+    } else {
+      // Update existing user's coins
+      const userIndex = players.findIndex(p => (p.username || p.name) === username);
+      if (userIndex !== -1) {
+        players[userIndex].coins = coins;
+        players[userIndex].diamonds = diamonds;
+        players[userIndex].level = level;
+        players[userIndex].avatar = equippedAvatar;
+        players[userIndex].gamesPlayed = gameHistory.length;
+      }
+    }
+    localStorage.setItem('rushersLeague', JSON.stringify(players));
+  }
+  
+  players.sort((a, b) => (b.coins || 0) - (a.coins || 0));
+  
+  const podium = document.getElementById('lbPodium');
+  const top3 = players.slice(0, 3);
+  
+  if (top3.length === 0) {
+    podium.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-muted);">No players yet. Be the first!</div>';
+  } else {
+    const medals = ['🥇', '🥈', '🥉'];
+    const classes = ['first', 'second', 'third'];
+    podium.innerHTML = top3.map((p, i) => `
+      <div class="lb-podium-item ${classes[i]}">
+        <div class="rank">${medals[i]}</div>
+        <div class="avatar" style="font-size:${i===0?'2.2rem':i===1?'2rem':'1.8rem'};">${getAvatarEmoji(p.avatar || 'default')}</div>
+        <div class="name">${p.username || p.name}</div>
+        <div class="coins">${p.coins || 0}💰</div>
+      </div>
+    `).join('');
+  }
+  
+  const list = document.getElementById('lbList');
+  list.innerHTML = '';
+  
+  players.forEach((p, i) => {
+    const div = document.createElement('div');
+    div.className = 'lb-list-item';
+    const isYou = (p.username || p.name) === username;
+    if (isYou) div.style.background = 'rgba(123,58,246,0.12)';
+    
+    div.innerHTML = `
+      <span class="rank-num">${i + 1}</span>
+      <div class="player-info">
+        <div class="player-avatar" style="font-size:1.2rem;">${getAvatarEmoji(p.avatar || 'default')}</div>
+        <span class="player-name">${p.username || p.name}${isYou ? ' ⭐ YOU' : ''}</span>
+      </div>
+      <span class="player-coins">${p.coins || 0}💰</span>
+    `;
+    list.appendChild(div);
+  });
+  
+  document.getElementById('lbTotalPlayers').textContent = players.length + ' players';
+}
+
+async function syncLeaderboard() {
+  let players = JSON.parse(localStorage.getItem('rushersLeague') || '[]');
+  
+  // Update current user
+  const idx = players.findIndex(p => (p.username || p.name) === username);
+  
+  if (idx !== -1) {
+    players[idx].coins = coins;
+    players[idx].diamonds = diamonds;
+    players[idx].level = level;
+    players[idx].avatar = equippedAvatar;
+    players[idx].gamesPlayed = gameHistory.length;
+  } else if (username && username !== 'Guest') {
+    players.push({
+      username: username,
+      name: username,
+      coins: coins,
+      diamonds: diamonds,
+      level: level,
+      avatar: equippedAvatar,
+      gamesPlayed: gameHistory.length
+    });
+  }
+  
+  players.sort((a, b) => (b.coins || 0) - (a.coins || 0));
+  localStorage.setItem('rushersLeague', JSON.stringify(players));
+  localStorage.setItem('totalCoins', coins);
+  localStorage.setItem('totalDiamonds', diamonds);
+  
+  // Sync to database
+  if (authToken && username) {
+    try {
+      await fetch(`${API_URL}/user/${username}/update`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${authToken}`
+        },
+        body: JSON.stringify({
+          coins, diamonds, xp, level,
+          avatar: equippedAvatar,
+          activeTheme: activeTheme,
+          ownedAvatars: ownedAvatars,
+          ownedThemes: ownedThemes,
+          inventory: inventory
+        })
+      });
+      console.log('✅ Leaderboard synced to database');
+    } catch (error) {
+      console.log('⚠️ Database sync failed');
+    }
+  }
+  
+  if (document.getElementById('leaderboardModal').classList.contains('active')) {
+    await renderLeaderboard();
+  }
+}
+
+async function openLeaderboard() {
+  document.getElementById('leaderboardModal').classList.add('active');
+  await renderLeaderboard();
+}
+function closeLeaderboard() { document.getElementById('leaderboardModal').classList.remove('active'); }
+
+// ==========================================
+// 🎯 EPIC PROFILE RENDER
+// ==========================================
+function renderProfile() {
+  const container = document.getElementById('profileContent');
+  const avatar = getAvatarEmoji(equippedAvatar);
+  const history = gameHistory || [];
+  
+  // Calculate stats
+  let totalCorrect = 0, totalQuestions = 0, totalCoinsEarned = 0;
+  history.forEach(g => { 
+    totalCorrect += (g.correct || 0); 
+    totalQuestions += (g.total || 0);
+    totalCoinsEarned += (g.coinsEarned || 0);
+  });
+  const accuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+  const totalGames = history.length;
+  
+  // Level progress
+  const nextLevelXP = Math.floor(100 * Math.pow(level + 1, 1.5));
+  const currentLevelXP = Math.floor(100 * Math.pow(level, 1.5));
+  const xpProgress = Math.min(((xp - currentLevelXP) / (nextLevelXP - currentLevelXP)) * 100, 100);
+  
+  // 12 Achievements
+  const achievements = [
+    { id: 'first_game', icon: '🎮', name: 'First Game', unlocked: totalGames >= 1, progress: Math.min((totalGames / 1) * 100, 100), color: '#4ade80' },
+    { id: '10_games', icon: '🏆', name: '10 Games', unlocked: totalGames >= 10, progress: Math.min((totalGames / 10) * 100, 100), color: '#fbbf24' },
+    { id: '50_games', icon: '👑', name: '50 Games', unlocked: totalGames >= 50, progress: Math.min((totalGames / 50) * 100, 100), color: '#f59e0b' },
+    { id: '100_games', icon: '💎', name: '100 Games', unlocked: totalGames >= 100, progress: Math.min((totalGames / 100) * 100, 100), color: '#7b3af6' },
+    { id: 'streak_7', icon: '🔥', name: '7 Day Streak', unlocked: streakDays >= 7, progress: Math.min((streakDays / 7) * 100, 100), color: '#ff6b6b' },
+    { id: 'streak_30', icon: '⚡', name: '30 Day Streak', unlocked: streakDays >= 30, progress: Math.min((streakDays / 30) * 100, 100), color: '#ffa94d' },
+    { id: '100_coins', icon: '💰', name: '100 Coins', unlocked: coins >= 100, progress: Math.min((coins / 100) * 100, 100), color: '#f59e0b' },
+    { id: '1000_coins', icon: '🪙', name: '1000 Coins', unlocked: coins >= 1000, progress: Math.min((coins / 1000) * 100, 100), color: '#ffd700' },
+    { id: '5000_coins', icon: '💎', name: '5000 Coins', unlocked: coins >= 5000, progress: Math.min((coins / 5000) * 100, 100), color: '#7b3af6' },
+    { id: 'perfect_game', icon: '⭐', name: 'Perfect Game', unlocked: history.some(g => g.correct === g.total && g.total >= 5), progress: history.some(g => g.correct === g.total && g.total >= 5) ? 100 : 0, color: '#00e5ff' },
+    { id: 'category_master', icon: '🧠', name: 'Category Master', unlocked: new Set(history.map(g => g.category)).size >= 5, progress: Math.min((new Set(history.map(g => g.category)).size / 5) * 100, 100), color: '#a78bfa' },
+    { id: 'quiz_king', icon: '👑', name: 'Quiz King', unlocked: totalGames >= 25 && accuracy >= 80, progress: Math.min(((totalGames / 25) * 100 + (accuracy / 80) * 100) / 2, 100), color: '#ff6bff' }
+  ];
+  
+  const unlockedCount = achievements.filter(a => a.unlocked).length;
+  const recentGames = history.slice(-8).reverse();
+  
+  container.innerHTML = `
+    <div style="padding:8px 0;animation:fadeSlideUp 0.4s ease;">
+      
+      <!-- ===== AVATAR SECTION ===== -->
+      <div style="text-align:center;">
+        <div class="profile-avatar-container">
+          <div class="profile-avatar-ring"></div>
+          <div class="profile-avatar">
+            ${avatar}
+            <div class="level-badge-ring">${level}</div>
+          </div>
+        </div>
+        
+        <h3 style="font-size:1.8rem;font-weight:900;color:var(--text-primary);margin-bottom:2px;">${username}</h3>
+        <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:2px;">🏅 Brain Rush Player</p>
+        <p style="color:var(--text-muted);font-size:0.75rem;">🎨 Theme: ${getThemeName(activeTheme)}</p>
+        
+        <!-- XP Progress Bar -->
+        <div style="margin:10px auto;max-width:280px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:var(--text-muted);">
+            <span>⚡ Level ${level}</span>
+            <span>${xp} / ${nextLevelXP} XP</span>
+          </div>
+          <div style="width:100%;height:4px;background:var(--border-color);border-radius:10px;overflow:hidden;margin-top:2px;">
+            <div style="height:100%;width:${xpProgress}%;background:var(--gradient-main);border-radius:10px;transition:width 0.8s ease;"></div>
+          </div>
+        </div>
+      </div>
+      
+      <!-- ===== STATS GRID ===== -->
+      <div class="profile-stats-grid">
+        <div class="profile-stat-card gold"><span class="stat-icon">💰</span><div class="stat-value">${coins}</div><div class="stat-label">Coins</div></div>
+        <div class="profile-stat-card purple"><span class="stat-icon">💎</span><div class="stat-value">${diamonds}</div><div class="stat-label">Diamonds</div></div>
+        <div class="profile-stat-card red"><span class="stat-icon">🔥</span><div class="stat-value">${streakDays}</div><div class="stat-label">Streak</div></div>
+        <div class="profile-stat-card blue"><span class="stat-icon">📊</span><div class="stat-value">${accuracy}%</div><div class="stat-label">Accuracy</div></div>
+        <div class="profile-stat-card green"><span class="stat-icon">🎮</span><div class="stat-value">${totalGames}</div><div class="stat-label">Games</div></div>
+      </div>
+      
+      <!-- ===== ACHIEVEMENTS ===== -->
+      <div style="margin-top:16px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+          <h4 style="font-size:0.85rem;font-weight:700;color:var(--text-primary);">🏆 Achievements (${unlockedCount}/${achievements.length})</h4>
+          <span style="font-size:0.65rem;color:var(--text-muted);">${Math.round((unlockedCount/achievements.length)*100)}%</span>
+        </div>
+        <div class="achievement-grid">
+          ${achievements.map(a => `
+            <div class="achievement-badge ${a.unlocked ? 'unlocked' : 'locked'}">
+              <span class="ach-icon">${a.icon}</span>
+              <div class="ach-name">${a.name}</div>
+              <div class="ach-progress">
+                <div class="ach-fill" style="width:${a.progress}%;background:${a.color};"></div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      
+      <!-- ===== RECENT GAMES ===== -->
+      <div style="margin-top:16px;text-align:left;">
+        <h4 style="font-size:0.85rem;font-weight:700;color:var(--text-primary);margin-bottom:8px;">📜 Recent Games</h4>
+        ${recentGames.length === 0 ? 
+          '<p style="color:var(--text-muted);font-size:0.8rem;text-align:center;">No games played yet. Start playing! 🎮</p>' :
+          `<div class="history-timeline">
+            ${recentGames.map(g => `
+              <div class="history-item ${g.correct >= g.total/2 ? 'correct' : 'wrong'}">
+                <span class="h-category">${(g.category||'unknown').charAt(0).toUpperCase()+g.category.slice(1)}</span>
+                <span class="h-result ${g.correct >= g.total/2 ? 'correct' : 'wrong'}">${g.correct}/${g.total}</span>
+                <span class="h-coins">+${g.coinsEarned||0}💰</span>
+              </div>
+            `).join('')}
+          </div>`
+        }
+      </div>
+      
+      <!-- ===== OWNED ITEMS ===== -->
+      <div style="margin-top:12px;text-align:left;">
+        <h4 style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">🖼️ Owned Avatars (${ownedAvatars.length})</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          ${ownedAvatars.map(id => `<span style="background:var(--input-bg);padding:2px 10px;border-radius:20px;font-size:0.65rem;transition:background 0.6s ease;">${getAvatarEmoji(id)} ${getAvatarName(id)}${id === equippedAvatar ? ' ✅' : ''}</span>`).join('')}
+        </div>
+      </div>
+      
+      <div style="margin-top:8px;text-align:left;">
+        <h4 style="font-size:0.75rem;font-weight:700;color:var(--text-muted);margin-bottom:4px;text-transform:uppercase;letter-spacing:0.5px;">🎨 Owned Themes (${ownedThemes.length})</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:4px;">
+          ${ownedThemes.length === 0 ? '<span style="font-size:0.65rem;color:var(--text-muted);">No themes purchased yet.</span>' : 
+            ownedThemes.map(id => `<span style="background:var(--input-bg);padding:2px 10px;border-radius:20px;font-size:0.65rem;transition:background 0.6s ease;">${getThemeEmoji(id)} ${getThemeName(id)}${id === activeTheme ? ' ✅' : ''}</span>`).join('')}
+        </div>
+      </div>
+      
+      <!-- ===== ACTION BUTTONS ===== -->
+      <div style="display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;justify-content:center;">
+        <button class="btn-secondary" onclick="closeProfile();openShop();" style="font-size:0.75rem;padding:8px 16px;">🖼️ Change Avatar</button>
+        <button class="btn-secondary" onclick="closeProfile();openSettings();" style="font-size:0.75rem;padding:8px 16px;">🎨 Change Theme</button>
+        <button class="btn-secondary" onclick="closeProfile();" style="font-size:0.75rem;padding:8px 16px;">✕ Close</button>
+      </div>
+    </div>
+  `;
+}
+
+// ==========================================
+// SETTINGS - FIXED WITH AVATAR
+// ==========================================
+function openSettings() {
+  document.getElementById('settingsModal').classList.add('active');
+  renderSettings();
+}
+function closeSettings() { document.getElementById('settingsModal').classList.remove('active'); }
+
+function renderSettings() {
+  // Update user info in settings
+  const avatar = getAvatarEmoji(equippedAvatar);
+  document.getElementById('settingsAvatarDisplay').textContent = avatar;
+  document.getElementById('settingsUsernameDisplay').textContent = username || 'User';
+  document.getElementById('settingsCoinsDisplay').textContent = coins;
+  document.getElementById('settingsDiamondsDisplay').textContent = diamonds;
+  document.getElementById('settingsStreakDisplay').textContent = streakDays;
+  
+  document.getElementById('settingsCoins').textContent = coins;
+  document.getElementById('settingsDiamonds').textContent = diamonds;
+  document.getElementById('settingsStreak').textContent = streakDays;
+  
+  // Render theme selector
+  const container = document.getElementById('settingsThemeGrid');
+  if (!container) return;
+  
+  const allThemes = [
+    { id: 'default', emoji: '☀️', name: 'Default', color: '#f0f2f8' },
+    { id: 'dark', emoji: '🌙', name: 'Dark', color: '#0a0a1a' },
+    { id: 'ocean', emoji: '🌊', name: 'Ocean', color: '#0a1628' },
+    { id: 'forest', emoji: '🌿', name: 'Forest', color: '#0a1a0a' },
+    { id: 'sunset', emoji: '🌅', name: 'Sunset', color: '#1a0a14' },
+    { id: 'cyber', emoji: '💠', name: 'Cyber', color: '#0a0a14' }
+  ];
+  
+  container.innerHTML = allThemes.map(theme => {
+    const owned = theme.id === 'default' || isThemeOwned(theme.id);
+    const active = activeTheme === theme.id;
+    return `
+      <div class="theme-card ${active ? 'active' : ''}" 
+           onclick="${owned ? "applyTheme('"+theme.id+"')" : "openShop();setTimeout(()=>switchShopTab('themes'),300);"}">
+        <div class="theme-preview-box ${theme.id}" style="background:${theme.color};color:#fff;">${theme.emoji}</div>
+        <div class="theme-name">${theme.name}</div>
+        <div class="theme-status">${active ? '✅ Active' : (owned ? 'Owned' : '🔒')}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+// ==========================================
+// SETTINGS TOGGLES
+// ==========================================
+function toggleSound() {
+  const checked = document.getElementById('soundToggle').checked;
+  localStorage.setItem('soundEnabled', checked ? '1' : '0');
+  showRewardPopup(checked ? '🔊 Sound On' : '🔇 Sound Off');
+}
+
+function toggleMusic() {
+  const checked = document.getElementById('musicToggleSettings').checked;
+  localStorage.setItem('musicEnabled', checked ? '1' : '0');
+  const music = document.getElementById('bgMusic');
+  if (checked) {
+    music.play().catch(()=>{});
+    document.getElementById('musicToggle').textContent = '🔊';
+  } else {
+    music.pause();
+    document.getElementById('musicToggle').textContent = '🔇';
+  }
+  showRewardPopup(checked ? '🎵 Music On' : '🔇 Music Off');
+}
+
+// ==========================================
+// EXPORT / IMPORT DATA
+// ==========================================
+function exportData() {
+  const data = {
+    username, coins, diamonds, xp, level, streakDays,
+    equippedAvatar, ownedAvatars, ownedThemes, activeTheme, inventory, gameHistory,
+    timestamp: new Date().toISOString()
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `brainrush_backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showRewardPopup('📤 Data exported!');
+}
+
+function importData() {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  input.onchange = function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      try {
+        const data = JSON.parse(ev.target.result);
+        if (!confirm('⚠️ Import will overwrite current data. Continue?')) return;
+        Object.keys(data).forEach(key => {
+          if (key !== 'timestamp') {
+            localStorage.setItem(key, typeof data[key] === 'object' ? JSON.stringify(data[key]) : data[key]);
+          }
+        });
+        showRewardPopup('📥 Data imported! Refreshing...');
+        setTimeout(() => location.reload(), 1000);
+      } catch (err) {
+        alert('❌ Invalid file format!');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
+}
+
+// ==========================================
+// PROFILE & SETTINGS OPEN/CLOSE
+// ==========================================
+function openProfile() {
+  document.getElementById('profileModal').classList.add('active');
+  renderProfile();
+}
+function closeProfile() {
+  document.getElementById('profileModal').classList.remove('active');
+}
+
+// ==========================================
+// MYSTERY BOX
+// ==========================================
+function claimMysteryBox() {
+  const last = localStorage.getItem('lastBox');
+  if (last && Date.now() - new Date(last).getTime() < 24 * 60 * 60 * 1000) { 
+    alert('🎁 Mystery Box available every 24 hours!'); 
+    return; 
+  }
+  const amount = Math.floor(Math.random() * 50) + 10;
+  const isCoin = Math.random() > 0.5;
+  if (isCoin) { coins += amount; localStorage.setItem('totalCoins', coins); showRewardPopup('+' + amount + ' 🪙 Coins!'); }
+  else { diamonds += amount; localStorage.setItem('totalDiamonds', diamonds); showRewardPopup('+' + amount + ' 💎 Diamonds!'); }
+  localStorage.setItem('lastBox', new Date().toISOString());
+  updateAllDisplays(); 
+  syncToServer(); 
+  syncLeaderboard();
+  spawnConfetti(30);
+  try { document.getElementById('rewardSfx').play(); } catch(e) {}
+}
+
+// ==========================================
+// WHEEL
+// ==========================================
+function openWheel() {
+  document.getElementById('wheelModal').classList.add('active');
+  setTimeout(drawWheel, 100);
+}
+function closeWheel() { document.getElementById('wheelModal').classList.remove('active'); }
+
+function drawWheel() {
+  const canvas = document.getElementById('wheelCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const segments = [
+    { label: '💰 10', type: 'coin', amount: 10, color: '#ffcd6d' },
+    { label: '💰 20', type: 'coin', amount: 20, color: '#ff71a7' },
+    { label: '💎 10', type: 'diamond', amount: 10, color: '#50fa7b' },
+    { label: '💎 20', type: 'diamond', amount: 20, color: '#8be9fd' },
+    { label: '💰 50', type: 'coin', amount: 50, color: '#ffb347' },
+    { label: '💎 50', type: 'diamond', amount: 50, color: '#9b59b6' },
+    { label: '💰 100', type: 'coin', amount: 100, color: '#f5e05a' },
+    { label: '💎 100', type: 'diamond', amount: 100, color: '#3498db' }
+  ];
+  const radius = canvas.width / 2, center = radius, segmentAngle = (2 * Math.PI) / segments.length;
+  let rotation = 0, spinning = false;
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    segments.forEach((seg, i) => {
+      const start = i * segmentAngle + rotation, end = (i + 1) * segmentAngle + rotation;
+      ctx.beginPath(); ctx.moveTo(center, center); ctx.arc(center, center, radius - 2, start, end); ctx.closePath();
+      ctx.fillStyle = seg.color; ctx.fill();
+      ctx.save(); ctx.translate(center, center); ctx.rotate((i + 0.5) * segmentAngle + rotation);
+      ctx.textAlign = 'center'; ctx.fillStyle = '#222'; ctx.font = 'bold 14px Poppins, sans-serif';
+      ctx.fillText(seg.label, radius * 0.7, 6); ctx.restore();
+    });
+    ctx.fillStyle = '#ff4757'; ctx.beginPath();
+    ctx.moveTo(center, center - radius + 10); ctx.lineTo(center + 12, center - radius + 28); ctx.lineTo(center - 12, center - radius + 28); ctx.closePath(); ctx.fill();
+  }
+  draw();
+  canvas.onclick = function() {
+    if (spinning) return;
+    try { document.getElementById('clickSfx').play(); } catch(e) {}
+    const last = localStorage.getItem('lastWheel');
+    if (last && Date.now() - new Date(last).getTime() < 24 * 60 * 60 * 1000) { 
+      alert('🎡 Daily Wheel available every 24 hours!'); 
+      return; 
+    }
+    spinning = true;
+    let velocity = 0.6 + Math.random() * 0.3, deceleration = 0.985;
+    function spin() {
+      if (velocity < 0.005) {
+        spinning = false;
+        const finalRotation = ((rotation % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+        let index = Math.floor(((2 * Math.PI - finalRotation) % (2 * Math.PI)) / segmentAngle) % segments.length;
+        if (index < 0) index += segments.length;
+        const reward = segments[index];
+        if (reward.type === 'coin') { 
+          coins += reward.amount; 
+          localStorage.setItem('totalCoins', coins); 
+          showRewardPopup('+' + reward.amount + ' 🪙 Coins!');
+          syncToServer();
+        } else { 
+          diamonds += reward.amount; 
+          localStorage.setItem('totalDiamonds', diamonds); 
+          showRewardPopup('+' + reward.amount + ' 💎 Diamonds!');
+        }
+        localStorage.setItem('lastWheel', new Date().toISOString());
+        updateAllDisplays(); 
+        syncToServer();
+        syncLeaderboard();
+        spawnConfetti(30);
+        try { document.getElementById('rewardSfx').play(); } catch(e) {}
+        return;
+      }
+      rotation += velocity; velocity *= deceleration; draw(); requestAnimationFrame(spin);
+    }
+    spin();
+  };
+}
+
+// ==========================================
+// ROADMAP
+// ==========================================
+function openRoadmap() {
+  document.getElementById('roadmapModal').classList.add('active');
+  updateRoadmapProgress();
+}
+function closeRoadmap() { document.getElementById('roadmapModal').classList.remove('active'); }
+
+// ==========================================
+// RESET DATA
+// ==========================================
+function resetData() {
+  if (!confirm('⚠️ Reset ALL data? This cannot be undone.')) return;
+  if (!confirm('❗ FINAL WARNING: Continue?')) return;
+  localStorage.clear();
+  location.reload();
+}
+
+// ==========================================
+// REWARD POPUP / CONFETTI
+// ==========================================
+function showRewardPopup(text) {
+  const popup = document.getElementById('rewardPopup');
+  popup.textContent = text;
+  popup.classList.add('show');
+  setTimeout(() => popup.classList.remove('show'), 1600);
+}
+
+function spawnConfetti(count) {
+  count = count || 28;
+  for (let i = 0; i < count; i++) {
+    const div = document.createElement('div');
+    div.style.cssText = `position:fixed; width:${Math.random()*6+4}px; height:${Math.random()*6+4}px; background:hsl(${Math.random()*360},88%,60%); left:${20+Math.random()*60}%; top:-10px; z-index:9999; pointer-events:none; border-radius:2px; opacity:${0.85-Math.random()*0.4}; transform:rotate(${Math.random()*360}deg);`;
+    document.body.appendChild(div);
+    let top = -10;
+    const fall = setInterval(() => {
+      top += Math.random() * 10 + 2;
+      div.style.top = top + 'px';
+      div.style.left = (parseFloat(div.style.left) + Math.random() * 4 - 2) + '%';
+      if (top > window.innerHeight + 50) { div.remove(); clearInterval(fall); }
+    }, 30);
+  }
+}
+
+// ==========================================
+// AI CHATBOT
+// ==========================================
+const chatToggle = document.getElementById('aiChatToggle');
+const chatContainer = document.getElementById('aiChatContainer');
+const chatClose = document.getElementById('aiChatClose');
+const chatMessages = document.getElementById('aiChatMessages');
+const chatInput = document.getElementById('aiChatInput');
+const chatSend = document.getElementById('aiChatSend');
+let chatHistory = [];
+
+chatToggle.addEventListener('click', () => { chatContainer.classList.toggle('open'); if (chatContainer.classList.contains('open')) chatInput.focus(); });
+chatClose.addEventListener('click', () => chatContainer.classList.remove('open'));
+
+function addMessage(role, content) {
+  const div = document.createElement('div');
+  div.className = 'ai-message ' + role;
+  div.textContent = content;
+  chatMessages.appendChild(div);
+  chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+
+async function sendAIMessage(message) {
+  if (!message.trim()) return;
+  addMessage('user', message);
+  chatInput.value = '';
+  chatSend.disabled = true;
+  try {
+    const response = await fetch(`${API_URL}/ai/chat`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': authToken ? `Bearer ${authToken}` : ''
+      },
+      body: JSON.stringify({ 
+        message, 
+        history: chatHistory.slice(-5),
+        username: username || 'Guest'
+      })
+    });
+    const data = await response.json();
+    if (data.response) { addMessage('bot', data.response); chatHistory.push({ role: 'user', content: message }); chatHistory.push({ role: 'assistant', content: data.response }); }
+    else { addMessage('bot', 'I\'m here to help! 🧠'); }
+  } catch (error) {
+    const fallbacks = ["I'm here to help! 🧠", "Earn coins by playing trivia!", "Build your streak daily for bonuses! 🔥", "Check the leaderboard to see your rank!", "Visit the shop to buy themes, avatars, and power-ups! 🏪"];
+    addMessage('bot', fallbacks[Math.floor(Math.random() * fallbacks.length)]);
+  }
+  chatSend.disabled = false;
+}
+chatSend.addEventListener('click', () => sendAIMessage(chatInput.value));
+chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendAIMessage(chatInput.value); });
+
+// ==========================================
+// MUSIC
+// ==========================================
+const music = document.getElementById('bgMusic');
+const musicToggle = document.getElementById('musicToggle');
+const musicEnabled = localStorage.getItem('musicEnabled') === '1';
+if (musicEnabled) { music.play().catch(()=>{}); musicToggle.textContent = '🔊'; }
+else { musicToggle.textContent = '🔇'; }
+musicToggle.addEventListener('click', function() {
+  if (music.paused) { music.play().catch(()=>{}); musicToggle.textContent = '🔊'; localStorage.setItem('musicEnabled', '1'); }
+  else { music.pause(); musicToggle.textContent = '🔇'; localStorage.setItem('musicEnabled', '0'); }
+});
+
+// ==========================================
+// FORCE LANDSCAPE
+// ==========================================
+function checkOrientation() {
+  const overlay = document.getElementById('landscapeOverlay');
+  const isMobile = window.innerWidth <= 1024;
+  const isPortrait = window.innerHeight > window.innerWidth;
+  if (isMobile && isPortrait) { overlay.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+  else { overlay.style.display = 'none'; document.body.style.overflow = ''; }
+}
+window.addEventListener('resize', checkOrientation);
+window.addEventListener('orientationchange', () => setTimeout(checkOrientation, 300));
+checkOrientation();
+
+// ==========================================
+// KEYBOARD SHORTCUTS
+// ==========================================
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') { document.querySelectorAll('.modal-overlay.active').forEach(el => el.classList.remove('active')); chatContainer.classList.remove('open'); }
+});
+
+// ==========================================
+// GAME RESULT LISTENER
+// ==========================================
+window.addEventListener('gameResult', function(e) {
+  if (e.detail) {
+    const detail = e.detail;
+    
+    gameHistory.push({
+      category: detail.category,
+      score: detail.score || 0,
+      correct: detail.correct || 0,
+      total: detail.total || 0,
+      coinsEarned: detail.coinsEarned || 0,
+      date: new Date().toISOString()
+    });
+    localStorage.setItem('gameHistory', JSON.stringify(gameHistory));
+    
+    if (detail.coinsEarned) {
+      coins += detail.coinsEarned;
+      localStorage.setItem('totalCoins', coins);
+    }
+    
+    if (detail.correct) {
+      const earnedXP = detail.correct * 10 + (detail.coinsEarned || 0);
+      xp += earnedXP;
+      localStorage.setItem('totalXP', xp);
+      
+      let leveledUp = false;
+      while (xp >= Math.floor(100 * Math.pow(level + 1, 1.5))) {
+        level++;
+        leveledUp = true;
+        const bonus = level * 50;
+        coins += bonus;
+        localStorage.setItem('totalCoins', coins);
+        if (leveledUp) {
+          showRewardPopup(`🎉 Level Up! You're now Level ${level}! +${bonus} coins!`);
+          spawnConfetti(40);
+        }
+      }
+      localStorage.setItem('userLevel', level);
+    }
+    
+    updateAllDisplays();
+    updateGameStats();
+    syncToServer();
+    syncLeaderboard();
+    updateStreak();
+  }
+});
+
+// ==========================================
+// INIT
+// ==========================================
+async function init() {
+  console.log('🧠 Brain Rush Premium Starting...');
+  
+  const savedTheme = localStorage.getItem('activeTheme') || 'default';
+  if (savedTheme !== 'default' && isThemeOwned(savedTheme)) {
+    document.body.classList.add('theme-' + savedTheme);
+  }
+  
+  if (isOnboarded && username) {
+    const refreshed = await refreshUserData();
+    if (refreshed) {
+      console.log('👤 Synced with server: ' + username);
+    } else {
+      console.log('👤 Playing offline: ' + username);
+    }
+    showGamePage();
+    initGame();
+    updateAllDisplays();
+  } else {
+    showOnboardingPage();
+    console.log('👤 New user - showing onboarding');
+  }
+}
+
+// Expose functions globally
+window.openProfile = openProfile; window.closeProfile = closeProfile;
+window.openSettings = openSettings; window.closeSettings = closeSettings;
+window.openLeaderboard = openLeaderboard; window.closeLeaderboard = closeLeaderboard;
+window.openShop = openShop; window.closeShop = closeShop;
+window.switchShopTab = switchShopTab; window.buyItem = buyItem;
+window.buyAvatar = buyAvatar; window.equipAvatar = equipAvatar;
+window.buyTheme = buyTheme; window.applyTheme = applyTheme;
+window.openWheel = openWheel; window.closeWheel = closeWheel;
+window.claimMysteryBox = claimMysteryBox;
+window.openRoadmap = openRoadmap; window.closeRoadmap = closeRoadmap;
+window.resetData = resetData; window.spawnConfetti = spawnConfetti; window.showRewardPopup = showRewardPopup;
+window.completeOnboarding = completeOnboarding; window.selectAvatar = selectAvatar;
+window.toggleSound = toggleSound; window.toggleMusic = toggleMusic;
+window.exportData = exportData; window.importData = importData;
+window.syncLeaderboard = syncLeaderboard; window.renderLeaderboard = renderLeaderboard;
+window.syncToServer = syncToServer;
+
+console.log('🎨 5 Amazing Themes Available!');
+console.log('🖼️ 8 free avatars + 6 locked avatars in shop!');
+console.log('⚡ Power-ups show "Owned" status!');
+console.log('✅ Leaderboard connected to database!');
+console.log('✅ EPIC Profile with 12 achievements!');
+
+init();
+</script>
+</body>
+</html>
