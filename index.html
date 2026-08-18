@@ -8,7 +8,7 @@
 
 <style>
 /* ============================================
-   PREMIUM THEME - PORTRAIT OPTIMIZED (BIGGER)
+   PREMIUM THEME - PORTRAIT OPTIMIZED
    ============================================ */
 :root {
   --bg-primary: #f0f2f8;
@@ -136,7 +136,7 @@ html, body {
   transition:background 0.6s ease, color 0.6s ease;
 }
 
-/* ===== NO LANDSCAPE LOCK - Works in Portrait! ===== */
+/* ===== NO LANDSCAPE LOCK ===== */
 
 /* Animated Background */
 .pulse-glow {
@@ -223,16 +223,16 @@ html, body {
 .onboarding-container .btn-primary:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
 
 /* ============================================
-   HEADER - COMPACT ONE LINE
+   HEADER - COMPACT ONE LINE (NO SOUND BUTTON)
    ============================================ */
 .header {
   position:fixed; top:0; left:0; right:0; z-index:100; padding:6px 12px;
   background:var(--header-bg); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border-color); display:none; justify-content:space-between; align-items:center;
   gap:4px; flex-wrap:nowrap; transition:background 0.6s ease, border-color 0.6s ease;
-  height:50px;
+  height:48px;
 }
-.header-left { display:flex; align-items:center; gap:6px; flex-shrink:0; }
+.header-left { display:flex; align-items:center; gap:4px; flex-shrink:0; }
 .logo { display:flex; align-items:center; gap:4px; text-decoration:none; }
 .logo-icon-header { 
   font-size:22px; 
@@ -281,19 +281,19 @@ html, body {
   background:var(--gradient-warm); color:#fff; font-size:7px; font-weight:700;
   flex-shrink:0;
 }
-.music-btn, .settings-btn {
+.settings-btn {
   width:30px; height:30px; border-radius:50%; background:var(--bg-secondary); border:1px solid var(--border-color);
   cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; transition:all 0.3s ease;
   color:var(--text-primary);
   flex-shrink:0;
 }
-.music-btn:hover, .settings-btn:hover { background:var(--bg-card-hover); transform:scale(1.08); }
+.settings-btn:hover { background:var(--bg-card-hover); transform:scale(1.08); }
 
 /* ============================================
-   MAIN CONTENT - BIGGER
+   MAIN CONTENT
    ============================================ */
 .main {
-  padding-top:60px; padding-bottom:40px; position:relative; z-index:1; max-width:1200px; margin:0 auto;
+  padding-top:58px; padding-bottom:40px; position:relative; z-index:1; max-width:1200px; margin:0 auto;
   padding-left:16px; padding-right:16px; display: none;
 }
 .hero-section { text-align:center; padding:20px 16px 16px; }
@@ -330,7 +330,7 @@ html, body {
 .streak-info .streak-next { color:var(--text-muted); font-size:0.75rem; }
 
 /* ============================================
-   CATEGORIES - SAME SIZE (NOT CHANGED)
+   CATEGORIES
    ============================================ */
 .categories-section { margin-top:16px; }
 .categories-section .section-title {
@@ -526,7 +526,7 @@ html, body {
 .theme-preview.cyber { background:#0a0a14; color:#d4d4ff; }
 
 /* ============================================
-   SETTINGS
+   SETTINGS - FIXED WITH ALL OPTIONS
    ============================================ */
 .theme-selector-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin:12px 0; }
 .theme-card { padding:12px; border-radius:12px; border:2px solid var(--border-color); background:var(--bg-secondary); cursor:pointer; text-align:center; transition:all 0.3s ease; }
@@ -666,11 +666,11 @@ html, body {
   .shop-item-card { flex-wrap:wrap; }
   .shop-item-card .item-action { width:100%; justify-content:flex-end; }
   .modal-overlay .modal { max-width:95%; padding:20px; }
-  .header { height:44px; padding:4px 10px; }
+  .header { height:42px; padding:4px 10px; }
   .logo span { font-size:12px; }
   .logo-icon-header { font-size:18px; }
   .profile-btn { width:26px; height:26px; font-size:12px; }
-  .music-btn, .settings-btn { width:26px; height:26px; font-size:12px; }
+  .settings-btn { width:26px; height:26px; font-size:12px; }
   .badge-item { font-size:7px; padding:1px 4px; }
   .level-badge { font-size:6px; padding:1px 4px; }
   .streak-badge-header { font-size:6px; padding:1px 4px; }
@@ -692,11 +692,11 @@ html, body {
   .profile-stats-grid { grid-template-columns:repeat(2, 1fr); }
   .achievement-grid { grid-template-columns:repeat(2, 1fr); }
   #aiChatContainer { width:260px; max-height:400px; }
-  .header { height:40px; padding:3px 8px; }
+  .header { height:38px; padding:3px 8px; }
   .logo span { font-size:10px; }
   .logo-icon-header { font-size:16px; }
   .profile-btn { width:24px; height:24px; font-size:10px; }
-  .music-btn, .settings-btn { width:24px; height:24px; font-size:10px; }
+  .settings-btn { width:24px; height:24px; font-size:10px; }
   .badge-item { font-size:6px; padding:1px 3px; }
   .level-badge { font-size:5px; padding:1px 3px; }
   .streak-badge-header { font-size:5px; padding:1px 3px; }
@@ -712,7 +712,7 @@ html, body {
 </head>
 <body>
 
-<!-- ===== NO LANDSCAPE LOCK - Works in Portrait! ===== -->
+<!-- ===== NO LANDSCAPE LOCK ===== -->
 
 <!-- Animated Background -->
 <div class="pulse-glow"></div>
@@ -747,7 +747,7 @@ html, body {
   </div>
 </div>
 
-<!-- Header - Compact One Line -->
+<!-- Header - Compact One Line (NO SOUND BUTTON) -->
 <header class="header" id="mainHeader">
   <div class="header-left">
     <a href="#" class="logo">
@@ -764,7 +764,6 @@ html, body {
     <div class="badge-item">💎 <span class="value diamond" id="diamondCount">0</span></div>
     <div class="badge-item">⚡ <span class="value" id="xpCount" style="color:#4ade80;">0</span></div>
     <div class="streak-badge-header" id="streakBadge" style="display:none;">🔥 <span id="streakDisplay">0</span></div>
-    <button class="music-btn" id="musicToggle">🔊</button>
     <button class="settings-btn" onclick="openSettings()">⚙️</button>
   </div>
 </header>
@@ -832,7 +831,7 @@ html, body {
   </div>
 </div>
 
-<!-- Settings Modal -->
+<!-- Settings Modal - FIXED -->
 <div class="modal-overlay" id="settingsModal">
   <div class="modal" style="max-width:600px;">
     <div class="modal-header"><h2>⚙️ Settings</h2><button class="close-btn" onclick="closeSettings()">✕</button></div>
