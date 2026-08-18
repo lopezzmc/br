@@ -8,7 +8,7 @@
 
 <style>
 /* ============================================
-   PREMIUM THEME - PORTRAIT OPTIMIZED (SLIGHTLY BIGGER)
+   PREMIUM THEME - MOBILE PERFECT
    ============================================ */
 :root {
   --bg-primary: #f0f2f8;
@@ -33,7 +33,6 @@
   --category-glow: rgba(123,58,246,0.12);
 }
 
-/* Theme Styles */
 body.theme-dark {
   --bg-primary: #0a0a1a;
   --bg-secondary: #141428;
@@ -224,7 +223,7 @@ html, body {
 .onboarding-container .btn-primary:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
 
 /* ============================================
-   HEADER - SLIGHTLY BIGGER, FITS ONE LINE
+   HEADER - MOBILE PERFECT
    ============================================ */
 .header {
   position:fixed; top:0; left:0; right:0; z-index:100; padding:8px 12px;
@@ -233,15 +232,15 @@ html, body {
   align-items:center;
   gap:6px; 
   transition:background 0.6s ease, border-color 0.6s ease;
-  height:58px;
-  min-height:58px;
+  height:60px;
+  min-height:60px;
   overflow:hidden;
 }
 .header-left { display:flex; align-items:center; gap:8px; flex-shrink:0; flex-wrap:nowrap; }
 .logo { display:flex; align-items:center; gap:6px; text-decoration:none; flex-shrink:0; }
 .logoBox {
-  width:36px;
-  height:36px;
+  width:38px;
+  height:38px;
   border-radius:8px;
   background:transparent;
   display:flex;
@@ -278,7 +277,7 @@ html, body {
 }
 
 .profile-btn {
-  width:34px; height:34px; border-radius:50%; background:var(--bg-secondary); border:1px solid var(--border-color);
+  width:36px; height:36px; border-radius:50%; background:var(--bg-secondary); border:1px solid var(--border-color);
   cursor:pointer; font-size:17px; display:flex; align-items:center; justify-content:center; transition:all 0.3s ease;
   color:var(--text-primary);
   flex-shrink:0;
@@ -308,7 +307,7 @@ html, body {
   white-space:nowrap;
 }
 .settings-btn {
-  width:34px; height:34px; border-radius:50%; background:var(--bg-secondary); border:1px solid var(--border-color);
+  width:36px; height:36px; border-radius:50%; background:var(--bg-secondary); border:1px solid var(--border-color);
   cursor:pointer; font-size:17px; display:flex; align-items:center; justify-content:center; transition:all 0.3s ease;
   color:var(--text-primary);
   flex-shrink:0;
@@ -316,10 +315,10 @@ html, body {
 .settings-btn:hover { background:var(--bg-card-hover); transform:scale(1.08); }
 
 /* ============================================
-   MAIN CONTENT - SLIGHTLY BIGGER
+   MAIN CONTENT - MOBILE PERFECT
    ============================================ */
 .main {
-  padding-top:68px; 
+  padding-top:72px; 
   padding-bottom:40px; 
   position:relative; 
   z-index:1; 
@@ -346,6 +345,7 @@ html, body {
 .quick-actions .action-btn {
   padding:14px 22px; border-radius:30px; border:none; font-weight:700; font-size:14px;
   cursor:pointer; transition:all 0.3s ease; display:flex; align-items:center; gap:8px;
+  min-height:50px;
 }
 .quick-actions .action-btn:hover { transform:translateY(-3px) scale(1.03); }
 .quick-actions .action-btn.primary { background:var(--gradient-main); color:#fff; }
@@ -363,7 +363,7 @@ html, body {
 .streak-info .streak-next { color:var(--text-muted); font-size:0.75rem; }
 
 /* ============================================
-   CATEGORIES - SAME SIZE (NOT CHANGED)
+   CATEGORIES - SAME SIZE
    ============================================ */
 .categories-section { margin-top:16px; }
 .categories-section .section-title {
@@ -394,10 +394,10 @@ html, body {
 .category-card .play-count { position:relative; z-index:1; font-size:0.5rem; color:var(--text-muted); margin-top:2px; }
 
 /* ============================================
-   RESPONSIVE - MOBILE
+   MOBILE RESPONSIVE - PERFECT
    ============================================ */
 @media (max-width: 480px) {
-  .header { height:52px; min-height:52px; padding:6px 10px; gap:4px; }
+  .header { height:54px; min-height:54px; padding:6px 10px; gap:4px; }
   .logoBox { width:32px; height:32px; }
   .logo span { font-size:14px; }
   .profile-btn { width:32px; height:32px; font-size:15px; }
@@ -408,11 +408,11 @@ html, body {
   .streak-badge-header { font-size:8px; padding:2px 6px; }
   .header-right { gap:3px; }
   
-  .main { padding-top:60px; padding-left:12px; padding-right:12px; }
+  .main { padding-top:62px; padding-left:12px; padding-right:12px; }
   .hero-section .greeting { font-size:1.5rem; }
   .hero-section .sub-greeting { font-size:0.95rem; }
   .hero-section .hero-stats .stat { font-size:12px; padding:8px 14px; }
-  .quick-actions .action-btn { padding:12px 16px; font-size:12px; }
+  .quick-actions .action-btn { padding:12px 16px; font-size:12px; min-height:44px; }
   .categories-grid { grid-template-columns:repeat(2, 1fr); gap:6px; }
   .category-card { min-height:60px; padding:8px 4px; border-radius:10px; }
   .category-card .emoji { font-size:1.4rem; }
@@ -421,12 +421,12 @@ html, body {
   .profile-stats-grid { grid-template-columns:repeat(2, 1fr); }
   .achievement-grid { grid-template-columns:repeat(2, 1fr); }
   #aiChatContainer { width:220px; max-height:320px; }
-  #aiChatToggle { width:44px; height:44px; font-size:18px; bottom:12px; right:12px; }
+  #aiChatToggle { width:48px; height:48px; font-size:20px; bottom:14px; right:14px; }
   .theme-selector-grid { grid-template-columns:repeat(2, 1fr); }
 }
 
 @media (max-width: 380px) {
-  .header { height:48px; min-height:48px; padding:4px 6px; }
+  .header { height:48px; min-height:48px; padding:4px 8px; }
   .logoBox { width:28px; height:28px; }
   .logo span { font-size:12px; }
   .profile-btn { width:28px; height:28px; font-size:13px; }
@@ -436,10 +436,11 @@ html, body {
   .streak-badge-header { font-size:7px; padding:2px 5px; }
   .main { padding-top:56px; }
   .hero-section .greeting { font-size:1.3rem; }
+  .quick-actions .action-btn { padding:10px 12px; font-size:11px; min-height:40px; }
 }
 
 @media (min-width: 481px) and (max-width: 768px) {
-  .header { height:54px; min-height:54px; padding:6px 12px; }
+  .header { height:56px; min-height:56px; padding:6px 12px; }
   .logoBox { width:34px; height:34px; }
   .logo span { font-size:15px; }
   .profile-btn { width:34px; height:34px; font-size:16px; }
@@ -447,14 +448,14 @@ html, body {
   .badge-item { font-size:10px; padding:3px 8px; }
   .level-badge { font-size:9px; padding:3px 8px; }
   .streak-badge-header { font-size:9px; padding:3px 8px; }
-  .main { padding-top:62px; }
+  .main { padding-top:64px; }
   .categories-grid { grid-template-columns:repeat(2, 1fr); gap:8px; }
   .category-card { min-height:70px; padding:10px 6px; }
   .category-card .emoji { font-size:1.6rem; }
 }
 
 @media (min-width: 769px) {
-  .header { height:62px; min-height:62px; padding:8px 18px; }
+  .header { height:64px; min-height:64px; padding:8px 18px; }
   .logoBox { width:40px; height:40px; }
   .logo span { font-size:18px; }
   .profile-btn { width:38px; height:38px; font-size:18px; }
@@ -462,10 +463,10 @@ html, body {
   .badge-item { font-size:12px; padding:4px 10px; }
   .level-badge { font-size:10px; padding:4px 10px; }
   .streak-badge-header { font-size:10px; padding:4px 10px; }
-  .main { padding-top:72px; }
+  .main { padding-top:74px; }
   .hero-section .greeting { font-size:2.2rem; }
   .hero-section .hero-stats .stat { font-size:16px; padding:12px 24px; }
-  .quick-actions .action-btn { padding:16px 28px; font-size:16px; }
+  .quick-actions .action-btn { padding:16px 28px; font-size:16px; min-height:56px; }
 }
 
 /* ============================================
@@ -485,12 +486,12 @@ html, body {
 .modal .modal-header .close-btn { width:34px; height:34px; border-radius:50%; border:none; background:var(--input-bg); cursor:pointer; font-size:18px; color:var(--text-primary); }
 .modal .modal-body { color:var(--text-secondary); font-size:0.95rem; line-height:1.6; }
 
-.modal .btn-primary { width:100%; padding:14px; border:none; border-radius:12px; background:var(--gradient-main); color:#fff; font-weight:700; font-size:1rem; cursor:pointer; transition:all 0.3s ease; }
+.modal .btn-primary { width:100%; padding:14px; border:none; border-radius:12px; background:var(--gradient-main); color:#fff; font-weight:700; font-size:1rem; cursor:pointer; transition:all 0.3s ease; min-height:50px; }
 .modal .btn-primary:hover { transform:scale(1.02); }
-.modal .btn-secondary { padding:8px 16px; border:none; border-radius:10px; background:var(--input-bg); color:var(--text-secondary); font-weight:600; cursor:pointer; transition:all 0.3s ease; font-size:0.85rem; }
+.modal .btn-secondary { padding:8px 16px; border:none; border-radius:10px; background:var(--input-bg); color:var(--text-secondary); font-weight:600; cursor:pointer; transition:all 0.3s ease; font-size:0.85rem; min-height:40px; }
 
 /* ============================================
-   SHOP - SLIGHTLY BIGGER
+   SHOP
    ============================================ */
 .shop-container { padding:4px 0; }
 .shop-category-title { font-size:0.95rem; font-weight:800; color:var(--text-primary); margin:14px 0 10px; display:flex; align-items:center; gap:8px; }
@@ -509,16 +510,16 @@ html, body {
 .shop-item-card .item-info .badge.equipped { background:#7b3af6; color:#fff; }
 .shop-item-card .item-action { display:flex; align-items:center; gap:6px; flex-wrap:wrap; }
 .shop-item-card .item-action .price { font-weight:700; font-size:0.75rem; padding:4px 10px; border-radius:16px; background:var(--input-bg); color:var(--text-secondary); }
-.shop-item-card .item-action .btn-buy { padding:6px 12px; border:none; border-radius:16px; font-weight:700; cursor:pointer; transition:all 0.3s ease; font-size:0.7rem; }
+.shop-item-card .item-action .btn-buy { padding:6px 12px; border:none; border-radius:16px; font-weight:700; cursor:pointer; transition:all 0.3s ease; font-size:0.7rem; min-height:34px; }
 .shop-item-card .item-action .btn-buy.coin { background:#f59e0b; color:#fff; }
 .shop-item-card .item-action .btn-buy.diamond { background:#7b3af6; color:#fff; }
 .shop-item-card .item-action .btn-buy:hover { transform:scale(1.05); }
 .shop-item-card .item-action .btn-buy:disabled { opacity:0.5; cursor:not-allowed; }
-.shop-item-card .item-action .btn-equip { padding:6px 12px; border:none; border-radius:16px; font-weight:700; cursor:pointer; transition:all 0.3s ease; font-size:0.7rem; background:var(--gradient-green); color:#fff; }
+.shop-item-card .item-action .btn-equip { padding:6px 12px; border:none; border-radius:16px; font-weight:700; cursor:pointer; transition:all 0.3s ease; font-size:0.7rem; min-height:34px; background:var(--gradient-green); color:#fff; }
 .shop-item-card .item-action .owned-tag { font-size:0.7rem; font-weight:700; color:#4ade80; padding:4px 12px; border-radius:16px; background:rgba(74,222,128,0.15); }
 
 .shop-tabs { display:flex; gap:6px; margin-bottom:12px; border-bottom:2px solid var(--border-color); padding-bottom:10px; flex-wrap:wrap; }
-.shop-tab { padding:8px 14px; border:none; border-radius:20px; cursor:pointer; font-weight:700; font-size:0.75rem; background:var(--input-bg); color:var(--text-secondary); transition:all 0.3s ease; font-family:'Poppins',sans-serif; }
+.shop-tab { padding:8px 14px; border:none; border-radius:20px; cursor:pointer; font-weight:700; font-size:0.75rem; background:var(--input-bg); color:var(--text-secondary); transition:all 0.3s ease; font-family:'Poppins',sans-serif; min-height:36px; }
 .shop-tab.active { background:#7b3af6; color:#fff; }
 .shop-tab:hover { transform:scale(1.03); }
 
@@ -606,7 +607,7 @@ html, body {
 .lb-list-item .player-name { font-weight:600; font-size:0.85rem; color:var(--text-primary); }
 .lb-list-item .player-coins { font-weight:700; color:#f59e0b; font-size:0.8rem; }
 
-.reward-popup { position:fixed; top:70px; right:16px; padding:12px 18px; font-size:0.9rem; font-weight:700; border-radius:12px; text-align:center; box-shadow:0 8px 30px rgba(0,0,0,0.15); z-index:180; transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),opacity 0.4s ease; opacity:0; color:var(--text-primary); background:var(--bg-card); border:1px solid var(--border-color); }
+.reward-popup { position:fixed; top:72px; right:16px; padding:12px 18px; font-size:0.9rem; font-weight:700; border-radius:12px; text-align:center; box-shadow:0 8px 30px rgba(0,0,0,0.15); z-index:180; transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),opacity 0.4s ease; opacity:0; color:var(--text-primary); background:var(--bg-card); border:1px solid var(--border-color); }
 .reward-popup.show { opacity:1; transform:translateY(-6px); }
 
 /* ============================================
@@ -638,7 +639,7 @@ html, body {
 #aiChatInputArea { padding:8px 12px; border-top:1px solid var(--border-color); display:flex; gap:6px; }
 #aiChatInput { flex:1; padding:8px 12px; border-radius:10px; border:1px solid var(--input-border); font-size:0.8rem; outline:none; font-family:'Poppins',sans-serif; background:var(--input-bg); color:var(--text-primary); }
 #aiChatInput:focus { border-color:#7b3af6; }
-#aiChatSend { padding:8px 16px; border-radius:10px; border:none; background:var(--gradient-main); color:#fff; font-weight:700; cursor:pointer; font-size:0.8rem; }
+#aiChatSend { padding:8px 16px; border-radius:10px; border:none; background:var(--gradient-main); color:#fff; font-weight:700; cursor:pointer; font-size:0.8rem; min-height:36px; }
 
 .roadmap-item { display:flex; align-items:flex-start; gap:10px; padding:10px 0; border-bottom:1px solid var(--border-color); }
 .roadmap-item .icon { font-size:1.2rem; min-width:32px; text-align:center; }
@@ -698,7 +699,7 @@ html, body {
   </div>
 </div>
 
-<!-- Header - SLIGHTLY BIGGER -->
+<!-- Header -->
 <header class="header" id="mainHeader">
   <div class="header-left">
     <a href="#" class="logo">
@@ -2337,7 +2338,7 @@ window.addEventListener('gameResult', function(e) {
 async function init() {
   console.log('🧠 Brain Rush Premium Starting...');
   console.log('✅ All Shop Items Working');
-  console.log('✅ Slightly Bigger Fonts & Buttons');
+  console.log('✅ Mobile Friendly - Slightly Bigger');
   console.log('✅ Categories & AI - Same Size');
   
   const savedTheme = localStorage.getItem('activeTheme') || 'default';
