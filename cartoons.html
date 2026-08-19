@@ -9,7 +9,7 @@
 
 <style>
 /* ============================================
-   FULL SCREEN - CLEAN LOOK (LIKE REFERENCE)
+   FULL SCREEN - IMAGE HALF SCREEN + BIG ANSWERS
    ============================================ */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{
@@ -40,44 +40,44 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:12px;
+  padding:4px;
 }
 .book{
   width:100%;
   height:100vh;
   max-width:100%;
-  padding:8px;
+  padding:4px;
   position:relative;
   display:flex;
   flex-direction:column;
 }
 
 /* ============================================
-   HEADER - CLEAN LOOK
+   HEADER
    ============================================ */
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:6px;
+  gap:4px;
   flex-wrap:nowrap;
-  padding:8px 12px;
+  padding:4px 6px;
   flex-shrink:0;
-  background:rgba(255,255,255,0.4);
-  border-radius:16px;
-  margin-bottom:4px;
+  background:rgba(255,255,255,0.5);
+  border-radius:10px;
+  margin-bottom:2px;
 }
 .leftHeader{
   display:flex;
   align-items:center;
-  gap:12px;
+  gap:5px;
   flex-wrap:nowrap;
   flex-shrink:0;
 }
 .logoBox{
-  width:48px;
-  height:48px;
-  border-radius:12px;
+  width:28px;
+  height:28px;
+  border-radius:6px;
   background:#fff;
   display:flex;
   align-items:center;
@@ -85,11 +85,10 @@ html,body{
   overflow:hidden;
   border:1px solid rgba(0,0,0,0.04);
   flex-shrink:0;
-  box-shadow:0 4px 15px rgba(0,0,0,0.06);
 }
 .logoBox img{
-  width:85%;
-  height:85%;
+  width:80%;
+  height:80%;
   object-fit:contain;
 }
 .titleWrap{
@@ -99,59 +98,71 @@ html,body{
 }
 .title{
   font-family:"Patrick Hand",Inter,system-ui,sans-serif;
-  font-size:22px;
+  font-size:14px;
   margin:0;
   font-weight:900;
   color:#111;
   line-height:1;
-  background:linear-gradient(135deg,#7b3af6,#00e5ff);
-  -webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;
 }
 .subtitle{
-  font-size:9px;
+  font-size:6px;
   color:#888;
   font-weight:700;
   opacity:.8;
-  margin-top:-2px;
+  margin-top:-1px;
   font-family:Inter;
-  letter-spacing:0.5px;
+  letter-spacing:0.3px;
   text-transform:uppercase;
 }
 .coins{
   display:flex;
   align-items:center;
-  gap:4px;
-  padding:4px 10px;
-  border-radius:10px;
+  gap:2px;
+  padding:2px 6px;
+  border-radius:6px;
   background:#fff;
   border:1px solid rgba(0,0,0,0.03);
   font-weight:900;
   flex-shrink:0;
-  box-shadow:0 4px 15px rgba(0,0,0,0.04);
 }
-.coins .coinEmoji{font-size:14px;}
-.coins #headerCoins{font-size:14px;color:#222;}
+.coins .coinEmoji{font-size:9px;}
+.coins #headerCoins{font-size:9px;color:#222;}
 .qcount{
   font-weight:900;
   color:#222;
-  padding:4px 10px;
+  padding:2px 6px;
   background:rgba(255,255,255,0.8);
-  border-radius:8px;
-  font-size:12px;
+  border-radius:6px;
+  font-size:8px;
   flex-shrink:0;
 }
+
+.streak-badge{
+  display:flex;
+  align-items:center;
+  gap:2px;
+  padding:1px 6px;
+  border-radius:16px;
+  background:linear-gradient(135deg,#ff6b6b,#ffa94d);
+  color:#fff;
+  font-weight:900;
+  font-size:7px;
+  flex-shrink:0;
+}
+.streak-badge .streak-fire{font-size:8px;}
+.streak-badge.hidden{display:none;}
+
 .header-right{
   display:flex;
   align-items:center;
-  gap:8px;
+  gap:3px;
   flex-wrap:nowrap;
   position:relative;
   flex-shrink:0;
 }
 .menu-btn{
-  width:38px;
-  height:38px;
+  width:26px;
+  height:26px;
   border-radius:50%;
   background:rgba(255,255,255,0.9);
   border:1px solid rgba(0,0,0,0.06);
@@ -159,23 +170,22 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:20px;
+  font-size:14px;
   font-weight:700;
   color:#222;
   position:relative;
   flex-shrink:0;
-  box-shadow:0 2px 12px rgba(0,0,0,0.06);
 }
 .menu-btn .badge{
   position:absolute;
-  top:-4px;
-  right:-4px;
+  top:-3px;
+  right:-3px;
   background:#ff6b6b;
   color:#fff;
-  font-size:8px;
+  font-size:5px;
   font-weight:800;
-  width:16px;
-  height:16px;
+  width:12px;
+  height:12px;
   border-radius:50%;
   display:none;
   align-items:center;
@@ -187,15 +197,15 @@ html,body{
   position:absolute;
   top:100%;
   right:0;
-  margin-top:6px;
+  margin-top:4px;
   background:rgba(255,255,255,0.96);
   backdrop-filter:blur(20px);
-  border-radius:14px;
+  border-radius:12px;
   border:1px solid rgba(0,0,0,0.06);
   box-shadow:0 12px 48px rgba(0,0,0,0.12);
-  padding:6px;
+  padding:4px;
   z-index:1000;
-  min-width:160px;
+  min-width:130px;
   opacity:0;
   transform:translateY(-10px) scale(0.96);
   pointer-events:none;
@@ -211,101 +221,106 @@ html,body{
 .menu-dropdown .menu-item{
   display:flex;
   align-items:center;
-  gap:8px;
-  padding:8px 14px;
-  border-radius:10px;
+  gap:6px;
+  padding:6px 10px;
+  border-radius:8px;
   cursor:pointer;
   font-weight:600;
-  font-size:13px;
+  font-size:10px;
   color:#222;
   width:100%;
   border:none;
   background:transparent;
   text-align:left;
 }
-.menu-dropdown .menu-item:hover{background:rgba(123,58,246,0.08);}
-.menu-dropdown .menu-item .icon{font-size:14px;width:22px;text-align:center;}
+.menu-dropdown .menu-item .icon{font-size:11px;width:18px;text-align:center;}
 .menu-dropdown .menu-item .count{
   margin-left:auto;
   background:rgba(123,58,246,0.12);
-  padding:2px 10px;
-  border-radius:20px;
-  font-size:11px;
+  padding:1px 6px;
+  border-radius:16px;
+  font-size:8px;
   font-weight:800;
   color:#7b3af6;
 }
-.menu-dropdown .menu-divider{height:1px;background:rgba(0,0,0,0.06);margin:4px 12px;}
+.menu-dropdown .menu-divider{height:1px;background:rgba(0,0,0,0.06);margin:3px 8px;}
 .menu-dropdown .menu-item.danger{color:#ff4757;}
 
 /* ============================================
-   CARD - CLEAN FULL SCREEN
+   CARD - FILLS ENTIRE SCREEN
    ============================================ */
 .card{
   flex:1;
   display:flex;
   flex-direction:column;
-  gap:6px;
-  align-items:center;
-  justify-content:center;
+  gap:3px;
+  align-items:stretch;
   width:100%;
   position:relative;
   min-height:0;
-  background:rgba(255,255,255,0.25);
-  border-radius:16px;
-  padding:10px;
+  background:rgba(255,255,255,0.3);
+  border-radius:10px;
+  padding:5px;
 }
 
-/* ============================================
-   TIMER
-   ============================================ */
-.timer-wrapper{
-  position:absolute;
-  top:12px;
-  right:16px;
-  z-index:10;
+.timer-section{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-shrink:0;
 }
-.timer-circle{
-  width:60px;
-  height:60px;
-  border-radius:50%;
+.timer-compact{
   display:flex;
   align-items:center;
-  justify-content:center;
-  background:rgba(255,255,255,0.9);
-  border:4px solid #7b3af6;
-  box-shadow:0 0 20px rgba(123,58,246,0.2);
-  position:relative;
+  gap:4px;
+  background:rgba(255,255,255,0.85);
+  padding:2px 8px 2px 4px;
+  border-radius:30px;
+  border:1px solid rgba(0,0,0,0.03);
+  flex-shrink:0;
 }
-.timer-circle svg{
-  position:absolute;
-  top:-4px;
-  left:-4px;
-  width:60px;
-  height:60px;
+.timer-compact .mini-circle{
+  position:relative;
+  width:28px;
+  height:28px;
+  flex-shrink:0;
+}
+.timer-compact .mini-circle svg{
+  width:100%;
+  height:100%;
   transform:rotate(-90deg);
 }
-.timer-circle circle{
-  fill:none;
-  stroke:#00e5ff;
-  stroke-width:4;
-  stroke-dasharray:163.36;
-  stroke-dashoffset:0;
-  transition:stroke-dashoffset 1s linear;
-}
-.timer-circle .timer-num{
-  font-size:22px;
+.timer-compact .mini-circle .ring-bg{fill:none;stroke:rgba(0,0,0,0.06);stroke-width:4;}
+.timer-compact .mini-circle .ring-progress{fill:none;stroke:#7b3af6;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset 0.3s;}
+.timer-compact .mini-circle .ring-pulse{fill:none;stroke:#ff6b6b;stroke-width:2;stroke-linecap:round;opacity:0;}
+.timer-compact.warning .mini-circle .ring-pulse{opacity:0.6;animation:pulseRing 0.8s ease-in-out infinite;}
+.timer-compact.danger .mini-circle .ring-pulse{opacity:1;animation:pulseRing 0.4s ease-in-out infinite;}
+@keyframes pulseRing{0%{transform:scale(1);opacity:0.6;}50%{transform:scale(1.12);opacity:0.2;}100%{transform:scale(1);opacity:0.6;}}
+.timer-compact .mini-circle .timer-num{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-size:11px;
   font-weight:900;
-  color:#7b3af6;
+  color:#222;
   font-family:"Patrick Hand",Inter,sans-serif;
-  position:relative;
-  z-index:2;
+  line-height:1;
 }
-.timer-circle .timer-num.warning{color:#ff6b6b;}
-.timer-circle .timer-num.danger{color:#ff0000;animation:numPulse 0.5s ease-in-out infinite alternate;}
-@keyframes numPulse{from{transform:scale(1);}to{transform:scale(1.15);}}
+.timer-compact .mini-circle .timer-num.warning{color:#ff6b6b;}
+.timer-compact .mini-circle .timer-num.danger{color:#ff0000;animation:numPulse 0.5s ease-in-out infinite alternate;}
+@keyframes numPulse{from{transform:translate(-50%,-50%) scale(1);}to{transform:translate(-50%,-50%) scale(1.15);}}
+.timer-compact .timer-status-text{
+  font-size:8px;
+  font-weight:700;
+  color:#888;
+  font-family:Inter,sans-serif;
+  min-width:22px;
+  white-space:nowrap;
+}
 
 /* ============================================
-   IMAGE - BIG & CENTERED
+   IMAGE - TAKES HALF THE SCREEN
    ============================================ */
 .image-container{
   display:flex;
@@ -313,13 +328,16 @@ html,body{
   align-items:center;
   flex-shrink:0;
   width:100%;
-  padding:4px 0;
+  height:50vh;
+  min-height:200px;
+  max-height:50vh;
+  padding:2px 0;
 }
 #logoImg{
-  max-height:200px;
-  min-height:70px;
+  width:100%;
+  height:100%;
   object-fit:contain;
-  border-radius:14px;
+  border-radius:12px;
   display:block;
   background:rgba(255,255,255,0.5);
   transition:opacity 0.3s ease;
@@ -329,41 +347,39 @@ html,body{
 #logoImg.error{display:none;}
 
 /* ============================================
-   QUESTION - BIG & CLEAN
+   QUESTION
    ============================================ */
 .question{
   font-family:"Patrick Hand",Inter,system-ui,sans-serif;
-  font-size:1.2rem;
+  font-size:1rem;
   font-weight:900;
-  color:#111;
+  color:#000;
   text-align:center;
-  padding:8px 12px;
-  min-height:40px;
+  padding:5px 8px;
+  position:relative;
+  z-index:10;
+  min-height:30px;
   flex-shrink:0;
-  background:rgba(255,255,255,0.8);
-  border-radius:14px;
-  width:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  background:rgba(255,255,255,0.85);
+  border-radius:10px;
 }
 .question.pop{animation:questionPop 0.3s ease;}
-@keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.03);}100%{transform:scale(1);}}
+@keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.04);}100%{transform:scale(1);}}
 
 /* ============================================
-   CHOICES - BIG & CLEAN
+   CHOICES - FILLS REMAINING SPACE
    ============================================ */
 .choices{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:10px;
+  gap:6px;
   width:100%;
   flex:1;
   align-content:center;
-  min-height:100px;
+  min-height:80px;
 }
 .choice{
-  min-height:52px;
+  min-height:44px;
   border-radius:999px;
   display:flex;
   align-items:center;
@@ -371,63 +387,66 @@ html,body{
   cursor:pointer;
   user-select:none;
   font-weight:900;
-  font-size:1rem;
+  font-size:0.85rem;
   font-family:"Patrick Hand",Inter,sans-serif;
   color:#fff;
   background:linear-gradient(-45deg,#1a9850,#2ecc71,#27ae60,#1a9850);
   background-size:400% 400%;
-  border:3px solid #057d05;
+  border:2px solid #057d05;
   transition:all .25s ease;
   animation:gradientBG 8s ease infinite;
-  padding:0 14px;
+  padding:0 10px;
   text-align:center;
   touch-action:manipulation;
   word-break:break-word;
   line-height:1.2;
 }
 @keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.choice:active{transform:scale(0.95);}
-.choice.correct{border-color:#00ff00;background:linear-gradient(-45deg,#1a9850,#2ecc71);box-shadow:0 0 25px rgba(0,255,0,0.3);}
+.choice:active{transform:scale(0.92);}
+.choice.correct{border-color:#00ff00;background:linear-gradient(-45deg,#1a9850,#2ecc71);box-shadow:0 0 20px #00ff00;}
 .choice.wrong{border-color:#ff0000;background:linear-gradient(-45deg,#c62828,#ef5350);animation:wrongShake 0.5s ease;}
-@keyframes wrongShake{0%{transform:translateX(0);}25%{transform:translateX(-6px);}50%{transform:translateX(6px);}75%{transform:translateX(-3px);}100%{transform:translateX(0);}}
+@keyframes wrongShake{0%{transform:translateX(0);}25%{transform:translateX(-5px);}50%{transform:translateX(5px);}75%{transform:translateX(-3px);}100%{transform:translateX(0);}}
 
-/* ============================================
-   FEEDBACK & PROGRESS
-   ============================================ */
 .feedback{
-  min-height:20px;
+  min-height:16px;
   font-weight:800;
   text-align:center;
   color:#333;
-  padding:2px;
-  font-size:0.75rem;
+  padding:1px;
+  font-size:0.65rem;
   flex-shrink:0;
 }
+
+.floating-emoji{
+  position:fixed;
+  font-size:30px;
+  pointer-events:none;
+  z-index:200;
+  animation:floatUp 1.2s ease-out forwards;
+}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(0.5) rotate(0deg);}50%{opacity:1;transform:translateY(-80px) scale(1.2) rotate(20deg);}100%{opacity:0;transform:translateY(-160px) scale(0.8) rotate(-10deg);}}
+
 .progressWrap{
-  margin-top:2px;
+  margin-top:1px;
   display:flex;
   flex-direction:column;
-  gap:2px;
+  gap:1px;
   align-items:stretch;
-  width:100%;
   flex-shrink:0;
 }
 .progressBar{
-  height:6px;
-  background:rgba(0,0,0,0.05);
+  height:4px;
+  background:linear-gradient(90deg,rgba(0,0,0,.02),rgba(0,0,0,.01));
   border-radius:999px;
   overflow:hidden;
 }
 .progressFill{
   height:100%;
   width:0%;
-  background:linear-gradient(90deg,#7b3af6,#00e5ff);
+  background:linear-gradient(90deg,rgba(123,58,246,.85),rgba(0,229,255,.8));
   transition:width .5s ease;
 }
 
-/* ============================================
-   FINAL SCREEN
-   ============================================ */
 .final{
   position:absolute;
   inset:0;
@@ -436,48 +455,39 @@ html,body{
   align-items:center;
   justify-content:center;
   flex-direction:column;
-  gap:8px;
-  background:rgba(255,255,255,0.95);
-  border-radius:16px;
-  padding:20px;
+  gap:5px;
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.98));
+  border-radius:10px;
+  padding:12px;
   text-align:center;
   display:none;
   animation:finalPop 0.5s ease;
 }
 @keyframes finalPop{0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);}100%{transform:scale(1);opacity:1;}}
-.final h2{font-family:"Patrick Hand",Inter;font-size:1.5rem;margin:2px 0;color:#0b6b3a;}
-.final .score{font-weight:900;color:#222;font-size:0.9rem;}
-.final .btns{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;justify-content:center;}
+.final h2{font-family:"Patrick Hand",Inter;font-size:1.1rem;margin:2px 0;color:#0b6b3a;}
+.final .score{font-weight:900;color:#222;font-size:0.75rem;}
+.final .btns{display:flex;gap:5px;margin-top:3px;flex-wrap:wrap;justify-content:center;}
 .btn{
-  padding:8px 18px;
-  border-radius:12px;
+  padding:5px 12px;
+  border-radius:8px;
   border:none;
   cursor:pointer;
   font-weight:900;
   background:linear-gradient(90deg,#7b3af6,#00e5ff);
   color:#fff;
-  box-shadow:0 12px 36px rgba(0,0,0,0.12);
+  box-shadow:0 12px 36px rgba(0,0,0,.12);
   touch-action:manipulation;
-  min-height:38px;
-  min-width:70px;
-  font-size:0.8rem;
+  min-height:30px;
+  min-width:55px;
+  font-size:0.65rem;
   transition:transform 0.2s ease;
 }
 .btn:active{transform:scale(0.92);}
 
-.floating-emoji{
-  position:fixed;
-  font-size:34px;
-  pointer-events:none;
-  z-index:200;
-  animation:floatUp 1.2s ease-out forwards;
-}
-@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(0.5) rotate(0deg);}50%{opacity:1;transform:translateY(-80px) scale(1.2) rotate(20deg);}100%{opacity:0;transform:translateY(-160px) scale(0.8) rotate(-10deg);}}
-
 .confetti{
   position:fixed;
-  width:6px;
-  height:6px;
+  width:5px;
+  height:5px;
   top:-20px;
   pointer-events:none;
   z-index:40;
@@ -488,46 +498,46 @@ html,body{
 @keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:.95;}}
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE - IMAGE HALF SCREEN
    ============================================ */
 @media(max-height:700px){
-  .header{padding:4px 8px;gap:4px;}
-  .logoBox{width:34px;height:34px;}
-  .title{font-size:16px;}
-  .subtitle{font-size:7px;}
-  .coins{padding:2px 6px;}
-  .coins .coinEmoji{font-size:10px;}
-  .coins #headerCoins{font-size:10px;}
-  .qcount{font-size:9px;padding:2px 6px;}
-  .menu-btn{width:30px;height:30px;font-size:16px;}
-  .card{padding:6px;gap:4px;}
-  #logoImg{max-height:110px;min-height:40px;}
-  .question{font-size:0.9rem;padding:4px 8px;min-height:30px;}
-  .choice{min-height:36px;font-size:0.75rem;padding:0 8px;border-width:2px;}
-  .choices{gap:6px;min-height:70px;}
-  .timer-circle{width:48px;height:48px;}
-  .timer-circle svg{width:48px;height:48px;}
-  .timer-circle .timer-num{font-size:18px;}
-  .timer-wrapper{top:8px;right:10px;}
+  .header{padding:2px 4px;}
+  .logoBox{width:22px;height:22px;}
+  .title{font-size:11px;}
+  .subtitle{font-size:5px;}
+  .coins{padding:1px 4px;}
+  .coins .coinEmoji{font-size:7px;}
+  .coins #headerCoins{font-size:7px;}
+  .qcount{font-size:6px;padding:1px 4px;}
+  .menu-btn{width:20px;height:20px;font-size:11px;}
+  .card{padding:3px;gap:2px;}
+  .image-container{height:40vh;min-height:140px;max-height:40vh;}
+  .question{font-size:0.8rem;padding:3px 5px;min-height:24px;}
+  .choice{min-height:32px;font-size:0.65rem;padding:0 6px;border-width:2px;}
+  .choices{gap:4px;min-height:60px;}
+  .timer-compact .mini-circle{width:22px;height:22px;}
+  .timer-compact .mini-circle .timer-num{font-size:9px;}
+  .timer-compact .timer-status-text{font-size:6px;min-width:16px;}
+  .feedback{font-size:0.55rem;min-height:12px;}
+  .final h2{font-size:0.9rem;}
+  .final .score{font-size:0.65rem;}
+  .btn{padding:4px 10px;font-size:0.55rem;min-height:24px;min-width:45px;}
 }
 
 @media(min-height:701px) and (max-height:850px){
-  #logoImg{max-height:150px;min-height:55px;}
-  .question{font-size:1rem;}
-  .choice{min-height:44px;font-size:0.85rem;}
+  .image-container{height:45vh;min-height:170px;max-height:45vh;}
+  .question{font-size:0.9rem;}
+  .choice{min-height:38px;font-size:0.75rem;}
 }
 
 @media(min-height:851px){
-  #logoImg{max-height:240px;min-height:80px;}
-  .question{font-size:1.3rem;}
-  .choice{min-height:56px;font-size:1.05rem;border-width:3px;}
-  .logoBox{width:54px;height:54px;}
-  .title{font-size:24px;}
-  .header{padding:10px 16px;}
-  .menu-btn{width:42px;height:42px;font-size:22px;}
-  .coins .coinEmoji{font-size:16px;}
-  .coins #headerCoins{font-size:16px;}
-  .qcount{font-size:13px;}
+  .image-container{height:50vh;min-height:250px;max-height:50vh;}
+  .question{font-size:1.1rem;}
+  .choice{min-height:48px;font-size:0.9rem;border-width:3px;}
+  .logoBox{width:32px;height:32px;}
+  .title{font-size:16px;}
+  .header{padding:6px 8px;}
+  .menu-btn{width:30px;height:30px;font-size:16px;}
 }
 </style>
 </head>
@@ -555,6 +565,10 @@ html,body{
         </div>
       </div>
       <div class="header-right" style="position:relative;">
+        <div class="streak-badge hidden" id="streakBadge">
+          <span class="streak-fire">🔥</span>
+          <span id="streakCount">0</span>
+        </div>
         <div class="coins"><span class="coinEmoji">💰</span> <span id="headerCoins">0</span></div>
         
         <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">
@@ -598,42 +612,38 @@ html,body{
 
     <!-- CARD -->
     <div class="card">
-      <!-- Timer -->
-      <div class="timer-wrapper">
-        <div class="timer-circle" id="timerCircle">
-          <svg viewBox="0 0 60 60">
-            <circle id="timerProgress" cx="30" cy="30" r="26" stroke="#ddd" stroke-width="4" fill="none" />
-            <circle id="timerProgressActive" cx="30" cy="30" r="26" stroke="#7b3af6" stroke-width="4" fill="none"
-              stroke-dasharray="163.36" stroke-dashoffset="0" />
-          </svg>
-          <span class="timer-num" id="timerNum">15</span>
+      <div class="timer-section">
+        <div class="timer-compact" id="timerCompact">
+          <div class="mini-circle">
+            <svg viewBox="0 0 100 100">
+              <circle class="ring-bg" cx="50" cy="50" r="42" />
+              <circle class="ring-progress" id="ringProgress" cx="50" cy="50" r="42" 
+                stroke-dasharray="263.89" stroke-dashoffset="0" />
+              <circle class="ring-pulse" id="ringPulse" cx="50" cy="50" r="42" 
+                stroke-dasharray="263.89" stroke-dashoffset="0" />
+            </svg>
+            <span class="timer-num" id="timerNum">15</span>
+          </div>
+          <span class="timer-status-text" id="timerStatusText">⏳ Go!</span>
         </div>
       </div>
 
-      <!-- Image -->
+      <!-- IMAGE - TAKES HALF THE SCREEN -->
       <div class="image-container">
         <img id="logoImg" src="" alt="Cartoon Image">
       </div>
 
-      <!-- Question -->
       <div class="question" id="question">Loading…</div>
-
-      <!-- Choices -->
       <div class="choices" id="choices" role="list" aria-live="polite"></div>
-
-      <!-- Feedback -->
       <div class="feedback" id="feedback" aria-live="polite"></div>
-
-      <!-- Progress -->
       <div class="progressWrap">
         <div class="progressBar"><div class="progressFill" id="progressFill"></div></div>
       </div>
 
-      <!-- Final -->
       <div id="final" class="final">
         <h2>🎬 Cartoon Master!</h2>
         <div class="score" id="finalScore">You answered 0 / 10 correctly</div>
-        <div style="margin-top:4px;"><div class="score" id="coinSummary">Earned 0 🪙</div></div>
+        <div style="margin-top:3px;"><div class="score" id="coinSummary">Earned 0 🪙</div></div>
         <div class="btns">
           <button class="btn" id="playAgain">🔄 Play Again</button>
           <button class="btn" id="goHomeBtn">🏠 Home</button>
@@ -722,12 +732,6 @@ document.addEventListener('click', function(e) {
 function goHome() {
   menuOpen = false;
   document.getElementById('menuDropdown').classList.remove('open');
-  
-  // Send game result before going home
-  if (score > 0) {
-    sendGameResult();
-  }
-  
   window.location.href = 'index.html';
 }
 
@@ -753,11 +757,11 @@ function useHint() {
   
   if (!currentSet || currentQ >= currentSet.length) return;
   
-  const correctAnswer = currentSet[currentQ].a;
+  const correctAnswer = currentSet[currentQ].answer;
   const btns = choicesEl.children;
   let wrongIndices = [];
   for (let i = 0; i < btns.length; i++) {
-    if (i !== correctAnswer && btns[i].style.pointerEvents !== 'none') {
+    if (btns[i].textContent !== correctAnswer && btns[i].style.pointerEvents !== 'none') {
       wrongIndices.push(i);
     }
   }
@@ -792,7 +796,7 @@ function useExtraTime() {
   
   updateMenuCounts();
   timeLeft += 15;
-  updateTimer();
+  updateTimerVisual();
   showFeedback('⏰ +15 seconds added!', '#7b3af6');
 }
 
@@ -891,52 +895,19 @@ function shuffleArray(arr) {
 // CARTOON BANK
 // ============================================
 const CARTOON_BANK = [
-  { img:"cartoons/Cinderella.jpg", choices:["Cinderella","Snow White","Aurora","Belle"], a:0 },
-  { img:"cartoons/Mikey.jpg", choices:["Mickey","Donald","Goofy","Pluto"], a:0 },
-  { img:"cartoons/spongebob.jpg", choices:["SpongeBob","Patrick","Squidward","Mr. Krabs"], a:0 },
-  { img:"cartoons/Phineas and ferb.jpg", choices:["Phineas","Ferb","Mickey","Donald"], a:0 },
-  { img:"cartoons/mordecia and rigby.jpg", choices:["Mordecai","Rigby","Phineas","Mickey"], a:0 },
-  { img:"cartoons/Scooby-Doo.jpg", choices:["Scooby-Doo","Shaggy","Tom","Jerry"], a:0 },
-  { img:"cartoons/smurfs.jpg", choices:["Smurf","Gargamel","Hefty","Papa Smurf"], a:0 },
-  { img:"cartoons/stitch.jpg", choices:["Stitch","Lilo","Mickey","Donald"], a:0 },
-  { img:"cartoons/Pikachu.jpg", choices:["Pikachu","Charizard","Bulbasaur","Squirtle"], a:0 },
-  { img:"cartoons/pawpatrol.jpg", choices:["Chase","Marshall","Skye","Rubble"], a:0 },
-  { img:"cartoons/angry birds.jpg", choices:["Red","Chuck","Bomb","Mighty Eagle"], a:0 },
-  { img:"cartoons/Winniepooh.jpg", choices:["Winnie the Pooh","Piglet","Tigger","Eeyore"], a:0 },
-  { img:"cartoons/batman.jpg", choices:["Batman","Superman","Robin","Joker"], a:0 },
-  { img:"cartoons/deadpool.jpg", choices:["Deadpool","Spider-Man","Iron Man","Hulk"], a:0 },
-  { img:"cartoons/dora .jpg", choices:["Dora","Diego","Boots","Swiper"], a:0 },
-  { img:"cartoons/mrbean.jpg", choices:["Mr Bean","Johnny Bravo","Shaggy","Tom"], a:0 },
-  { img:"cartoons/robin.jpg", choices:["Robin","Batman","Cyborg","Starfire"], a:0 },
-  { img:"cartoons/tom and jerry.jpg", choices:["Tom and Jerry","Spike","Tyke","Mickey"], a:0 },
-  { img:"cartoons/toystory.jpg", choices:["Buzz Lightyear","Woody","Jessie","Rex"], a:0 },
-  { img:"cartoons/moana.jpg", choices:["Moana","Elsa","Anna","Rapunzel"], a:0 },
-  { img:"cartoons/ben 10.jpg", choices:["Ben 10","Danny Phantom","Finn","Jake"], a:0 },
-  { img:"cartoons/Rapunzel.jpg", choices:["Rapunzel","Cinderella","Elsa","Belle"], a:0 },
-  { img:"cartoons/mabel.jpg", choices:["Mabel","Dipper","Wendy","Star"], a:0 },
-  { img:"cartoons/sofia.jpg", choices:["Sofia","Elsa","Anna","Moana"], a:0 },
-  { img:"cartoons/snow white .jpg", choices:["Snow White","Cinderella","Aurora","Belle"], a:0 },
-  { img:"cartoons/masha.jpg", choices:["Masha","Peppa","Dora","Skye"], a:0 },
-  { img:"cartoons/balarina.jpg", choices:["Ballerina","Elsa","Barbie","Rapunzel"], a:0 },
-  { img:"cartoons/olaf.jpg", choices:["Olaf","Sven","Kristoff","Marshmallow"], a:0 },
-  { img:"cartoons/grinch.jpg", choices:["Grinch","Shrek","Sullivan","Hulk"], a:0 },
-  { img:"cartoons/pumba and timao.jpg", choices:["Pumbaa and Timon","Simba","Scar","Nala"], a:0 },
-  { img:"cartoons/bunny.jpg", choices:["Bunny","Pumbaa","Simba","Zazu"], a:0 },
-  { img:"cartoons/shrek.jpg", choices:["Shrek","Donkey","Fiona","Po"], a:0 },
-  { img:"cartoons/dragonball.jpg", choices:["Goku","Vegeta","Gohan","Piccolo"], a:0 },
-  { img:"cartoons/alvin .jpg", choices:["Alvin","Simon","Theodore","Dave"], a:0 },
-  { img:"cartoons/po.jpg", choices:["Po","Tigress","Tai Lung","Shifu"], a:0 },
-  { img:"cartoons/boss baby.jpg", choices:["Boss Baby","Tim","Stacy","Ted"], a:0 },
-  { img:"cartoons/sonic.jpg", choices:["Sonic","Tails","Knuckles","Shadow"], a:0 },
-  { img:"cartoons/oggey.jpg", choices:["Oggy","Dee Dee","Marky","Jack"], a:0 },
-  { img:"cartoons/zootopia.jpg", choices:["Judy Hopps","Nick Wilde","Clawhauser","Flash"], a:0 },
-  { q:"Which cartoon is Stitch from?", choices:["Lilo & Stitch","Toy Story","Tom & Jerry","Scooby-Doo"], a:0 },
-  { q:"Which cartoon features a talking dog solving mysteries?", choices:["Scooby-Doo","Paw Patrol","Tom & Jerry","SpongeBob"], a:0 },
-  { q:"Which cartoon lives in a pineapple under the sea?", choices:["SpongeBob","Tom & Jerry","Paw Patrol","Smurfs"], a:0 },
-  { q:"Which character is from Toy Story?", choices:["Woody","Buzz","Stitch","Mickey"], a:0 },
-  { q:"Who is SpongeBob's best friend?", choices:["Patrick","Squidward","Sandy","Mr. Krabs"], a:0 },
-  { q:"Which cartoon is Dora from?", choices:["Dora the Explorer","Bluey","Paw Patrol","Smurfs"], a:0 },
-  { q:"Which character is known for eating honey?", choices:["Winnie the Pooh","Piglet","Tigger","Eeyore"], a:0 }
+  { img:"cartoons/Cinderella.jpg", choices:["Cinderella","Snow White","Aurora","Belle"], answer:"Cinderella" },
+  { img:"cartoons/Mikey.jpg", choices:["Mickey","Donald","Goofy","Pluto"], answer:"Mickey" },
+  { img:"cartoons/spongebob.jpg", choices:["SpongeBob","Patrick","Squidward","Mr. Krabs"], answer:"SpongeBob" },
+  { img:"cartoons/Phineas and ferb.jpg", choices:["Phineas","Ferb","Mickey","Donald"], answer:"Phineas" },
+  { img:"cartoons/mordecia and rigby.jpg", choices:["Mordecai","Rigby","Phineas","Mickey"], answer:"Mordecai" },
+  { img:"cartoons/scooby-Doo.jpg", choices:["Scooby-Doo","Shaggy","Tom","Jerry"], answer:"Scooby-Doo" },
+  { img:"cartoons/smurfs.jpg", choices:["Smurf","Gargamel","Hefty","Papa Smurf"], answer:"Smurf" },
+  { img:"cartoons/stitch.jpg", choices:["Stitch","Lilo","Mickey","Donald"], answer:"Stitch" },
+  { img:"cartoons/Pikachu.jpg", choices:["Pikachu","Charizard","Bulbasaur","Squirtle"], answer:"Pikachu" },
+  { q:"Which cartoon is Stitch from?", choices:["Lilo & Stitch","Toy Story","Tom & Jerry","Scooby-Doo"], answer:"Lilo & Stitch" },
+  { q:"Which cartoon features a talking dog solving mysteries?", choices:["Scooby-Doo","Paw Patrol","Tom & Jerry","SpongeBob"], answer:"Scooby-Doo" },
+  { q:"Which cartoon lives in a pineapple under the sea?", choices:["SpongeBob","Tom & Jerry","Paw Patrol","Smurfs"], answer:"SpongeBob" },
+  { q:"Which character is from Toy Story?", choices:["Woody","Buzz","Stitch","Mickey"], answer:"Woody" }
 ];
 
 // ============================================
@@ -960,6 +931,8 @@ const finalEl = document.getElementById('final');
 const finalScoreEl = document.getElementById('finalScore');
 const coinSummaryEl = document.getElementById('coinSummary');
 const headerCoinsEl = document.getElementById('headerCoins');
+const streakBadge = document.getElementById('streakBadge');
+const streakCount = document.getElementById('streakCount');
 const playAgainBtn = document.getElementById('playAgain');
 const goHomeBtn = document.getElementById('goHomeBtn');
 const clickS = document.getElementById('clickS');
@@ -968,17 +941,30 @@ const cheerS = document.getElementById('cheerS');
 const wrongS = document.getElementById('wrongS');
 const bgMusic = document.getElementById('bgMusic');
 
-const timerProgress = document.getElementById('timerProgress');
+const timerCompact = document.getElementById('timerCompact');
+const ringProgress = document.getElementById('ringProgress');
+const ringPulse = document.getElementById('ringPulse');
 const timerNum = document.getElementById('timerNum');
-const feedbackEl = document.getElementById('feedback');
+const timerStatusText = document.getElementById('timerStatusText');
 
 headerCoinsEl.textContent = totalCoins;
-const CIRCUMFERENCE = 2 * Math.PI * 26;
+const circumference = 2 * Math.PI * 42;
+
+function loadImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => { resolve(true); };
+    img.onerror = () => { resolve(false); };
+    img.src = src;
+  });
+}
 
 // ====== STREAK ======
 function updateStreak(isCorrect){
   if(isCorrect){
     streak++;
+    streakBadge.classList.remove('hidden');
+    streakCount.textContent=streak;
     if(streak>=3){
       const bonus=Math.min(streak,5);
       totalCoins+=bonus;
@@ -986,12 +972,14 @@ function updateStreak(isCorrect){
       headerCoinsEl.textContent=totalCoins;
       syncCoinsToBackend(bonus);
       showFloatingEmoji('🔥');
-      feedbackEl.textContent=`🔥 ${streak} in a row! +${bonus} bonus!`;
-      feedbackEl.style.color='#ff6b6b';
-      setTimeout(()=>{feedbackEl.textContent='';feedbackEl.style.color='#333';},1500);
+      const fb=document.getElementById('feedback');
+      fb.textContent=`🔥 ${streak} in a row! +${bonus} bonus!`;
+      fb.style.color='#ff6b6b';
+      setTimeout(()=>{fb.textContent='';fb.style.color='#333';},1500);
     }
   } else {
     streak=0;
+    streakBadge.classList.add('hidden');
   }
 }
 
@@ -1021,14 +1009,17 @@ function miniConfetti(){
 function newSet(){
   const shuffledBank = shuffleArray([...CARTOON_BANK]);
   currentSet = shuffledBank.slice(0, 10).map(q => {
-    const shuffledChoices = shuffleArray([...q.choices]);
-    const newCorrectIndex = shuffledChoices.indexOf(q.choices[q.a]);
-    return {
-      img: q.img || null,
-      q: q.q || "Which character/cartoon is this?",
-      choices: shuffledChoices,
-      a: newCorrectIndex
-    };
+    if (q.choices) {
+      const choicesWithAnswer = q.choices.map(text => ({ text, isCorrect: text === q.answer }));
+      const shuffledChoices = shuffleArray([...choicesWithAnswer]);
+      return {
+        img: q.img || null,
+        q: q.q || "Which character/cartoon is this?",
+        choices: shuffledChoices.map(c => c.text),
+        answer: q.answer
+      };
+    }
+    return q;
   });
   currentQ=0;score=0;
 }
@@ -1056,7 +1047,7 @@ function loadQuestion(){
     logoImg.style.display = 'none';
   }
 
-  questionEl.textContent = current.q;
+  questionEl.textContent = current.q || "Which character/cartoon is this?";
   questionEl.classList.remove('pop');
   void questionEl.offsetWidth;
   questionEl.classList.add('pop');
@@ -1067,9 +1058,9 @@ function loadQuestion(){
     const btn=document.createElement('div');
     btn.className='choice';
     btn.textContent = `${letters[i]}. ${c}`;
-    btn.dataset.index = i;
-    btn.addEventListener('click',(e)=>{e.preventDefault();selectAnswer(btn,i,current.a);});
-    btn.addEventListener('touchend',(e)=>{e.preventDefault();selectAnswer(btn,i,current.a);});
+    btn.dataset.answer = c;
+    btn.addEventListener('click',(e)=>{e.preventDefault();selectAnswer(btn,c,current.answer);});
+    btn.addEventListener('touchend',(e)=>{e.preventDefault();selectAnswer(btn,c,current.answer);});
     choicesEl.appendChild(btn);
   });
   qcountEl.textContent=`${currentQ+1}/10`;
@@ -1080,20 +1071,33 @@ function loadQuestion(){
 function startTimer(){
   clearInterval(timerInterval);
   timeLeft=TOTAL_TIME;
-  updateTimer();
+  updateTimerVisual();
+  timerCompact.className='timer-compact';
+  timerNum.className='timer-num';
+  timerStatusText.className='timer-status-text';
+  timerStatusText.textContent='⏳ Go!';
   timerInterval=setInterval(()=>{
     timeLeft--;
-    updateTimer();
-    if(timeLeft<=3 && timeLeft>0){
-      timerNum.className='timer-num danger';
-    } else if(timeLeft<=5 && timeLeft>3){
+    updateTimerVisual();
+    if(timeLeft<=5 && timeLeft>3){
+      timerCompact.className='timer-compact warning';
       timerNum.className='timer-num warning';
+      timerStatusText.className='timer-status-text warning';
+      timerStatusText.textContent='⚠️ Hurry!';
+    } else if(timeLeft<=3 && timeLeft>0){
+      timerCompact.className='timer-compact danger';
+      timerNum.className='timer-num danger';
+      timerStatusText.className='timer-status-text danger';
+      timerStatusText.textContent='🔥 GO!';
     }
     if(timeLeft<=0 && !isAnswered){
       clearInterval(timerInterval);
+      timerStatusText.textContent='⏰ Time!';
+      timerStatusText.className='timer-status-text danger';
+      timerCompact.className='timer-compact danger';
       const current=currentSet[currentQ];
-      Array.from(choicesEl.children).forEach((btn,idx)=>{
-        if(idx===current.a)btn.classList.add('correct');
+      Array.from(choicesEl.children).forEach(btn=>{
+        if(btn.dataset.answer===current.answer)btn.classList.add('correct');
         btn.style.pointerEvents='none';
       });
       setTimeout(()=>{currentQ++;loadQuestion();},1500);
@@ -1101,20 +1105,26 @@ function startTimer(){
   },1000);
 }
 
-function updateTimer(){
+function updateTimerVisual(){
+  const percentage=(timeLeft/TOTAL_TIME)*100;
+  const offset=circumference-(percentage/100)*circumference;
+  ringProgress.style.strokeDashoffset=offset;
+  ringPulse.style.strokeDashoffset=offset;
   timerNum.textContent=timeLeft;
-  const dashOffset = CIRCUMFERENCE * (1 - timeLeft / TOTAL_TIME);
-  timerProgress.style.strokeDashoffset = dashOffset;
+  if(percentage>60){ringProgress.style.stroke='#7b3af6';}
+  else if(percentage>33){ringProgress.style.stroke='#ffa94d';}
+  else{ringProgress.style.stroke='#ff6b6b';}
 }
 
-function selectAnswer(btn, index, answer){
+function selectAnswer(btn, selected, answer){
   if(isAnswered) return;
   isAnswered=true;
   if(bgMusic.paused) bgMusic.play();
   clickS.currentTime=0;clickS.play();
   clearInterval(timerInterval);
   
-  if(index===answer){
+  const isCorrect = selected === answer;
+  if(isCorrect){
     btn.classList.add('correct');
     score++;
     
@@ -1140,9 +1150,16 @@ function selectAnswer(btn, index, answer){
     const msg=correctMessages[Math.floor(Math.random()*correctMessages.length)];
     const emoji=correctEmojis[Math.floor(Math.random()*correctEmojis.length)];
     showFloatingEmoji(emoji);
-    feedbackEl.textContent=`✅ ${msg}`;
-    feedbackEl.style.color='#1fb97a';
-    setTimeout(()=>{feedbackEl.textContent='';feedbackEl.style.color='#333';},1000);
+    timerCompact.className='timer-compact correct';
+    timerNum.className='timer-num';
+    timerNum.style.color='#1fb97a';
+    timerStatusText.className='timer-status-text correct';
+    timerStatusText.textContent=msg;
+    ringProgress.style.stroke='#1fb97a';
+    const fb=document.getElementById('feedback');
+    fb.textContent=`✅ ${msg}`;
+    fb.style.color='#1fb97a';
+    setTimeout(()=>{fb.textContent='';fb.style.color='#333';},1000);
     miniConfetti();
     Array.from(choicesEl.children).forEach(c=>c.style.pointerEvents='none');
     setTimeout(()=>{currentQ++;loadQuestion();},800);
@@ -1152,12 +1169,19 @@ function selectAnswer(btn, index, answer){
     const msg=wrongMessages[Math.floor(Math.random()*wrongMessages.length)];
     const emoji=wrongEmojis[Math.floor(Math.random()*wrongEmojis.length)];
     showFloatingEmoji(emoji);
-    feedbackEl.textContent=`❌ ${msg}`;
-    feedbackEl.style.color='#ff4757';
-    setTimeout(()=>{feedbackEl.textContent='';feedbackEl.style.color='#333';},1200);
+    timerCompact.className='timer-compact wrong';
+    timerNum.className='timer-num';
+    timerNum.style.color='#ff4757';
+    timerStatusText.className='timer-status-text wrong';
+    timerStatusText.textContent='😅 Try again!';
+    ringProgress.style.stroke='#ff4757';
+    const fb=document.getElementById('feedback');
+    fb.textContent=`❌ ${msg}`;
+    fb.style.color='#ff4757';
+    setTimeout(()=>{fb.textContent='';fb.style.color='#333';},1200);
     if(wrongS){wrongS.currentTime=0;wrongS.play();}
-    Array.from(choicesEl.children).forEach((c,idx)=>{
-      if(idx===answer)c.classList.add('correct');
+    Array.from(choicesEl.children).forEach(c=>{
+      if(c.dataset.answer===answer)c.classList.add('correct');
       c.style.pointerEvents='none';
     });
     setTimeout(()=>{currentQ++;loadQuestion();},1500);
@@ -1165,14 +1189,37 @@ function selectAnswer(btn, index, answer){
 }
 
 // ============================================
-// sendGameResult() - UPDATES MAIN PAGE STATS
+// finishQuiz() - SEND GAME RESULT
 // ============================================
-function sendGameResult() {
+function finishQuiz(){
+  finalEl.style.display='flex';
+  const messages=['🎬 Cartoon Master!','🌟 You\'re a Star!','💪 Animation Champ!','🏆 You Rock!','🎉 Amazing Knowledge!'];
+  document.querySelector('.final h2').textContent=`🎉 ${messages[Math.floor(Math.random()*messages.length)]}`;
+  finalScoreEl.textContent=`You answered ${score} / 10 correctly!`;
+  coinSummaryEl.textContent=`Earned ${score*pointsPerQ} 🪙 coins!`;
+  cheerS.currentTime=0;cheerS.play();
+  progressFill.style.width='100%';
+  
+  for(let i=0;i<60;i++){
+    setTimeout(()=>{
+      const c=document.createElement('div');
+      c.className='confetti';
+      c.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
+      c.style.left=`${Math.random()*100}vw`;
+      c.style.animationDuration=`${Math.random()*2+1.5}s`;
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),2500);
+    },i*40);
+  }
+  
+  // ==========================================
+  // SEND GAME RESULT TO MAIN PAGE
+  // ==========================================
   const gameData = {
     category: 'cartoons',
     score: score * 10,
     correct: score,
-    total: currentSet.length || 10,
+    total: 10,
     coinsEarned: score * 10
   };
   
@@ -1192,34 +1239,6 @@ function sendGameResult() {
   localStorage.setItem('gameHistory', JSON.stringify(gameHistory));
   
   console.log('✅ Game result sent to main page!', gameData);
-}
-
-// ============================================
-// finishQuiz()
-// ============================================
-function finishQuiz(){
-  finalEl.style.display='flex';
-  const messages=['🎬 Cartoon Master!','🌟 You\'re a Star!','💪 Animation Champ!','🏆 You Rock!','🎉 Amazing Knowledge!'];
-  document.querySelector('.final h2').textContent=`🎉 ${messages[Math.floor(Math.random()*messages.length)]}`;
-  finalScoreEl.textContent=`You answered ${score} / 10 correctly!`;
-  coinSummaryEl.textContent=`Earned ${score*pointsPerQ} 🪙 coins!`;
-  cheerS.currentTime=0;cheerS.play();
-  progressFill.style.width='100%';
-  
-  for(let i=0;i=80;i++){
-    setTimeout(()=>{
-      const c=document.createElement('div');
-      c.className='confetti';
-      c.style.backgroundColor=`hsl(${Math.random()*360},100%,50%)`;
-      c.style.left=`${Math.random()*100}vw`;
-      c.style.animationDuration=`${Math.random()*2+1.5}s`;
-      document.body.appendChild(c);
-      setTimeout(()=>c.remove(),2500);
-    },i*35);
-  }
-  
-  // Send game result to main page
-  sendGameResult();
   
   if(authToken){
     try{
@@ -1237,31 +1256,28 @@ playAgainBtn.addEventListener('click',()=>{
   score=0;
   streak=0;
   doubleCoinsActive = false;
+  streakBadge.classList.add('hidden');
   newSet();
   loadQuestion();
   updateMenuCounts();
 });
 
-goHomeBtn.addEventListener('click',()=>{
-  if (score > 0) {
-    sendGameResult();
-  }
-  window.location.href='index.html';
-});
+goHomeBtn.addEventListener('click',()=>window.location.href='index.html');
 
 function coinPop(amount){
   const pop=document.createElement('div');
   pop.textContent=`+${amount} 🪙`;
-  pop.style.cssText=`position:fixed; top:15px; right:15px; font-weight:900; font-size:18px; color:#fbc531; z-index:100; opacity:1; transition:all 1s ease-out; pointer-events:none; background:rgba(0,0,0,0.7); padding:6px 14px; border-radius:10px; box-shadow:0 4px 20px rgba(0,0,0,0.3);`;
+  pop.style.cssText=`position:fixed; top:15px; right:15px; font-weight:900; font-size:16px; color:#fbc531; z-index:100; opacity:1; transition:all 1s ease-out; pointer-events:none; background:rgba(0,0,0,0.7); padding:4px 12px; border-radius:8px; box-shadow:0 4px 20px rgba(0,0,0,0.3);`;
   document.body.appendChild(pop);
-  setTimeout(()=>{pop.style.transform='translateY(-50px)';pop.style.opacity='0';},50);
+  setTimeout(()=>{pop.style.transform='translateY(-40px)';pop.style.opacity='0';},50);
   setTimeout(()=>pop.remove(),1000);
 }
 
 function showFeedback(message, color) {
-  feedbackEl.textContent = message;
-  feedbackEl.style.color = color || '#333';
-  setTimeout(() => { feedbackEl.textContent = ''; feedbackEl.style.color = '#333'; }, 2000);
+  const fb = document.getElementById('feedback');
+  fb.textContent = message;
+  fb.style.color = color || '#333';
+  setTimeout(() => { fb.textContent = ''; fb.style.color = '#333'; }, 2000);
 }
 
 // ============================================
@@ -1293,8 +1309,8 @@ updateMenuCounts();
 
 console.log('🎬 Cartoons loaded with:');
 console.log('✅ NO landscape lock - works in portrait');
-console.log('✅ FULL SCREEN - clean look');
-console.log('✅ BIG image & answers');
+console.log('✅ IMAGE TAKES HALF THE SCREEN');
+console.log('✅ BIG ANSWERS below image');
 console.log('✅ Game stats sent to main page');
 console.log(`📦 Inventory:`, getShopInventory());
 </script>
