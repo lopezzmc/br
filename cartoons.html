@@ -9,7 +9,7 @@
 
 <style>
 /* ============================================
-   FULL SCREEN - BIGGER HEADER + 3-DOT BUTTON
+   FULL SCREEN - BIG IMAGE + BIG ANSWERS
    ============================================ */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{
@@ -40,20 +40,20 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:center;
-  padding:4px;
+  padding:3px;
 }
 .book{
   width:100%;
   height:100vh;
   max-width:100%;
-  padding:4px;
+  padding:3px;
   position:relative;
   display:flex;
   flex-direction:column;
 }
 
 /* ============================================
-   HEADER - BIGGER ITEMS
+   HEADER - BIGGER
    ============================================ */
 .header{
   display:flex;
@@ -61,11 +61,11 @@ html,body{
   align-items:center;
   gap:6px;
   flex-wrap:nowrap;
-  padding:6px 10px;
+  padding:5px 8px;
   flex-shrink:0;
   background:rgba(255,255,255,0.5);
   border-radius:12px;
-  margin-bottom:3px;
+  margin-bottom:2px;
 }
 .leftHeader{
   display:flex;
@@ -75,8 +75,8 @@ html,body{
   flex-shrink:0;
 }
 .logoBox{
-  width:36px;
-  height:36px;
+  width:34px;
+  height:34px;
   border-radius:8px;
   background:#fff;
   display:flex;
@@ -98,14 +98,14 @@ html,body{
 }
 .title{
   font-family:"Patrick Hand",Inter,system-ui,sans-serif;
-  font-size:18px;
+  font-size:17px;
   margin:0;
   font-weight:900;
   color:#111;
   line-height:1;
 }
 .subtitle{
-  font-size:8px;
+  font-size:7px;
   color:#888;
   font-weight:700;
   opacity:.8;
@@ -117,23 +117,23 @@ html,body{
 .coins{
   display:flex;
   align-items:center;
-  gap:4px;
-  padding:4px 10px;
+  gap:3px;
+  padding:3px 8px;
   border-radius:8px;
   background:#fff;
   border:1px solid rgba(0,0,0,0.03);
   font-weight:900;
   flex-shrink:0;
 }
-.coins .coinEmoji{font-size:12px;}
-.coins #headerCoins{font-size:12px;color:#222;}
+.coins .coinEmoji{font-size:11px;}
+.coins #headerCoins{font-size:11px;color:#222;}
 .qcount{
   font-weight:900;
   color:#222;
-  padding:4px 10px;
+  padding:3px 8px;
   background:rgba(255,255,255,0.8);
   border-radius:8px;
-  font-size:11px;
+  font-size:10px;
   flex-shrink:0;
 }
 
@@ -141,31 +141,28 @@ html,body{
   display:flex;
   align-items:center;
   gap:3px;
-  padding:3px 10px;
+  padding:2px 8px;
   border-radius:20px;
   background:linear-gradient(135deg,#ff6b6b,#ffa94d);
   color:#fff;
   font-weight:900;
-  font-size:10px;
+  font-size:9px;
   flex-shrink:0;
 }
-.streak-badge .streak-fire{font-size:11px;}
+.streak-badge .streak-fire{font-size:10px;}
 .streak-badge.hidden{display:none;}
 
-/* ============================================
-   HEADER RIGHT - BIGGER 3-DOT BUTTON
-   ============================================ */
 .header-right{
   display:flex;
   align-items:center;
-  gap:6px;
+  gap:5px;
   flex-wrap:nowrap;
   position:relative;
   flex-shrink:0;
 }
 .menu-btn{
-  width:38px;
-  height:38px;
+  width:36px;
+  height:36px;
   border-radius:50%;
   background:rgba(255,255,255,0.9);
   border:1px solid rgba(0,0,0,0.06);
@@ -173,7 +170,7 @@ html,body{
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:20px;
+  font-size:18px;
   font-weight:700;
   color:#222;
   position:relative;
@@ -187,10 +184,10 @@ html,body{
   right:-4px;
   background:#ff6b6b;
   color:#fff;
-  font-size:8px;
+  font-size:7px;
   font-weight:800;
-  width:16px;
-  height:16px;
+  width:14px;
+  height:14px;
   border-radius:50%;
   display:none;
   align-items:center;
@@ -210,7 +207,7 @@ html,body{
   box-shadow:0 12px 48px rgba(0,0,0,0.12);
   padding:6px;
   z-index:1000;
-  min-width:160px;
+  min-width:155px;
   opacity:0;
   transform:translateY(-10px) scale(0.96);
   pointer-events:none;
@@ -231,7 +228,7 @@ html,body{
   border-radius:10px;
   cursor:pointer;
   font-weight:600;
-  font-size:13px;
+  font-size:12px;
   color:#222;
   width:100%;
   border:none;
@@ -239,17 +236,16 @@ html,body{
   text-align:left;
 }
 .menu-dropdown .menu-item:hover{background:rgba(123,58,246,0.08);}
-.menu-dropdown .menu-item .icon{font-size:14px;width:22px;text-align:center;}
+.menu-dropdown .menu-item .icon{font-size:13px;width:20px;text-align:center;}
 .menu-dropdown .menu-item .count{
   margin-left:auto;
   background:rgba(123,58,246,0.12);
-  padding:2px 10px;
+  padding:1px 8px;
   border-radius:20px;
-  font-size:11px;
+  font-size:10px;
   font-weight:800;
   color:#7b3af6;
 }
-.menu-dropdown .menu-item .count.empty{background:rgba(255,71,87,0.12);color:#ff4757;}
 .menu-dropdown .menu-divider{height:1px;background:rgba(0,0,0,0.06);margin:4px 12px;}
 .menu-dropdown .menu-item.danger{color:#ff4757;}
 
@@ -260,14 +256,14 @@ html,body{
   flex:1;
   display:flex;
   flex-direction:column;
-  gap:5px;
+  gap:4px;
   align-items:stretch;
   width:100%;
   position:relative;
   min-height:0;
   background:rgba(255,255,255,0.3);
   border-radius:12px;
-  padding:8px;
+  padding:6px;
 }
 
 .timer-section{
@@ -281,15 +277,15 @@ html,body{
   align-items:center;
   gap:6px;
   background:rgba(255,255,255,0.85);
-  padding:4px 12px 4px 6px;
+  padding:3px 10px 3px 6px;
   border-radius:30px;
   border:1px solid rgba(0,0,0,0.03);
   flex-shrink:0;
 }
 .timer-compact .mini-circle{
   position:relative;
-  width:34px;
-  height:34px;
+  width:32px;
+  height:32px;
   flex-shrink:0;
 }
 .timer-compact .mini-circle svg{
@@ -308,52 +304,58 @@ html,body{
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  font-size:13px;
+  font-size:12px;
   font-weight:900;
   color:#222;
   font-family:"Patrick Hand",Inter,sans-serif;
   line-height:1;
 }
-.timer-compact .mini-circle .timer-num.warning{color:#ff6b6b;}
-.timer-compact .mini-circle .timer-num.danger{color:#ff0000;animation:numPulse 0.5s ease-in-out infinite alternate;}
-@keyframes numPulse{from{transform:translate(-50%,-50%) scale(1);}to{transform:translate(-50%,-50%) scale(1.15);}}
 .timer-compact .timer-status-text{
-  font-size:10px;
+  font-size:9px;
   font-weight:700;
   color:#888;
   font-family:Inter,sans-serif;
-  min-width:28px;
+  min-width:24px;
   white-space:nowrap;
 }
 
-/* ===== IMAGE ===== */
+/* ============================================
+   IMAGE - BIGGER + CENTERED
+   ============================================ */
+.image-container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-shrink:0;
+  padding:2px 0;
+}
 #logoImg{
   width:100%;
-  max-height:180px;
-  min-height:70px;
+  max-height:220px;
+  min-height:90px;
   object-fit:contain;
-  border-radius:12px;
-  margin:0 auto;
+  border-radius:14px;
   display:block;
   background:#f5f5f5;
   transition:opacity 0.3s ease;
   opacity:0;
-  flex-shrink:0;
 }
 #logoImg.loaded{opacity:1;}
 #logoImg.error{display:none;}
 
-/* ===== QUESTION ===== */
+/* ============================================
+   QUESTION
+   ============================================ */
 .question{
   font-family:"Patrick Hand",Inter,system-ui,sans-serif;
-  font-size:1.1rem;
+  font-size:1.05rem;
   font-weight:900;
   color:#000;
   text-align:center;
-  padding:8px 10px;
+  padding:6px 8px;
   position:relative;
   z-index:10;
-  min-height:38px;
+  min-height:34px;
   flex-shrink:0;
   background:rgba(255,255,255,0.85);
   border-radius:12px;
@@ -361,7 +363,9 @@ html,body{
 .question.pop{animation:questionPop 0.3s ease;}
 @keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.04);}100%{transform:scale(1);}}
 
-/* ===== CHOICES - FILLS REMAINING SPACE ===== */
+/* ============================================
+   CHOICES - BIGGER ANSWERS
+   ============================================ */
 .choices{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -369,10 +373,10 @@ html,body{
   width:100%;
   flex:1;
   align-content:center;
-  min-height:100px;
+  min-height:120px;
 }
 .choice{
-  min-height:48px;
+  min-height:55px;
   border-radius:999px;
   display:flex;
   align-items:center;
@@ -380,15 +384,15 @@ html,body{
   cursor:pointer;
   user-select:none;
   font-weight:900;
-  font-size:0.85rem;
+  font-size:1rem;
   font-family:"Patrick Hand",Inter,sans-serif;
   color:#fff;
   background:linear-gradient(-45deg,#1a9850,#2ecc71,#27ae60,#1a9850);
   background-size:400% 400%;
-  border:2px solid #057d05;
+  border:3px solid #057d05;
   transition:all .25s ease;
   animation:gradientBG 8s ease infinite;
-  padding:0 12px;
+  padding:0 14px;
   text-align:center;
   touch-action:manipulation;
   word-break:break-word;
@@ -401,12 +405,12 @@ html,body{
 @keyframes wrongShake{0%{transform:translateX(0);}25%{transform:translateX(-6px);}50%{transform:translateX(6px);}75%{transform:translateX(-3px);}100%{transform:translateX(0);}}
 
 .feedback{
-  min-height:20px;
+  min-height:18px;
   font-weight:800;
   text-align:center;
   color:#333;
   padding:2px;
-  font-size:0.75rem;
+  font-size:0.7rem;
   flex-shrink:0;
 }
 
@@ -491,47 +495,47 @@ html,body{
 @keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:.95;}}
 
 /* ============================================
-   RESPONSIVE
+   RESPONSIVE - BIGGER ON ALL SCREENS
    ============================================ */
 @media(max-height:700px){
-  .header{padding:4px 6px;gap:4px;}
+  .header{padding:3px 5px;gap:4px;}
   .logoBox{width:28px;height:28px;}
   .title{font-size:14px;}
-  .subtitle{font-size:6px;}
-  .coins{padding:2px 6px;}
+  .subtitle{font-size:5px;}
+  .coins{padding:2px 5px;}
   .coins .coinEmoji{font-size:9px;}
   .coins #headerCoins{font-size:9px;}
-  .qcount{font-size:8px;padding:2px 6px;}
-  .menu-btn{width:30px;height:30px;font-size:16px;}
+  .qcount{font-size:8px;padding:2px 5px;}
+  .menu-btn{width:30px;height:30px;font-size:15px;}
   .card{padding:4px;gap:3px;}
-  #logoImg{max-height:100px;min-height:40px;}
+  #logoImg{max-height:120px;min-height:50px;}
   .question{font-size:0.85rem;padding:4px 6px;min-height:28px;}
-  .choice{min-height:34px;font-size:0.65rem;padding:0 6px;}
-  .choices{gap:5px;min-height:60px;}
-  .timer-compact .mini-circle{width:26px;height:26px;}
-  .timer-compact .mini-circle .timer-num{font-size:10px;}
+  .choice{min-height:38px;font-size:0.75rem;padding:0 8px;border-width:2px;}
+  .choices{gap:5px;min-height:80px;}
+  .timer-compact .mini-circle{width:24px;height:24px;}
+  .timer-compact .mini-circle .timer-num{font-size:9px;}
   .timer-compact .timer-status-text{font-size:7px;}
   .streak-badge{font-size:7px;padding:2px 6px;}
   .streak-badge .streak-fire{font-size:8px;}
 }
 
 @media(min-height:701px) and (max-height:850px){
-  #logoImg{max-height:140px;min-height:50px;}
+  #logoImg{max-height:170px;min-height:70px;}
   .question{font-size:0.95rem;}
-  .choice{min-height:40px;font-size:0.75rem;}
+  .choice{min-height:46px;font-size:0.85rem;}
 }
 
 @media(min-height:851px){
-  #logoImg{max-height:220px;min-height:80px;}
+  #logoImg{max-height:260px;min-height:100px;}
   .question{font-size:1.2rem;}
-  .choice{min-height:52px;font-size:0.9rem;}
-  .logoBox{width:40px;height:40px;}
+  .choice{min-height:60px;font-size:1.1rem;border-width:3px;}
+  .logoBox{width:38px;height:38px;}
   .title{font-size:20px;}
-  .header{padding:8px 12px;}
-  .menu-btn{width:42px;height:42px;font-size:22px;}
-  .coins .coinEmoji{font-size:14px;}
-  .coins #headerCoins{font-size:14px;}
-  .qcount{font-size:12px;}
+  .header{padding:6px 10px;}
+  .menu-btn{width:40px;height:40px;font-size:20px;}
+  .coins .coinEmoji{font-size:13px;}
+  .coins #headerCoins{font-size:13px;}
+  .qcount{font-size:11px;}
 }
 </style>
 </head>
@@ -546,7 +550,7 @@ html,body{
 <!-- GAME STAGE -->
 <div class="stage">
   <div class="book">
-    <!-- HEADER - BIGGER -->
+    <!-- HEADER -->
     <div class="header">
       <div class="leftHeader">
         <div class="logoBox"><img src="logo.png" alt="logo" onerror="this.style.display='none'"></div>
@@ -565,7 +569,6 @@ html,body{
         </div>
         <div class="coins"><span class="coinEmoji">💰</span> <span id="headerCoins">0</span></div>
         
-        <!-- BIGGER 3-DOT BUTTON -->
         <button class="menu-btn" id="menuBtn" onclick="toggleMenu()">
           ⋮
           <span class="badge" id="menuBadge">!</span>
@@ -605,7 +608,7 @@ html,body{
       </div>
     </div>
 
-    <!-- CARD - FILLS ENTIRE SCREEN -->
+    <!-- CARD -->
     <div class="card">
       <div class="timer-section">
         <div class="timer-compact" id="timerCompact">
@@ -623,7 +626,11 @@ html,body{
         </div>
       </div>
 
-      <img id="logoImg" src="" alt="Cartoon Image">
+      <!-- IMAGE - BIGGER + CENTERED -->
+      <div class="image-container">
+        <img id="logoImg" src="" alt="Cartoon Image">
+      </div>
+
       <div class="question" id="question">Loading…</div>
       <div class="choices" id="choices" role="list" aria-live="polite"></div>
       <div class="feedback" id="feedback" aria-live="polite"></div>
@@ -1301,8 +1308,8 @@ updateMenuCounts();
 console.log('🎬 Cartoons loaded with:');
 console.log('✅ NO landscape lock - works in portrait');
 console.log('✅ FULL SCREEN - fills entire screen');
-console.log('✅ BIGGER header items');
-console.log('✅ BIGGER 3-dot menu button');
+console.log('✅ BIG IMAGE - centered');
+console.log('✅ BIG ANSWER BUTTONS');
 console.log('✅ Game stats sent to main page');
 console.log(`📦 Inventory:`, getShopInventory());
 </script>
