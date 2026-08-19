@@ -8,7 +8,7 @@
 
 <style>
 /* ============================================
-   PREMIUM THEME - MOBILE PERFECT
+   PREMIUM THEME - MOBILE PERFECT (FINAL)
    ============================================ */
 :root {
   --bg-primary: #f0f2f8;
@@ -315,7 +315,7 @@ html, body {
 .settings-btn:hover { background:var(--bg-card-hover); transform:scale(1.08); }
 
 /* ============================================
-   MAIN CONTENT - MOBILE PERFECT
+   MAIN CONTENT
    ============================================ */
 .main {
   padding-top:72px; 
@@ -394,7 +394,7 @@ html, body {
 .category-card .play-count { position:relative; z-index:1; font-size:0.5rem; color:var(--text-muted); margin-top:2px; }
 
 /* ============================================
-   MOBILE RESPONSIVE - PERFECT
+   MOBILE RESPONSIVE
    ============================================ */
 @media (max-width: 480px) {
   .header { height:54px; min-height:54px; padding:6px 10px; gap:4px; }
@@ -611,7 +611,7 @@ html, body {
 .reward-popup.show { opacity:1; transform:translateY(-6px); }
 
 /* ============================================
-   AI CHAT - SAME SIZE
+   AI CHAT
    ============================================ */
 #aiChatToggle {
   position:fixed; bottom:20px; right:20px; width:56px; height:56px; border-radius:50%;
@@ -1084,7 +1084,7 @@ function isThemeOwned(themeId) { return ownedThemes.includes(themeId); }
 function isAvatarOwned(avatarId) { return ownedAvatars.includes(avatarId); }
 
 // ==========================================
-// GAME STATS
+// GAME STATS - TRACKS EVERYTHING
 // ==========================================
 function updateGameStats() {
   document.getElementById('gamesPlayed').textContent = gameHistory.length;
@@ -1916,6 +1916,8 @@ function renderProfile() {
   const accuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
   const totalGames = history.length;
   
+  const ownedCosmetics = JSON.parse(localStorage.getItem('ownedCosmetics') || '[]');
+  
   container.innerHTML = `
     <div style="padding:6px 0;animation:fadeSlideUp 0.4s ease;">
       <div style="text-align:center;">
@@ -1926,6 +1928,17 @@ function renderProfile() {
         <h3 style="font-size:1.3rem;font-weight:900;color:var(--text-primary);">${username}</h3>
         <p style="color:var(--text-muted);font-size:0.7rem;">🏅 Brain Rush Player</p>
         <p style="color:var(--text-muted);font-size:0.6rem;">🎨 Theme: ${getThemeName(activeTheme)}</p>
+        ${equippedCosmetics.length > 0 ? `<p style="color:var(--text-muted);font-size:0.6rem;">✨ Cosmetics: ${equippedCosmetics.map(id => SHOP_DATA.cosmetics.find(c => c.id === id)?.emoji || '').join(' ')}</p>` : ''}
+        ${activePasses.length > 0 ? `<p style="color:var(--text-muted);font-size:0.6rem;">🎫 Passes: ${activePasses.map(id => SHOP_DATA.passes.find(p => p.id === id)?.emoji || '').join(' ')}</p>` : ''}
+        <div style="margin:8px auto;max-width:220px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.5rem;color:var(--text-muted);">
+            <span>⚡ Level ${level}</span>
+            <span>${xp} / ${Math.floor(100 * Math.pow(level + 1, 1.5))} XP</span>
+          </div>
+          <div style="width:100%;height:3px;background:var(--border-color);border-radius:10px;overflow:hidden;margin-top:2px;">
+            <div style="height:100%;width:${Math.min(((xp - Math.floor(100 * Math.pow(level, 1.5))) / (Math.floor(100 * Math.pow(level + 1, 1.5)) - Math.floor(100 * Math.pow(level, 1.5)))) * 100, 100)}%;background:var(--gradient-main);border-radius:10px;transition:width 0.8s ease;"></div>
+          </div>
+        </div>
       </div>
       <div class="profile-stats-grid">
         <div class="profile-stat-card gold"><span class="stat-icon">💰</span><div class="stat-value">${coins}</div><div class="stat-label">Coins</div></div>
@@ -1933,6 +1946,60 @@ function renderProfile() {
         <div class="profile-stat-card red"><span class="stat-icon">🔥</span><div class="stat-value">${streakDays}</div><div class="stat-label">Streak</div></div>
         <div class="profile-stat-card blue"><span class="stat-icon">📊</span><div class="stat-value">${accuracy}%</div><div class="stat-label">Accuracy</div></div>
         <div class="profile-stat-card green"><span class="stat-icon">🎮</span><div class="stat-value">${totalGames}</div><div class="stat-label">Games</div></div>
+      </div>
+      <div style="margin-top:10px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+          <h4 style="font-size:0.65rem;font-weight:700;color:var(--text-primary);">🏆 Achievements</h4>
+        </div>
+        <div class="achievement-grid">
+          ${[
+            { icon: '🎮', name: 'First Game', unlocked: totalGames >= 1 },
+            { icon: '🏆', name: '10 Games', unlocked: totalGames >= 10 },
+            { icon: '👑', name: '50 Games', unlocked: totalGames >= 50 },
+            { icon: '💎', name: '100 Games', unlocked: totalGames >= 100 },
+            { icon: '🔥', name: '7 Day Streak', unlocked: streakDays >= 7 },
+            { icon: '⚡', name: '30 Day Streak', unlocked: streakDays >= 30 },
+            { icon: '💰', name: '100 Coins', unlocked: coins >= 100 },
+            { icon: '🪙', name: '1000 Coins', unlocked: coins >= 1000 },
+            { icon: '💎', name: '5000 Coins', unlocked: coins >= 5000 },
+            { icon: '⭐', name: 'Perfect Game', unlocked: history.some(g => g.correct === g.total && g.total >= 5) },
+            { icon: '🧠', name: 'Category Master', unlocked: new Set(history.map(g => g.category)).size >= 5 },
+            { icon: '👑', name: 'Quiz King', unlocked: totalGames >= 25 && accuracy >= 80 }
+          ].map(a => `
+            <div class="achievement-badge ${a.unlocked ? 'unlocked' : 'locked'}">
+              <span class="ach-icon">${a.icon}</span>
+              <div class="ach-name">${a.name}</div>
+              <div class="ach-progress"><div class="ach-fill" style="width:${a.unlocked ? 100 : 0}%;"></div></div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+      <div style="margin-top:8px;text-align:left;">
+        <h4 style="font-size:0.6rem;font-weight:700;color:var(--text-muted);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.3px;">🖼️ Owned Avatars (${ownedAvatars.length})</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;">
+          ${ownedAvatars.map(id => `<span style="background:var(--input-bg);padding:2px 8px;border-radius:16px;font-size:0.5rem;color:var(--text-secondary);">${getAvatarEmoji(id)} ${getAvatarName(id)}${id === equippedAvatar ? ' ✅' : ''}</span>`).join('')}
+        </div>
+      </div>
+      <div style="margin-top:6px;text-align:left;">
+        <h4 style="font-size:0.6rem;font-weight:700;color:var(--text-muted);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.3px;">🎨 Owned Themes (${ownedThemes.length})</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;">
+          ${ownedThemes.length === 0 ? '<span style="font-size:0.5rem;color:var(--text-muted);">No themes purchased yet.</span>' : 
+            ownedThemes.map(id => `<span style="background:var(--input-bg);padding:2px 8px;border-radius:16px;font-size:0.5rem;color:var(--text-secondary);">${getThemeEmoji(id)} ${getThemeName(id)}${id === activeTheme ? ' ✅' : ''}</span>`).join('')}
+        </div>
+      </div>
+      <div style="margin-top:6px;text-align:left;">
+        <h4 style="font-size:0.6rem;font-weight:700;color:var(--text-muted);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.3px;">✨ Owned Cosmetics (${ownedCosmetics.length})</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;">
+          ${ownedCosmetics.length === 0 ? '<span style="font-size:0.5rem;color:var(--text-muted);">No cosmetics purchased yet.</span>' : 
+            ownedCosmetics.map(id => `<span style="background:var(--input-bg);padding:2px 8px;border-radius:16px;font-size:0.5rem;color:var(--text-secondary);">${SHOP_DATA.cosmetics.find(c => c.id === id)?.emoji || '✨'} ${SHOP_DATA.cosmetics.find(c => c.id === id)?.name || id}${equippedCosmetics.includes(id) ? ' ✅' : ''}</span>`).join('')}
+        </div>
+      </div>
+      <div style="margin-top:6px;text-align:left;">
+        <h4 style="font-size:0.6rem;font-weight:700;color:var(--text-muted);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.3px;">🎫 Active Passes</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:3px;">
+          ${activePasses.length === 0 ? '<span style="font-size:0.5rem;color:var(--text-muted);">No active passes.</span>' : 
+            activePasses.map(id => `<span style="background:var(--input-bg);padding:2px 8px;border-radius:16px;font-size:0.5rem;color:var(--text-secondary);">${SHOP_DATA.passes.find(p => p.id === id)?.emoji || '🎫'} ${SHOP_DATA.passes.find(p => p.id === id)?.name || id} ✅</span>`).join('')}
+        </div>
       </div>
       <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;justify-content:center;">
         <button class="btn-secondary" onclick="closeProfile();openShop();" style="font-size:0.6rem;padding:6px 12px;">🖼️ Shop</button>
@@ -2283,7 +2350,7 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ==========================================
-// GAME RESULT LISTENER
+// GAME RESULT LISTENER - TRACKS ALL STATS
 // ==========================================
 window.addEventListener('gameResult', function(e) {
   if (e.detail) {
@@ -2325,7 +2392,7 @@ window.addEventListener('gameResult', function(e) {
     }
     
     updateAllDisplays();
-    updateGameStats();
+    updateGameStats(); // Updates Games Played, Best Category, Accuracy
     syncToServer();
     syncLeaderboard();
     updateStreak();
@@ -2339,7 +2406,7 @@ async function init() {
   console.log('🧠 Brain Rush Premium Starting...');
   console.log('✅ All Shop Items Working');
   console.log('✅ Mobile Friendly - Slightly Bigger');
-  console.log('✅ Categories & AI - Same Size');
+  console.log('✅ Game Stats Tracking - Games Played, Best Category, Accuracy');
   
   const savedTheme = localStorage.getItem('activeTheme') || 'default';
   if (savedTheme !== 'default' && isThemeOwned(savedTheme)) {
