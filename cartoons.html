@@ -374,11 +374,27 @@ html,body{
 @keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.04);}100%{transform:scale(1);}}
 
 /* ============================================
-   NO IMAGE - LIKE CRE BUT BIGGER TEXT
+   NO IMAGE - LIKE CRE BUT BIGGER TEXT & CENTERED AS GROUP
    ============================================ */
 .question.no-image {
   font-size: 2rem;
   /* Everything else stays EXACTLY the same as .question above */
+}
+
+/* ============================================
+   WHEN NO IMAGE - CENTER EVERYTHING AS A GROUP
+   ============================================ */
+.card.no-image {
+  justify-content: center;
+}
+
+.card.no-image .image-container {
+  display: none;
+}
+
+.card.no-image .choices {
+  align-content: center;
+  justify-content: center;
 }
 
 /* ============================================
@@ -628,7 +644,7 @@ html,body{
     </div>
 
     <!-- CARD -->
-    <div class="card">
+    <div class="card" id="card">
       <div class="timer-section">
         <div class="timer-compact" id="timerCompact">
           <div class="mini-circle">
@@ -943,6 +959,7 @@ let streak = 0;
 const TOTAL_TIME = 15;
 let doubleCoinsActive = false;
 
+const cardEl = document.getElementById('card');
 const logoImg = document.getElementById('logoImg');
 const questionEl = document.getElementById('question');
 const choicesEl = document.getElementById('choices');
@@ -1071,10 +1088,12 @@ function loadQuestion(){
     img.src = current.img;
     // Remove no-image class (text normal size)
     questionEl.classList.remove('no-image');
+    cardEl.classList.remove('no-image');
   } else {
-    // No image - hide it and make text BIGGER (everything else like CRE)
+    // No image - hide it, make text BIGGER, center everything
     logoImg.style.display = 'none';
     questionEl.classList.add('no-image');
+    cardEl.classList.add('no-image');
   }
 
   questionEl.textContent = current.q || "Which character/cartoon is this?";
@@ -1340,7 +1359,7 @@ updateMenuCounts();
 console.log('🎬 Cartoons loaded with:');
 console.log('✅ NO landscape lock - works in portrait');
 console.log('✅ Image questions: normal text size, PERFECTLY CENTERED');
-console.log('✅ No image questions: EXACTLY like CRE but BIGGER text');
+console.log('✅ No image questions: EXACTLY like CRE but BIGGER text & CENTERED as a group');
 console.log('✅ Game stats sent to main page');
 console.log(`📦 Inventory:`, getShopInventory());
 </script>
