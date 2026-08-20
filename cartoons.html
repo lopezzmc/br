@@ -349,48 +349,40 @@ html,body{
 #logoImg.error{display:none;}
 
 /* ============================================
-   QUESTION - WITH IMAGE (KEEP AS IS)
+   QUESTION - BIGGER TEXT (like Christian quiz)
    ============================================ */
 .question{
   font-family:"Patrick Hand",Inter,system-ui,sans-serif;
-  font-size:1.4rem;
+  font-size:1.7rem;
   font-weight:900;
   color:#000;
   text-align:center;
-  padding:10px 12px;
+  padding:16px 14px;
   position:relative;
   z-index:10;
-  min-height:44px;
+  min-height:70px;
   flex-shrink:0;
-  background:rgba(255,255,255,0.85);
-  border-radius:12px;
-  line-height:1.3;
+  background:rgba(255,255,255,0.88);
+  border-radius:14px;
+  line-height:1.35;
   border:1px solid rgba(123,58,246,0.06);
+  box-shadow:0 2px 12px rgba(0,0,0,0.04);
   display:flex;
   align-items:center;
   justify-content:center;
 }
 .question.pop{animation:questionPop 0.3s ease;}
-@keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.04);}100%{transform:scale(1);}}
+@keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.02);}100%{transform:scale(1);}}
 
 /* ============================================
-   NO IMAGE - EXACTLY LIKE CHRISTIAN QUIZ (BIGGER TEXT)
+   NO IMAGE - SAME AS WITH IMAGE (already big)
    ============================================ */
 .question.no-image {
-  font-size: 1.7rem;
-  padding: 16px 14px;
-  min-height: 70px;
-  border-radius: 14px;
-  background: rgba(255,255,255,0.88);
-  border: 1px solid rgba(123,58,246,0.06);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  /* Same as .question - already big */
 }
 
 /* ============================================
-   CHOICES - BIGGER ANSWERS
+   CHOICES - BIGGER ANSWERS (both with and without image)
    ============================================ */
 .choices{
   display:grid;
@@ -402,7 +394,7 @@ html,body{
   min-height:100px;
 }
 .choice{
-  min-height:52px;
+  min-height:56px;
   border-radius:999px;
   display:flex;
   align-items:center;
@@ -410,7 +402,7 @@ html,body{
   cursor:pointer;
   user-select:none;
   font-weight:900;
-  font-size:1rem;
+  font-size:1.1rem;
   font-family:"Patrick Hand",Inter,sans-serif;
   color:#fff;
   background:linear-gradient(-45deg,#1a9850,#2ecc71,#27ae60,#1a9850);
@@ -425,131 +417,89 @@ html,body{
   line-height:1.2;
 }
 @keyframes gradientBG{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.choice:active{transform:scale(0.92);}
+.choice:active{transform:scale(0.94);}
 .choice.correct{border-color:#00ff00;background:linear-gradient(-45deg,#1a9850,#2ecc71);box-shadow:0 0 25px #00ff00;}
 .choice.wrong{border-color:#ff0000;background:linear-gradient(-45deg,#c62828,#ef5350);animation:wrongShake 0.5s ease;}
 @keyframes wrongShake{0%{transform:translateX(0);}25%{transform:translateX(-6px);}50%{transform:translateX(6px);}75%{transform:translateX(-3px);}100%{transform:translateX(0);}}
-
-.feedback{
-  min-height:18px;
-  font-weight:800;
-  text-align:center;
-  color:#333;
-  padding:2px;
-  font-size:0.7rem;
-  flex-shrink:0;
-}
-
-.floating-emoji{
-  position:fixed;
-  font-size:34px;
-  pointer-events:none;
-  z-index:200;
-  animation:floatUp 1.2s ease-out forwards;
-}
-@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(0.5) rotate(0deg);}50%{opacity:1;transform:translateY(-80px) scale(1.2) rotate(20deg);}100%{opacity:0;transform:translateY(-160px) scale(0.8) rotate(-10deg);}}
-
-.progressWrap{
-  margin-top:2px;
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-  align-items:stretch;
-  flex-shrink:0;
-}
-.progressBar{
-  height:5px;
-  background:linear-gradient(90deg,rgba(0,0,0,.02),rgba(0,0,0,.01));
-  border-radius:999px;
-  overflow:hidden;
-}
-.progressFill{
-  height:100%;
-  width:0%;
-  background:linear-gradient(90deg,rgba(123,58,246,.85),rgba(0,229,255,.8));
-  transition:width .5s ease;
-}
-
-.final{
-  position:absolute;
-  inset:0;
-  z-index:12;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  flex-direction:column;
-  gap:6px;
-  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.98));
-  border-radius:12px;
-  padding:16px;
-  text-align:center;
-  display:none;
-  animation:finalPop 0.5s ease;
-}
-@keyframes finalPop{0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);}100%{transform:scale(1);opacity:1;}}
-.final h2{font-family:"Patrick Hand",Inter;font-size:1.2rem;margin:2px 0;color:#0b6b3a;}
-.final .score{font-weight:900;color:#222;font-size:0.8rem;}
-.final .btns{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;justify-content:center;}
-.btn{
-  padding:6px 14px;
-  border-radius:10px;
-  border:none;
-  cursor:pointer;
-  font-weight:900;
-  background:linear-gradient(90deg,#7b3af6,#00e5ff);
-  color:#fff;
-  box-shadow:0 12px 36px rgba(0,0,0,.12);
-  touch-action:manipulation;
-  min-height:36px;
-  min-width:60px;
-  font-size:0.7rem;
-  transition:transform 0.2s ease;
-}
-.btn:active{transform:scale(0.92);}
-
-.confetti{
-  position:fixed;
-  width:5px;
-  height:5px;
-  top:-20px;
-  pointer-events:none;
-  z-index:40;
-  opacity:.95;
-  border-radius:2px;
-  animation:confettiFall 2000ms linear forwards;
-}
-@keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:.95;}}
 
 /* ============================================
    RESPONSIVE - BIGGER ON ALL SCREENS
    ============================================ */
 @media(max-width:480px){
-  .question{font-size:1.1rem;padding:6px 8px;min-height:32px;}
-  .question.no-image{font-size:1.4rem;padding:14px 12px;min-height:60px;border-radius:12px;}
-  .choice{min-height:38px;font-size:0.8rem;padding:0 8px;border-width:2px;}
-  .choices{gap:5px;min-height:70px;}
+  .question{
+    font-size:1.4rem;
+    padding:14px 12px;
+    min-height:60px;
+    border-radius:12px;
+  }
+  .choice{
+    min-height:52px;
+    font-size:0.95rem;
+    padding:0 10px;
+    border-width:2px;
+  }
   .image-container{height:40vh;min-height:140px;max-height:40vh;}
+  .header{padding:6px 10px;}
+  .title{font-size:16px;}
+  .logoBox{width:32px;height:32px;}
+  .qcount{font-size:10px;padding:3px 8px;}
+  .coins{padding:3px 8px;}
+  .coins .coinEmoji{font-size:11px;}
+  .coins #headerCoins{font-size:11px;}
+  .menu-btn{width:30px;height:30px;font-size:16px;}
 }
 
 @media(max-width:380px){
-  .question.no-image{font-size:1.2rem;padding:12px 10px;min-height:50px;}
-  .choice{min-height:34px;font-size:0.7rem;}
+  .question{
+    font-size:1.2rem;
+    padding:12px 10px;
+    min-height:50px;
+  }
+  .choice{
+    min-height:44px;
+    font-size:0.85rem;
+    padding:0 8px;
+  }
 }
 
 @media(min-height:800px) and (max-width:480px){
-  .question.no-image{font-size:1.6rem;min-height:75px;}
+  .question{
+    font-size:1.6rem;
+    min-height:75px;
+  }
+  .choice{
+    min-height:56px;
+    font-size:1rem;
+  }
 }
 
 @media(min-width:481px) and (max-width:767px){
-  .question{font-size:1.2rem;min-height:40px;}
-  .question.no-image{font-size:1.6rem;min-height:70px;padding:16px 14px;}
-  .choice{min-height:44px;font-size:0.9rem;}
+  .question{
+    font-size:1.6rem;
+    min-height:70px;
+    padding:16px 14px;
+  }
+  .choice{
+    min-height:52px;
+    font-size:1rem;
+  }
+  .header{padding:6px 10px;}
+  .title{font-size:16px;}
+  .logoBox{width:32px;height:32px;}
 }
 
 @media(min-width:768px){
-  .question{font-size:1.6rem;min-height:55px;padding:14px 16px;}
-  .question.no-image{font-size:2rem;min-height:85px;padding:20px 18px;border-radius:16px;}
-  .choice{min-height:56px;font-size:1.1rem;border-width:3px;}
+  .question{
+    font-size:2rem;
+    min-height:85px;
+    padding:20px 18px;
+    border-radius:16px;
+  }
+  .choice{
+    min-height:60px;
+    font-size:1.15rem;
+    border-width:3px;
+  }
   .image-container{height:50vh;min-height:250px;max-height:50vh;}
   .logoBox{width:40px;height:40px;}
   .title{font-size:22px;}
@@ -561,14 +511,21 @@ html,body{
 }
 
 @media(max-height:500px) and (orientation:landscape){
-  .question{font-size:1rem;min-height:32px;padding:6px 10px;}
-  .question.no-image{font-size:1.1rem;min-height:40px;padding:8px 10px;}
-  .choice{min-height:30px;font-size:0.7rem;padding:0 6px;border-width:2px;}
-  .choices{gap:4px;min-height:50px;}
+  .question{
+    font-size:1.1rem;
+    min-height:40px;
+    padding:8px 10px;
+  }
+  .choice{
+    min-height:34px;
+    font-size:0.8rem;
+    padding:0 8px;
+    border-width:2px;
+  }
   .image-container{height:40vh;min-height:100px;max-height:40vh;}
-  .timer-compact .mini-circle{width:22px;height:22px;}
-  .timer-compact .mini-circle .timer-num{font-size:8px;}
-  .timer-compact .timer-status-text{font-size:6px;}
+  .timer-compact .mini-circle{width:24px;height:24px;}
+  .timer-compact .mini-circle .timer-num{font-size:10px;}
+  .timer-compact .timer-status-text{font-size:7px;}
 }
 </style>
 </head>
@@ -664,10 +621,10 @@ html,body{
         <img id="logoImg" src="" alt="Cartoon Image">
       </div>
 
-      <!-- QUESTION - EXACTLY LIKE CHRISTIAN QUIZ WHEN NO IMAGE -->
+      <!-- QUESTION - BIGGER TEXT -->
       <div class="question" id="question">Loading…</div>
 
-      <!-- CHOICES - BIGGER -->
+      <!-- CHOICES - BIGGER ANSWERS -->
       <div class="choices" id="choices" role="list" aria-live="polite"></div>
 
       <div class="feedback" id="feedback" aria-live="polite"></div>
@@ -889,7 +846,8 @@ function updateMenuCounts() {
 }
 
 // ============================================
-// COIN SYNC// ============================================
+// COIN SYNC
+// ============================================
 async function syncCoinsToBackend(amount) {
   if (!authToken) return false;
   try {
@@ -1083,11 +1041,10 @@ function loadQuestion(){
       logoImg.style.display = 'none';
     };
     img.src = current.img;
-    // Remove no-image class (text normal size)
     questionEl.classList.remove('no-image');
     cardEl.classList.remove('no-image');
   } else {
-    // No image - EXACTLY like Christian quiz with bigger text
+    // No image - same style (already big)
     logoImg.style.display = 'none';
     questionEl.classList.add('no-image');
     cardEl.classList.add('no-image');
@@ -1355,8 +1312,9 @@ updateMenuCounts();
 
 console.log('🎬 Cartoons loaded with:');
 console.log('✅ NO landscape lock - works in portrait');
-console.log('✅ Image questions: normal text size, PERFECTLY CENTERED');
-console.log('✅ No image questions: EXACTLY like Christian quiz with BIGGER text');
+console.log('✅ BIGGER question text (1.7rem like Christian)');
+console.log('✅ BIGGER answer buttons (1.1rem)');
+console.log('✅ Perfectly centered layout');
 console.log('✅ Game stats sent to main page');
 console.log(`📦 Inventory:`, getShopInventory());
 </script>
