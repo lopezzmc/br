@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-<title>Brain Rush — Christian Quiz</title>
+<title>Brain Rush — Cars</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
 <style>
 /* ============================================
-   MOBILE-FRIENDLY - SOFT COLOR #363535 - FIXED MENU
+   FULL SCREEN - BIGGER EVERYTHING!
    ============================================ */
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{
@@ -17,7 +17,7 @@ html,body{
   margin:0;
   padding:0;
   background:#f0f0f0;
-  color:#363535;
+  color:#111;
   overflow:hidden;
   font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;
   -webkit-font-smoothing:antialiased;
@@ -53,13 +53,13 @@ html,body{
 }
 
 /* ============================================
-   HEADER - BIGGER & CLEANER
+   HEADER - BIGGER
    ============================================ */
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:6px;
+  gap:8px;
   flex-wrap:nowrap;
   padding:8px 12px;
   flex-shrink:0;
@@ -67,8 +67,6 @@ html,body{
   border-radius:12px;
   margin-bottom:4px;
   border:1px solid rgba(255,255,255,0.3);
-  position:relative;
-  z-index:10;
 }
 .leftHeader{
   display:flex;
@@ -78,8 +76,8 @@ html,body{
   flex-shrink:0;
 }
 .logoBox{
-  width:34px;
-  height:34px;
+  width:36px;
+  height:36px;
   border-radius:8px;
   background:#fff;
   display:flex;
@@ -88,7 +86,6 @@ html,body{
   overflow:hidden;
   border:1px solid rgba(0,0,0,0.04);
   flex-shrink:0;
-  box-shadow:0 2px 8px rgba(0,0,0,0.04);
 }
 .logoBox img{
   width:80%;
@@ -102,17 +99,17 @@ html,body{
 }
 .title{
   font-family:"Patrick Hand",Inter,system-ui,sans-serif;
-  font-size:18px;
+  font-size:20px;
   margin:0;
   font-weight:900;
-  color:#363535;
+  color:#111;
   line-height:1;
 }
 .subtitle{
-  font-size:8px;
+  font-size:9px;
   color:#888;
   font-weight:700;
-  opacity:.7;
+  opacity:.8;
   margin-top:-1px;
   font-family:Inter;
   letter-spacing:0.5px;
@@ -129,15 +126,15 @@ html,body{
   font-weight:900;
   flex-shrink:0;
 }
-.coins .coinEmoji{font-size:12px;}
-.coins #headerCoins{font-size:12px;color:#363535;}
+.coins .coinEmoji{font-size:13px;}
+.coins #headerCoins{font-size:13px;color:#222;}
 .qcount{
   font-weight:900;
-  color:#363535;
+  color:#222;
   padding:4px 10px;
-  background:rgba(255,255,255,0.7);
+  background:rgba(255,255,255,0.8);
   border-radius:8px;
-  font-size:11px;
+  font-size:12px;
   flex-shrink:0;
 }
 
@@ -153,7 +150,7 @@ html,body{
   font-size:10px;
   flex-shrink:0;
 }
-.streak-badge .streak-fire{font-size:10px;}
+.streak-badge .streak-fire{font-size:11px;}
 .streak-badge.hidden{display:none;}
 
 .header-right{
@@ -163,7 +160,6 @@ html,body{
   flex-wrap:nowrap;
   position:relative;
   flex-shrink:0;
-  z-index:20;
 }
 .menu-btn{
   width:34px;
@@ -177,16 +173,14 @@ html,body{
   justify-content:center;
   font-size:18px;
   font-weight:700;
-  color:#363535;
+  color:#222;
   position:relative;
   flex-shrink:0;
-  box-shadow:0 2px 8px rgba(0,0,0,0.04);
-  z-index:25;
 }
 .menu-btn .badge{
   position:absolute;
-  top:-3px;
-  right:-3px;
+  top:-4px;
+  right:-4px;
   background:#ff6b6b;
   color:#fff;
   font-size:7px;
@@ -200,26 +194,23 @@ html,body{
 }
 .menu-btn .badge.show{display:flex;}
 
-/* ============================================
-   MENU DROPDOWN - FIXED (APPEARS ON TOP)
-   ============================================ */
 .menu-dropdown{
   position:absolute;
-  top:calc(100% + 6px);
+  top:100%;
   right:0;
-  background:rgba(255,255,255,0.98);
+  margin-top:6px;
+  background:rgba(255,255,255,0.96);
   backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
   border-radius:14px;
-  border:1px solid rgba(0,0,0,0.08);
-  box-shadow:0 16px 64px rgba(0,0,0,0.15);
+  border:1px solid rgba(0,0,0,0.06);
+  box-shadow:0 12px 48px rgba(0,0,0,0.12);
   padding:6px;
-  z-index:9999 !important;
-  min-width:160px;
+  z-index:1000;
+  min-width:150px;
   opacity:0;
   transform:translateY(-10px) scale(0.96);
   pointer-events:none;
-  transition:all 0.25s cubic-bezier(0.34,1.56,0.64,1);
+  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);
   display:none;
 }
 .menu-dropdown.open{
@@ -232,22 +223,19 @@ html,body{
   display:flex;
   align-items:center;
   gap:8px;
-  padding:10px 14px;
+  padding:8px 14px;
   border-radius:10px;
   cursor:pointer;
   font-weight:600;
   font-size:12px;
-  color:#363535;
+  color:#222;
   width:100%;
   border:none;
   background:transparent;
   text-align:left;
-  transition:background 0.15s ease;
 }
-.menu-dropdown .menu-item:active{
-  background:rgba(123,58,246,0.1);
-}
-.menu-dropdown .menu-item .icon{font-size:14px;width:22px;text-align:center;}
+.menu-dropdown .menu-item:hover{background:rgba(123,58,246,0.08);}
+.menu-dropdown .menu-item .icon{font-size:13px;width:20px;text-align:center;}
 .menu-dropdown .menu-item .count{
   margin-left:auto;
   background:rgba(123,58,246,0.12);
@@ -257,16 +245,11 @@ html,body{
   font-weight:800;
   color:#7b3af6;
 }
-.menu-dropdown .menu-item .count.empty{
-  background:rgba(255,0,0,0.08);
-  color:#ff4757;
-}
 .menu-dropdown .menu-divider{height:1px;background:rgba(0,0,0,0.06);margin:4px 12px;}
 .menu-dropdown .menu-item.danger{color:#ff4757;}
-.menu-dropdown .menu-item.danger:active{background:rgba(255,71,87,0.1);}
 
 /* ============================================
-   CARD - CLEAN & SPACIOUS
+   CARD - FILLS ENTIRE SCREEN
    ============================================ */
 .card{
   flex:1;
@@ -277,10 +260,9 @@ html,body{
   width:100%;
   position:relative;
   min-height:0;
-  background:rgba(255,255,255,0.15);
+  background:rgba(255,255,255,0.3);
   border-radius:12px;
-  padding:6px;
-  z-index:5;
+  padding:8px;
 }
 
 .timer-section{
@@ -292,17 +274,17 @@ html,body{
 .timer-compact{
   display:flex;
   align-items:center;
-  gap:5px;
-  background:rgba(255,255,255,0.8);
-  padding:3px 10px 3px 5px;
+  gap:6px;
+  background:rgba(255,255,255,0.85);
+  padding:3px 10px 3px 6px;
   border-radius:30px;
   border:1px solid rgba(0,0,0,0.03);
   flex-shrink:0;
 }
 .timer-compact .mini-circle{
   position:relative;
-  width:28px;
-  height:28px;
+  width:32px;
+  height:32px;
   flex-shrink:0;
 }
 .timer-compact .mini-circle svg{
@@ -321,9 +303,9 @@ html,body{
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
-  font-size:11px;
+  font-size:12px;
   font-weight:900;
-  color:#363535;
+  color:#222;
   font-family:"Patrick Hand",Inter,sans-serif;
   line-height:1;
 }
@@ -331,90 +313,103 @@ html,body{
 .timer-compact .mini-circle .timer-num.danger{color:#ff0000;animation:numPulse 0.5s ease-in-out infinite alternate;}
 @keyframes numPulse{from{transform:translate(-50%,-50%) scale(1);}to{transform:translate(-50%,-50%) scale(1.15);}}
 .timer-compact .timer-status-text{
-  font-size:8px;
+  font-size:9px;
   font-weight:700;
   color:#888;
   font-family:Inter,sans-serif;
-  min-width:22px;
+  min-width:25px;
   white-space:nowrap;
 }
 
 /* ============================================
-   QUESTION - PERFECT SIZE, CENTERED, SOFT COLOR
+   IMAGE - TAKES HALF THE SCREEN
+   ============================================ */
+.image-container{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-shrink:0;
+  width:100%;
+  height:50vh;
+  min-height:200px;
+  max-height:50vh;
+  padding:2px 0;
+}
+#logoImg{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border-radius:12px;
+  display:block;
+  background:rgba(255,255,255,0.5);
+  transition:opacity 0.3s ease;
+  opacity:0;
+}
+#logoImg.loaded{opacity:1;}
+#logoImg.error{display:none;}
+
+/* ============================================
+   QUESTION - WITH IMAGE (normal size)
    ============================================ */
 .question{
   font-family:"Patrick Hand",Inter,system-ui,sans-serif;
-  font-size:1.7rem;
+  font-size:1.6rem;
   font-weight:900;
-  color:#363535;
+  color:#000;
   text-align:center;
   padding:16px 14px;
   position:relative;
-  z-index:5;
-  flex:1;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  z-index:10;
+  min-height:70px;
+  flex-shrink:0;
   background:rgba(255,255,255,0.88);
   border-radius:14px;
   line-height:1.35;
-  min-height:70px;
-  box-shadow:0 2px 12px rgba(0,0,0,0.04);
   border:1px solid rgba(123,58,246,0.06);
+  box-shadow:0 2px 12px rgba(0,0,0,0.04);
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
-@media(max-width:480px){
-  .question{
-    font-size:1.4rem;
-    padding:14px 12px;
-    min-height:60px;
-    border-radius:12px;
-  }
-}
-@media(max-width:380px){
-  .question{
-    font-size:1.2rem;
-    padding:12px 10px;
-    min-height:50px;
-  }
-}
-@media(min-height:800px) and (max-width:480px){
-  .question{
-    font-size:1.6rem;
-    min-height:75px;
-  }
-}
-@media(min-width:768px){
-  .question{
-    font-size:2rem;
-    min-height:85px;
-    padding:20px 18px;
-  }
-}
-@media(max-height:500px) and (orientation:landscape){
-  .question{
-    font-size:1.1rem;
-    min-height:40px;
-    padding:8px 10px;
-  }
-}
-
 .question.pop{animation:questionPop 0.3s ease;}
 @keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.02);}100%{transform:scale(1);}}
 
 /* ============================================
-   CHOICES - TAPPABLE
+   NO IMAGE - EXACTLY LIKE CHRISTIAN QUIZ BUT BIGGER TEXT
+   ============================================ */
+.question.no-image {
+  font-size: 2rem;
+  padding: 16px 14px;
+  min-height: 70px;
+  flex: 1;
+  background: rgba(255,255,255,0.88);
+  border: 1px solid rgba(123,58,246,0.06);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  border-radius: 14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* Hide image container when no image */
+.card.no-image .image-container {
+  display: none;
+}
+
+/* ============================================
+   CHOICES - BIGGER ANSWERS (1.1rem)
    ============================================ */
 .choices{
   display:grid;
   grid-template-columns:1fr 1fr;
-  gap:6px;
+  gap:8px;
   width:100%;
   flex:1;
   align-content:center;
-  min-height:70px;
+  min-height:100px;
 }
 .choice{
-  min-height:48px;
+  min-height:56px;
   border-radius:999px;
   display:flex;
   align-items:center;
@@ -422,15 +417,15 @@ html,body{
   cursor:pointer;
   user-select:none;
   font-weight:900;
-  font-size:0.9rem;
+  font-size:1.1rem;
   font-family:"Patrick Hand",Inter,sans-serif;
   color:#fff;
   background:linear-gradient(-45deg,#1a9850,#2ecc71,#27ae60,#1a9850);
   background-size:400% 400%;
-  border:2px solid #057d05;
+  border:3px solid #057d05;
   transition:all .25s ease;
   animation:gradientBG 8s ease infinite;
-  padding:0 10px;
+  padding:0 14px;
   text-align:center;
   touch-action:manipulation;
   word-break:break-word;
@@ -440,53 +435,23 @@ html,body{
 .choice:active{transform:scale(0.94);}
 .choice.correct{border-color:#00ff00;background:linear-gradient(-45deg,#1a9850,#2ecc71);box-shadow:0 0 25px #00ff00;}
 .choice.wrong{border-color:#ff0000;background:linear-gradient(-45deg,#c62828,#ef5350);animation:wrongShake 0.5s ease;}
-@keyframes wrongShake{0%{transform:translateX(0);}25%{transform:translateX(-5px);}50%{transform:translateX(5px);}75%{transform:translateX(-3px);}100%{transform:translateX(0);}}
-
-@media(max-width:480px){
-  .choice{
-    min-height:52px;
-    font-size:0.85rem;
-    padding:0 8px;
-    border-width:2px;
-  }
-}
-@media(max-width:380px){
-  .choice{
-    min-height:44px;
-    font-size:0.75rem;
-    padding:0 6px;
-    border-width:2px;
-  }
-}
-@media(min-width:768px){
-  .choice{
-    min-height:56px;
-    font-size:1rem;
-    border-width:3px;
-  }
-}
+@keyframes wrongShake{0%{transform:translateX(0);}25%{transform:translateX(-6px);}50%{transform:translateX(6px);}75%{transform:translateX(-3px);}100%{transform:translateX(0);}}
 
 .feedback{
-  min-height:20px;
+  min-height:18px;
   font-weight:800;
   text-align:center;
-  color:#363535;
-  padding:3px;
-  font-size:0.75rem;
+  color:#333;
+  padding:2px;
+  font-size:0.7rem;
   flex-shrink:0;
-}
-@media(max-width:480px){
-  .feedback{
-    font-size:0.7rem;
-    min-height:18px;
-  }
 }
 
 .floating-emoji{
   position:fixed;
-  font-size:36px;
+  font-size:34px;
   pointer-events:none;
-  z-index:99999 !important;
+  z-index:200;
   animation:floatUp 1.2s ease-out forwards;
 }
 @keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(0.5) rotate(0deg);}50%{opacity:1;transform:translateY(-80px) scale(1.2) rotate(20deg);}100%{opacity:0;transform:translateY(-160px) scale(0.8) rotate(-10deg);}}
@@ -500,30 +465,28 @@ html,body{
   flex-shrink:0;
 }
 .progressBar{
-  height:4px;
-  background:rgba(0,0,0,0.05);
+  height:5px;
+  background:linear-gradient(90deg,rgba(0,0,0,.02),rgba(0,0,0,.01));
   border-radius:999px;
   overflow:hidden;
 }
 .progressFill{
   height:100%;
   width:0%;
-  background:linear-gradient(90deg,rgba(123,58,246,0.7),rgba(0,229,255,0.7));
+  background:linear-gradient(90deg,rgba(123,58,246,.85),rgba(0,229,255,.8));
   transition:width .5s ease;
 }
 
 .final{
   position:absolute;
   inset:0;
-  z-index:100 !important;
+  z-index:12;
   display:flex;
   align-items:center;
   justify-content:center;
   flex-direction:column;
   gap:6px;
-  background:rgba(255,255,255,0.96);
-  backdrop-filter:blur(10px);
-  -webkit-backdrop-filter:blur(10px);
+  background:linear-gradient(180deg,rgba(255,255,255,.95),rgba(255,255,255,.98));
   border-radius:12px;
   padding:16px;
   text-align:center;
@@ -531,8 +494,8 @@ html,body{
   animation:finalPop 0.5s ease;
 }
 @keyframes finalPop{0%{transform:scale(0.8);opacity:0;}50%{transform:scale(1.05);}100%{transform:scale(1);opacity:1;}}
-.final h2{font-family:"Patrick Hand",Inter;font-size:1.4rem;margin:2px 0;color:#0b6b3a;}
-.final .score{font-weight:900;color:#363535;font-size:0.85rem;}
+.final h2{font-family:"Patrick Hand",Inter;font-size:1.2rem;margin:2px 0;color:#0b6b3a;}
+.final .score{font-weight:900;color:#222;font-size:0.8rem;}
 .final .btns{display:flex;gap:6px;margin-top:4px;flex-wrap:wrap;justify-content:center;}
 .btn{
   padding:6px 14px;
@@ -542,14 +505,14 @@ html,body{
   font-weight:900;
   background:linear-gradient(90deg,#7b3af6,#00e5ff);
   color:#fff;
-  box-shadow:0 8px 24px rgba(0,0,0,0.1);
+  box-shadow:0 12px 36px rgba(0,0,0,.12);
   touch-action:manipulation;
-  min-height:38px;
+  min-height:36px;
   min-width:60px;
-  font-size:0.8rem;
+  font-size:0.7rem;
   transition:transform 0.2s ease;
 }
-.btn:active{transform:scale(0.94);}
+.btn:active{transform:scale(0.92);}
 
 .confetti{
   position:fixed;
@@ -557,42 +520,81 @@ html,body{
   height:5px;
   top:-20px;
   pointer-events:none;
-  z-index:99998 !important;
-  opacity:.9;
+  z-index:40;
+  opacity:.95;
   border-radius:2px;
   animation:confettiFall 2000ms linear forwards;
 }
-@keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:.9;}}
+@keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:.95;}}
 
 /* ============================================
-   MOBILE-FRIENDLY OPTIMIZATIONS
+   RESPONSIVE - PERFECT ON ALL SCREENS
    ============================================ */
+@media(max-width:480px){
+  .question{font-size:1.4rem;padding:14px 12px;min-height:60px;border-radius:12px;}
+  .question.no-image{font-size:1.7rem;padding:14px 12px;min-height:60px;border-radius:12px;}
+  .choice{min-height:50px;font-size:0.95rem;padding:0 10px;border-width:2px;}
+  .image-container{height:40vh;min-height:140px;max-height:40vh;}
+  .header{padding:6px 10px;}
+  .title{font-size:16px;}
+  .logoBox{width:32px;height:32px;}
+  .qcount{font-size:10px;padding:3px 8px;}
+  .coins{padding:3px 8px;}
+  .coins .coinEmoji{font-size:11px;}
+  .coins #headerCoins{font-size:11px;}
+  .menu-btn{width:30px;height:30px;font-size:16px;}
+}
+
+@media(max-width:380px){
+  .question{font-size:1.2rem;padding:12px 10px;min-height:50px;}
+  .question.no-image{font-size:1.5rem;padding:12px 10px;min-height:50px;}
+  .choice{min-height:44px;font-size:0.85rem;padding:0 8px;}
+}
+
 @media(min-height:800px) and (max-width:480px){
   .question{font-size:1.6rem;min-height:75px;}
-  .choice{min-height:54px;font-size:0.9rem;}
+  .question.no-image{font-size:1.9rem;min-height:75px;}
+  .choice{min-height:54px;font-size:1rem;}
 }
 
 @media(min-width:481px) and (max-width:767px){
-  .question{font-size:1.6rem;min-height:70px;}
-  .choice{min-height:52px;font-size:0.9rem;}
+  .question{font-size:1.5rem;min-height:70px;padding:16px 14px;}
+  .question.no-image{font-size:1.8rem;min-height:70px;padding:16px 14px;}
+  .choice{min-height:52px;font-size:1rem;}
   .header{padding:6px 10px;}
   .title{font-size:16px;}
   .logoBox{width:32px;height:32px;}
 }
 
-@media(hover:none){
-  .choice:hover{transform:none;}
-  .menu-item:hover{background:transparent;}
+@media(min-width:768px){
+  .question{font-size:1.8rem;min-height:85px;padding:20px 18px;border-radius:16px;}
+  .question.no-image{font-size:2.2rem;min-height:85px;padding:20px 18px;border-radius:16px;}
+  .choice{min-height:60px;font-size:1.15rem;border-width:3px;}
+  .image-container{height:50vh;min-height:250px;max-height:50vh;}
+  .logoBox{width:40px;height:40px;}
+  .title{font-size:22px;}
+  .header{padding:10px 16px;}
+  .menu-btn{width:38px;height:38px;font-size:20px;}
+  .coins .coinEmoji{font-size:15px;}
+  .coins #headerCoins{font-size:15px;}
+  .qcount{font-size:13px;}
 }
 
-@supports(padding:max(0px)){
-  .stage{padding:max(4px, env(safe-area-inset-top)) max(4px, env(safe-area-inset-right)) max(4px, env(safe-area-inset-bottom)) max(4px, env(safe-area-inset-left));}
+@media(max-height:500px) and (orientation:landscape){
+  .question{font-size:1.1rem;min-height:40px;padding:8px 10px;}
+  .question.no-image{font-size:1.3rem;min-height:40px;padding:8px 10px;}
+  .choice{min-height:34px;font-size:0.8rem;padding:0 8px;border-width:2px;}
+  .choices{gap:4px;min-height:50px;}
+  .image-container{height:40vh;min-height:100px;max-height:40vh;}
+  .timer-compact .mini-circle{width:24px;height:24px;}
+  .timer-compact .mini-circle .timer-num{font-size:10px;}
+  .timer-compact .timer-status-text{font-size:7px;}
 }
 </style>
 </head>
 <body>
 
-<!-- ===== NO LANDSCAPE LOCK - REMOVED! ===== -->
+<!-- ===== NO LANDSCAPE LOCK ===== -->
 
 <!-- BACKGROUND -->
 <div class="bg"></div>
@@ -601,19 +603,19 @@ html,body{
 <!-- GAME STAGE -->
 <div class="stage">
   <div class="book">
-    <!-- HEADER - BIGGER & CLEANER -->
+    <!-- HEADER - BIGGER -->
     <div class="header">
       <div class="leftHeader">
         <div class="logoBox"><img src="logo.png" alt="logo" onerror="this.style.display='none'"></div>
         <div class="titleWrap">
           <div class="title">Brain Rush</div>
-          <div class="subtitle">Christian</div>
+          <div class="subtitle">Cars</div>
         </div>
         <div>
           <div class="qcount" id="qcount">1/10</div>
         </div>
       </div>
-      <div class="header-right">
+      <div class="header-right" style="position:relative;">
         <div class="streak-badge hidden" id="streakBadge">
           <span class="streak-fire">🔥</span>
           <span id="streakCount">0</span>
@@ -660,7 +662,7 @@ html,body{
     </div>
 
     <!-- CARD -->
-    <div class="card">
+    <div class="card" id="card">
       <div class="timer-section">
         <div class="timer-compact" id="timerCompact">
           <div class="mini-circle">
@@ -677,7 +679,12 @@ html,body{
         </div>
       </div>
 
-      <!-- QUESTION - PERFECT SIZE, CENTERED -->
+      <!-- IMAGE - HALF SCREEN -->
+      <div class="image-container">
+        <img id="logoImg" src="" alt="Car Image">
+      </div>
+
+      <!-- QUESTION -->
       <div class="question" id="question">Loading…</div>
 
       <!-- CHOICES -->
@@ -689,7 +696,7 @@ html,body{
       </div>
 
       <div id="final" class="final">
-        <h2>✝️ Bible Master!</h2>
+        <h2>🚗 Car Master!</h2>
         <div class="score" id="finalScore">You answered 0 / 10 correctly</div>
         <div style="margin-top:3px;"><div class="score" id="coinSummary">Earned 0 🪙</div></div>
         <div class="btns">
@@ -709,6 +716,10 @@ html,body{
 <audio id="bgMusic" loop><source src="background-music.mp3" type="audio/mpeg"></audio>
 
 <script>
+// ============================================
+// NO LANDSCAPE LOCK
+// ============================================
+
 // ============================================
 // BACKEND INTEGRATION
 // ============================================
@@ -754,18 +765,16 @@ function usePowerup(powerupId) {
 }
 
 // ============================================
-// MENU SYSTEM - FIXED
+// MENU SYSTEM
 // ============================================
 let menuOpen = false;
 
 function toggleMenu() {
   menuOpen = !menuOpen;
-  const dropdown = document.getElementById('menuDropdown');
-  dropdown.classList.toggle('open', menuOpen);
+  document.getElementById('menuDropdown').classList.toggle('open', menuOpen);
   if (menuOpen) updateMenuCounts();
 }
 
-// Close menu when clicking outside
 document.addEventListener('click', function(e) {
   const menuBtn = document.getElementById('menuBtn');
   const dropdown = document.getElementById('menuDropdown');
@@ -803,7 +812,7 @@ function useHint() {
   
   if (!currentSet || currentQ >= currentSet.length) return;
   
-  const correctIndex = currentSet[currentQ].correct;
+  const correctIndex = currentSet[currentQ].a;
   const btns = choicesEl.children;
   let wrongIndices = [];
   for (let i = 0; i < btns.length; i++) {
@@ -938,28 +947,19 @@ function shuffleArray(arr) {
 }
 
 // ============================================
-// CHRISTIAN QUESTIONS
+// CAR BANK
 // ============================================
-const CHRISTIAN_BANK = [
-  { q:"Who built the ark to survive the flood?", choices:["Moses","Noah","Abraham","David"], answer:"Noah" },
-  { q:"What is the first book of the Bible?", choices:["Genesis","Exodus","Leviticus","Numbers"], answer:"Genesis" },
-  { q:"Who was thrown into the lions' den?", choices:["Daniel","Joseph","Elijah","Peter"], answer:"Daniel" },
-  { q:"Which sea did Moses part to lead the Israelites?", choices:["Red Sea","Dead Sea","Mediterranean","Sea of Galilee"], answer:"Red Sea" },
-  { q:"Who led the Israelites out of Egypt?", choices:["Moses","Aaron","Joshua","Samuel"], answer:"Moses" },
-  { q:"Who was sold by his brothers and ended up in Egypt?", choices:["Joseph","Jacob","Esau","Benjamin"], answer:"Joseph" },
-  { q:"Who received the Ten Commandments?", choices:["Moses","Aaron","Joshua","David"], answer:"Moses" },
-  { q:"What did God create on the first day?", choices:["Sun and Moon","Earth","Light","Animals"], answer:"Light" },
-  { q:"Who fought Goliath?", choices:["Saul","David","Samson","Solomon"], answer:"David" },
-  { q:"Who was Abraham's son?", choices:["Isaac","Jacob","Esau","Joseph"], answer:"Isaac" },
-  { q:"Who was the mother of Jesus?", choices:["Mary","Elizabeth","Martha","Anna"], answer:"Mary" },
-  { q:"Which disciple denied Jesus three times?", choices:["Peter","John","James","Judas"], answer:"Peter" },
-  { q:"Who betrayed Jesus for thirty pieces of silver?", choices:["Judas","Peter","John","Thomas"], answer:"Judas" },
-  { q:"Where was Jesus born?", choices:["Nazareth","Bethlehem","Jerusalem","Capernaum"], answer:"Bethlehem" },
-  { q:"What miracle did Jesus perform at the wedding in Cana?", choices:["Healing a blind man","Walking on water","Turning water into wine","Feeding 5000"], answer:"Turning water into wine" },
-  { q:"Who baptized Jesus?", choices:["John the Baptist","Peter","Paul","Philip"], answer:"John the Baptist" },
-  { q:"What is the shortest verse in the Bible?", choices:["Jesus wept","God is love","Pray without ceasing","In the beginning"], answer:"Jesus wept" },
-  { q:"Which disciple walked on water with Jesus?", choices:["Peter","John","James","Andrew"], answer:"Peter" },
-  { q:"Who wrote most of the letters in the New Testament?", choices:["Paul","Peter","John","James"], answer:"Paul" }
+const CAR_BANK = [
+  { img: "images/Audi_A6.jpg", q: "Where was Audi originally founded?", choices: ["Germany", "USA", "Italy", "France"], a: 0 },
+  { img: "images/lambo.jpg", q: "Which year was Lamborghini founded?", choices: ["1963", "1950", "1975", "1980"], a: 0 },
+  { img: "images/cadillac.jpg", q: "Cadillac is a division of which company?", choices: ["GM", "Ford", "Chrysler", "Toyota"], a: 0 },
+  { img: "images/Mercedes.jeep.jpg", q: "Mercedes-Benz was founded in which country?", choices: ["Germany", "USA", "UK", "Italy"], a: 0 },
+  { img: "images/Mercedes.jpg", q: "Which inventor is linked to Mercedes?", choices: ["Karl Benz", "Henry Ford", "Ferruccio Lamborghini", "Enzo Ferrari"], a: 0 },
+  { img: "images/porsche.jpg", q: "Porsche originated in which country?", choices: ["Germany", "France", "Italy", "Switzerland"], a: 0 },
+  { img: "images/porsche2.jpg", q: "Porsche is famous for which sports car?", choices: ["911", "Mustang", "Camaro", "Miata"], a: 0 },
+  { img: "images/lexus.jpg", q: "Which company owns Lexus?", choices: ["Toyota", "Honda", "BMW", "Ford"], a: 0 },
+  { img: "images/ferrrari.jpg", q: "Ferrari was founded in which year?", choices: ["1939", "1947", "1950", "1963"], a: 1 },
+  { img: "images/Bentley.jpg", q: "Bentley is based in which country?", choices: ["UK", "Germany", "Italy", "USA"], a: 0 }
 ];
 
 // ============================================
@@ -974,6 +974,8 @@ let streak = 0;
 const TOTAL_TIME = 15;
 let doubleCoinsActive = false;
 
+const cardEl = document.getElementById('card');
+const logoImg = document.getElementById('logoImg');
 const questionEl = document.getElementById('question');
 const choicesEl = document.getElementById('choices');
 const progressFill = document.getElementById('progressFill');
@@ -1001,6 +1003,15 @@ const timerStatusText = document.getElementById('timerStatusText');
 headerCoinsEl.textContent = totalCoins;
 const circumference = 2 * Math.PI * 42;
 
+function loadImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => { resolve(true); };
+    img.onerror = () => { resolve(false); };
+    img.src = src;
+  });
+}
+
 // ====== STREAK ======
 function updateStreak(isCorrect){
   if(isCorrect){
@@ -1017,7 +1028,7 @@ function updateStreak(isCorrect){
       const fb=document.getElementById('feedback');
       fb.textContent=`🔥 ${streak} in a row! +${bonus} bonus!`;
       fb.style.color='#ff6b6b';
-      setTimeout(()=>{fb.textContent='';fb.style.color='#363535';},1500);
+      setTimeout(()=>{fb.textContent='';fb.style.color='#333';},1500);
     }
   } else {
     streak=0;
@@ -1049,15 +1060,16 @@ function miniConfetti(){
 }
 
 function newSet(){
-  const shuffledBank = shuffleArray([...CHRISTIAN_BANK]);
+  const shuffledBank = shuffleArray([...CAR_BANK]);
   currentSet = shuffledBank.slice(0, 10).map(q => {
-    const choicesWithIndex = q.choices.map((text, idx) => ({ text, isCorrect: text === q.answer }));
+    const choicesWithIndex = q.choices.map((text, idx) => ({ text, isCorrect: idx === q.a }));
     const shuffledChoices = shuffleArray([...choicesWithIndex]);
     const newCorrectIndex = shuffledChoices.findIndex(c => c.isCorrect);
     return {
+      img: q.img,
       q: q.q,
       choices: shuffledChoices.map(c => c.text),
-      correct: newCorrectIndex
+      a: newCorrectIndex
     };
   });
   currentQ=0;score=0;
@@ -1066,10 +1078,38 @@ function newSet(){
 function loadQuestion(){
   if(currentQ>=currentSet.length){ finishQuiz(); return; }
   isAnswered=false;
-  
   let current=currentSet[currentQ];
-  questionEl.textContent=current.q;
+
+  // Reset image state
+  logoImg.classList.remove('loaded');
+  logoImg.classList.remove('error');
   
+  // Check if this question has an image
+  const hasImage = current.img && current.img.trim() !== '';
+  
+  if (hasImage) {
+    // Show image
+    const img = new Image();
+    img.onload = function() {
+      logoImg.src = current.img;
+      logoImg.classList.add('loaded');
+      logoImg.style.display = 'block';
+    };
+    img.onerror = function() {
+      logoImg.style.display = 'none';
+    };
+    img.src = current.img;
+    // Remove no-image class
+    questionEl.classList.remove('no-image');
+    cardEl.classList.remove('no-image');
+  } else {
+    // No image - hide it, use Christian Quiz style with bigger text
+    logoImg.style.display = 'none';
+    questionEl.classList.add('no-image');
+    cardEl.classList.add('no-image');
+  }
+
+  questionEl.textContent = current.q;
   questionEl.classList.remove('pop');
   void questionEl.offsetWidth;
   questionEl.classList.add('pop');
@@ -1081,8 +1121,8 @@ function loadQuestion(){
     btn.className='choice';
     btn.textContent = `${letters[i]}. ${c}`;
     btn.dataset.index = i;
-    btn.addEventListener('click',(e)=>{e.preventDefault();selectAnswer(btn,i,current.correct);});
-    btn.addEventListener('touchend',(e)=>{e.preventDefault();selectAnswer(btn,i,current.correct);});
+    btn.addEventListener('click',(e)=>{e.preventDefault();selectAnswer(btn,i,current.a);});
+    btn.addEventListener('touchend',(e)=>{e.preventDefault();selectAnswer(btn,i,current.a);});
     choicesEl.appendChild(btn);
   });
   qcountEl.textContent=`${currentQ+1}/10`;
@@ -1119,7 +1159,7 @@ function startTimer(){
       timerCompact.className='timer-compact danger';
       const current=currentSet[currentQ];
       Array.from(choicesEl.children).forEach((btn,idx)=>{
-        if(idx===current.correct)btn.classList.add('correct');
+        if(idx===current.a)btn.classList.add('correct');
         btn.style.pointerEvents='none';
       });
       setTimeout(()=>{currentQ++;loadQuestion();},1500);
@@ -1180,7 +1220,7 @@ function selectAnswer(btn, index, correct){
     const fb=document.getElementById('feedback');
     fb.textContent=`✅ ${msg}`;
     fb.style.color='#1fb97a';
-    setTimeout(()=>{fb.textContent='';fb.style.color='#363535';},1000);
+    setTimeout(()=>{fb.textContent='';fb.style.color='#333';},1000);
     miniConfetti();
     Array.from(choicesEl.children).forEach(c=>c.style.pointerEvents='none');
     setTimeout(()=>{currentQ++;loadQuestion();},800);
@@ -1199,7 +1239,7 @@ function selectAnswer(btn, index, correct){
     const fb=document.getElementById('feedback');
     fb.textContent=`❌ ${msg}`;
     fb.style.color='#ff4757';
-    setTimeout(()=>{fb.textContent='';fb.style.color='#363535';},1200);
+    setTimeout(()=>{fb.textContent='';fb.style.color='#333';},1200);
     if(wrongS){wrongS.currentTime=0;wrongS.play();}
     Array.from(choicesEl.children).forEach((c,idx)=>{
       if(idx===correct)c.classList.add('correct');
@@ -1214,7 +1254,7 @@ function selectAnswer(btn, index, correct){
 // ============================================
 function finishQuiz(){
   finalEl.style.display='flex';
-  const messages=['✝️ Bible Master!','🙏 Faithful Learner!','📖 Scripture Expert!','🌟 God\'s Word Champion!','💪 Bible Scholar!'];
+  const messages=['🚗 Car Master!','🏎️ Speed Demon!','🌟 Car Genius!','💪 Auto Expert!','🎉 Amazing Knowledge!'];
   document.querySelector('.final h2').textContent=`🎉 ${messages[Math.floor(Math.random()*messages.length)]}`;
   finalScoreEl.textContent=`You answered ${score} / 10 correctly!`;
   coinSummaryEl.textContent=`Earned ${score*pointsPerQ} 🪙 coins!`;
@@ -1233,11 +1273,8 @@ function finishQuiz(){
     },i*40);
   }
   
-  // ==========================================
-  // SEND GAME RESULT TO MAIN PAGE
-  // ==========================================
   const gameData = {
-    category: 'christian',
+    category: 'cars',
     score: score * 10,
     correct: score,
     total: 10,
@@ -1266,7 +1303,7 @@ function finishQuiz(){
       fetch(`${API_URL}/game/save-result`,{
         method:'POST',
         headers:{'Content-Type':'application/json','Authorization':`Bearer ${authToken}`},
-        body:JSON.stringify({category:'christian',score:score*10,questionsAnswered:currentSet.length,correctAnswers:score,timeSpent:60})
+        body:JSON.stringify({category:'cars',score:score*10,questionsAnswered:currentSet.length,correctAnswers:score,timeSpent:60})
       }).then(res=>res.json()).then(data=>console.log('✅ Game saved:',data)).catch(err=>console.error('❌ Save error:',err));
     }catch(e){console.error('❌ Save error:',e);}
   }
@@ -1297,8 +1334,8 @@ function coinPop(amount){
 function showFeedback(message, color) {
   const fb = document.getElementById('feedback');
   fb.textContent = message;
-  fb.style.color = color || '#363535';
-  setTimeout(() => { fb.textContent = ''; fb.style.color = '#363535'; }, 2000);
+  fb.style.color = color || '#333';
+  setTimeout(() => { fb.textContent = ''; fb.style.color = '#333'; }, 2000);
 }
 
 // ============================================
@@ -1328,13 +1365,12 @@ newSet();
 loadQuestion();
 updateMenuCounts();
 
-console.log('✝️ Christian Quiz loaded with:');
+console.log('🚗 Cars loaded with:');
 console.log('✅ NO landscape lock - works in portrait');
-console.log('✅ BIGGER header items (18px title, 34px logo)');
-console.log('✅ BIGGER question text');
-console.log('✅ BIGGER answer buttons');
-console.log('✅ FIXED dropdown menu (appears on top)');
-console.log('✅ SOFT color #363535');
+console.log('✅ Question text: 1.6rem (with image)');
+console.log('✅ No image: EXACTLY like Christian Quiz with BIGGER text (2rem)');
+console.log('✅ Answer buttons: 1.1rem');
+console.log('✅ Perfectly centered like CRE');
 console.log('✅ Game stats sent to main page');
 console.log(`📦 Inventory:`, getShopInventory());
 </script>
