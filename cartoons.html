@@ -349,7 +349,7 @@ html,body{
 #logoImg.error{display:none;}
 
 /* ============================================
-   QUESTION - PERFECT SIZE (1.6rem)
+   QUESTION - WITH IMAGE (1.6rem)
    ============================================ */
 .question{
   font-family:"Patrick Hand",Inter,system-ui,sans-serif;
@@ -375,15 +375,16 @@ html,body{
 @keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.02);}100%{transform:scale(1);}}
 
 /* ============================================
-   NO IMAGE - SLIGHTLY BIGGER (1.8rem)
+   NO IMAGE - MUCH BIGGER TEXT (2rem)
    ============================================ */
 .question.no-image {
-  font-size: 1.8rem;
-  /* Everything else stays the same */
+  font-size: 2rem;
+  min-height: 80px;
+  padding: 20px 16px;
 }
 
 /* ============================================
-   CHOICES - PERFECT SIZE (1.1rem)
+   CHOICES - BIGGER ANSWERS (1.1rem)
    ============================================ */
 .choices{
   display:grid;
@@ -518,7 +519,7 @@ html,body{
    ============================================ */
 @media(max-width:480px){
   .question{font-size:1.4rem;padding:14px 12px;min-height:60px;border-radius:12px;}
-  .question.no-image{font-size:1.5rem;}
+  .question.no-image{font-size:1.7rem;min-height:70px;padding:16px 14px;}
   .choice{min-height:50px;font-size:0.95rem;padding:0 10px;border-width:2px;}
   .image-container{height:40vh;min-height:140px;max-height:40vh;}
   .header{padding:6px 10px;}
@@ -533,19 +534,19 @@ html,body{
 
 @media(max-width:380px){
   .question{font-size:1.2rem;padding:12px 10px;min-height:50px;}
-  .question.no-image{font-size:1.3rem;}
+  .question.no-image{font-size:1.5rem;min-height:60px;padding:14px 12px;}
   .choice{min-height:44px;font-size:0.85rem;padding:0 8px;}
 }
 
 @media(min-height:800px) and (max-width:480px){
   .question{font-size:1.6rem;min-height:75px;}
-  .question.no-image{font-size:1.7rem;}
+  .question.no-image{font-size:1.9rem;min-height:85px;padding:20px 16px;}
   .choice{min-height:54px;font-size:1rem;}
 }
 
 @media(min-width:481px) and (max-width:767px){
   .question{font-size:1.5rem;min-height:70px;padding:16px 14px;}
-  .question.no-image{font-size:1.6rem;}
+  .question.no-image{font-size:1.8rem;min-height:80px;padding:18px 16px;}
   .choice{min-height:52px;font-size:1rem;}
   .header{padding:6px 10px;}
   .title{font-size:16px;}
@@ -554,7 +555,7 @@ html,body{
 
 @media(min-width:768px){
   .question{font-size:1.8rem;min-height:85px;padding:20px 18px;border-radius:16px;}
-  .question.no-image{font-size:2rem;}
+  .question.no-image{font-size:2.2rem;min-height:100px;padding:24px 20px;}
   .choice{min-height:60px;font-size:1.15rem;border-width:3px;}
   .image-container{height:50vh;min-height:250px;max-height:50vh;}
   .logoBox{width:40px;height:40px;}
@@ -568,7 +569,7 @@ html,body{
 
 @media(max-height:500px) and (orientation:landscape){
   .question{font-size:1.1rem;min-height:40px;padding:8px 10px;}
-  .question.no-image{font-size:1.2rem;}
+  .question.no-image{font-size:1.3rem;min-height:48px;padding:10px 12px;}
   .choice{min-height:34px;font-size:0.8rem;padding:0 8px;border-width:2px;}
   .choices{gap:4px;min-height:50px;}
   .image-container{height:40vh;min-height:100px;max-height:40vh;}
@@ -670,10 +671,10 @@ html,body{
         <img id="logoImg" src="" alt="Cartoon Image">
       </div>
 
-      <!-- QUESTION - PERFECT SIZE -->
+      <!-- QUESTION - BIGGER TEXT (2rem when no image) -->
       <div class="question" id="question">Loading…</div>
 
-      <!-- CHOICES - PERFECT SIZE -->
+      <!-- CHOICES - BIGGER ANSWERS -->
       <div class="choices" id="choices" role="list" aria-live="polite"></div>
 
       <div class="feedback" id="feedback" aria-live="polite"></div>
@@ -1090,11 +1091,11 @@ function loadQuestion(){
       logoImg.style.display = 'none';
     };
     img.src = current.img;
-    // Remove no-image class
+    // Remove no-image class (normal size)
     questionEl.classList.remove('no-image');
     cardEl.classList.remove('no-image');
   } else {
-    // No image - hide it, use bigger text
+    // No image - hide it, use MUCH BIGGER text (2rem)
     logoImg.style.display = 'none';
     questionEl.classList.add('no-image');
     cardEl.classList.add('no-image');
@@ -1265,9 +1266,6 @@ function finishQuiz(){
     },i*40);
   }
   
-  // ==========================================
-  // SEND GAME RESULT TO MAIN PAGE
-  // ==========================================
   const gameData = {
     category: 'cartoons',
     score: score * 10,
@@ -1362,7 +1360,7 @@ updateMenuCounts();
 
 console.log('🎬 Cartoons loaded with:');
 console.log('✅ NO landscape lock - works in portrait');
-console.log('✅ Question text: 1.6rem (with image), 1.8rem (no image)');
+console.log('✅ Question text: 1.6rem (with image), 2rem (no image) - BIG difference!');
 console.log('✅ Answer buttons: 1.1rem');
 console.log('✅ Perfectly centered layout');
 console.log('✅ Game stats sent to main page');
