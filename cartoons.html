@@ -348,7 +348,7 @@ html,body{
 #logoImg.error{display:none;}
 
 /* ============================================
-   QUESTION - BIGGER TEXT
+   QUESTION - PERFECTLY CENTERED
    ============================================ */
 .question{
   font-family:"Patrick Hand",Inter,system-ui,sans-serif;
@@ -364,15 +364,17 @@ html,body{
   background:rgba(255,255,255,0.85);
   border-radius:12px;
   line-height:1.3;
+  /* 🔥 CRITICAL: Perfect centering */
   display:flex;
   align-items:center;
   justify-content:center;
+  width:100%;
 }
 .question.pop{animation:questionPop 0.3s ease;}
 @keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.04);}100%{transform:scale(1);}}
 
 /* ============================================
-   🔥 When NO image, text becomes MUCH BIGGER & CENTERED
+   🔥 When NO image - MUCH BIGGER & CENTERED
    ============================================ */
 .question.no-image {
   font-size: 2.5rem;
@@ -381,6 +383,7 @@ html,body{
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 /* ============================================
@@ -652,7 +655,7 @@ html,body{
         <img id="logoImg" src="" alt="Cartoon Image">
       </div>
 
-      <!-- QUESTION - CENTERED (MUCH BIGGER if no image) -->
+      <!-- QUESTION - PERFECTLY CENTERED -->
       <div class="question" id="question">Loading…</div>
 
       <!-- CHOICES - BIGGER -->
@@ -1341,7 +1344,7 @@ updateMenuCounts();
 
 console.log('🎬 Cartoons loaded with:');
 console.log('✅ NO landscape lock - works in portrait');
-console.log('✅ Image questions: normal text size, centered');
+console.log('✅ Image questions: normal text size, PERFECTLY CENTERED');
 console.log('✅ 🔥 NO image questions: MUCH BIGGER text & CENTERED');
 console.log('✅ Game stats sent to main page');
 console.log(`📦 Inventory:`, getShopInventory());
