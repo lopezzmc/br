@@ -364,12 +364,15 @@ html,body{
   background:rgba(255,255,255,0.85);
   border-radius:12px;
   line-height:1.3;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 .question.pop{animation:questionPop 0.3s ease;}
 @keyframes questionPop{0%{transform:scale(1);}50%{transform:scale(1.04);}100%{transform:scale(1);}}
 
 /* ============================================
-   🔥 NEW: When NO image, text becomes MUCH BIGGER
+   🔥 When NO image, text becomes MUCH BIGGER & CENTERED
    ============================================ */
 .question.no-image {
   font-size: 2.5rem;
@@ -649,7 +652,7 @@ html,body{
         <img id="logoImg" src="" alt="Cartoon Image">
       </div>
 
-      <!-- QUESTION - BIGGER (or MUCH BIGGER if no image) -->
+      <!-- QUESTION - CENTERED (MUCH BIGGER if no image) -->
       <div class="question" id="question">Loading…</div>
 
       <!-- CHOICES - BIGGER -->
@@ -1053,7 +1056,7 @@ function loadQuestion(){
   logoImg.classList.remove('loaded');
   logoImg.classList.remove('error');
   
-  // 🔥 NEW: Check if this question has an image
+  // 🔥 Check if this question has an image
   const hasImage = current.img && current.img.trim() !== '';
   
   if (hasImage) {
@@ -1071,7 +1074,7 @@ function loadQuestion(){
     // Remove no-image class (text normal size)
     questionEl.classList.remove('no-image');
   } else {
-    // 🔥 NEW: No image - hide it and make text MUCH BIGGER
+    // 🔥 No image - hide it and make text MUCH BIGGER & CENTERED
     logoImg.style.display = 'none';
     questionEl.classList.add('no-image');
   }
@@ -1338,9 +1341,8 @@ updateMenuCounts();
 
 console.log('🎬 Cartoons loaded with:');
 console.log('✅ NO landscape lock - works in portrait');
-console.log('✅ BIGGER header items');
-console.log('✅ Image questions: normal text size');
-console.log('✅ 🔥 NO image questions: MUCH BIGGER text (2.5rem)');
+console.log('✅ Image questions: normal text size, centered');
+console.log('✅ 🔥 NO image questions: MUCH BIGGER text & CENTERED');
 console.log('✅ Game stats sent to main page');
 console.log(`📦 Inventory:`, getShopInventory());
 </script>
