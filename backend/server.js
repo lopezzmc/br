@@ -19,12 +19,17 @@ app.use(cors({
 app.use(express.json());
 
 // ============================================
-// POSTGRESQL DATABASE SETUP
+// POSTGRESQL DATABASE SETUP (EXPLICIT PARAMS)
 // ============================================
-console.log('🔍 DATABASE_URL exists:', !!process.env.DATABASE_URL);
-
+// Using explicit parameters to avoid URL parsing errors.
+// The environment variable DATABASE_URL is still set, but we are
+// using the individual components to connect directly.
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  user: 'brain_rush_db_user',
+  host: 'dpg-da4jtd49v7es738dpro0-a',
+  database: 'brain_rush_db',
+  password: 'RI9xe6aIXcjVRjpGTCqlkMDhDANm2VxI',
+  port: 5432,
   ssl: {
     rejectUnauthorized: false // Required for Render PostgreSQL
   }
