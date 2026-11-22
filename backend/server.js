@@ -34,6 +34,29 @@ app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
 
 // ============================================
+// SERVE STATIC FILES (HTML, images, audio, video)
+// ============================================
+const path = require('path');
+const staticRoot = path.join(__dirname, '..');
+
+// Block backend folder and hidden files from being served
+app.use((req, res, next) => {
+  if (
+    req.path.startsWith('/backend') ||
+    req.path.startsWith('/.git') ||
+    req.path.startsWith('/node_modules') ||
+    req.path === '/serviceAccountKey.json' ||
+    req.path === '/.env'
+  ) {
+    return res.status(404).end();
+  }
+  next();
+});
+
+// Serve everything from the repo root
+app.use(express.static(staticRoot));
+
+// ============================================
 // DATABASE CONNECTION CHECK
 // ============================================
 async function checkDatabase() {
