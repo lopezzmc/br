@@ -6,3 +6,4 @@ brainrush-backend/
 Thumbs.db
 package-lock.json
 desktop.ini
+backend/serviceAccountKey.json

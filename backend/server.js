@@ -1,112 +1,107 @@
+
 // ============================================
-// BRAIN RUSH BACKEND SERVER
+// BRAIN RUSH BACKEND SERVER (Firebase Firestore)
 // ============================================
 
 const express = require('express');
 const cors = require('cors');
-const { Pool } = require('pg');
+const admin = require('firebase-admin');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // ============================================
+// FIREBASE INITIALIZATION
+// ============================================
+let credential;
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  credential = admin.credential.cert(JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT));
+} else {
+  credential = admin.credential.cert(require('./serviceAccountKey.json'));
+}
+
+if (!admin.apps.length) {
+  admin.initializeApp({ credential });
+}
+
+const db = admin.firestore();
+const FieldValue = admin.firestore.FieldValue;
+
+// ============================================
 // MIDDLEWARE
 // ============================================
-app.use(cors({
-  origin: '*',
-  credentials: true
-}));
+app.use(cors({ origin: '*', credentials: true }));
 app.use(express.json());
 
 // ============================================
-// POSTGRESQL DATABASE SETUP (EXPLICIT PARAMS)
+// DATABASE CONNECTION CHECK
 // ============================================
-// Using explicit parameters to avoid URL parsing errors.
-// The environment variable DATABASE_URL is still set, but we are
-// using the individual components to connect directly.
-const pool = new Pool({
-  user: 'brain_rush_db_user',
-  host: 'dpg-da4jtd49v7es738dpro0-a',
-  database: 'brain_rush_db',
-  password: 'RI9xe6aIXcjVRjpGTCqlkMDhDANm2VxI',
-  port: 5432,
-  ssl: {
-    rejectUnauthorized: false // Required for Render PostgreSQL
-  }
-});
-
-// Initialize database table on startup
-async function initDatabase() {
-  const createTableQuery = `
-    CREATE TABLE IF NOT EXISTS users (
-      username VARCHAR(50) PRIMARY KEY,
-      email VARCHAR(100),
-      password VARCHAR(100),
-      coins INT DEFAULT 100,
-      diamonds INT DEFAULT 5,
-      xp INT DEFAULT 0,
-      level INT DEFAULT 1,
-      streak_days INT DEFAULT 0,
-      equipped_avatar VARCHAR(50) DEFAULT 'default',
-      owned_avatars TEXT[] DEFAULT ARRAY['default'],
-      owned_themes TEXT[] DEFAULT '{}',
-      active_theme VARCHAR(50) DEFAULT 'default',
-      inventory TEXT[] DEFAULT '{}',
-      games_played INT DEFAULT 0,
-      joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
-  `;
-
+async function checkDatabase() {
   try {
-    await pool.query(createTableQuery);
-    console.log('✅ Database initialized successfully');
-    console.log('💾 Database: PostgreSQL (PERSISTENT!)');
+    await db.collection('users').limit(1).get();
+    console.log('✅ Firestore connected successfully');
   } catch (err) {
-    console.error('❌ Database initialization error:', err.message);
+    console.error('❌ Firestore connection error:', err.message);
   }
 }
-
-initDatabase();
+checkDatabase();
 
 // ============================================
 // HELPER FUNCTIONS
 // ============================================
+function userDocId(username) {
+  return username.toLowerCase();
+}
+
 async function findUser(username) {
-  const result = await pool.query(
-    'SELECT * FROM users WHERE LOWER(username) = LOWER($1)',
-    [username]
-  );
-  return result.rows[0] || null;
+  const doc = await db.collection('users').doc(userDocId(username)).get();
+  if (!doc.exists) return null;
+  return { id: doc.id, ...doc.data() };
+}
+
+function serializeUser(user) {
+  return {
+    username: user.username,
+    coins: user.coins || 0,
+    diamonds: user.diamonds || 0,
+    xp: user.xp || 0,
+    level: user.level || 1,
+    streakDays: user.streakDays || 0,
+    equippedAvatar: user.equippedAvatar || 'default',
+    ownedAvatars: user.ownedAvatars || ['default'],
+    ownedThemes: user.ownedThemes || [],
+    activeTheme: user.activeTheme || 'default',
+    inventory: user.inventory || [],
+    gamesPlayed: user.gamesPlayed || 0
+  };
 }
 
 // ============================================
 // API ROUTES
 // ============================================
 
-// --------------------------------------------
 // HEALTH CHECK
-// --------------------------------------------
 app.get('/api/health', async (req, res) => {
   try {
-    const result = await pool.query('SELECT COUNT(*) FROM users');
+    const snap = await db.collection('users').count().get();
     res.json({
       status: 'ok',
       timestamp: new Date().toISOString(),
       message: '🚀 Brain Rush Server is running!',
-      users: parseInt(result.rows[0].count)
+      users: snap.data().count
     });
   } catch (err) {
     res.status(500).json({ status: 'error', message: err.message });
   }
 });
 
-// Root endpoint
+// ROOT
 app.get('/', (req, res) => {
   res.json({
     name: 'Brain Rush API',
     version: '3.0.0',
     status: 'online',
-    database: 'PostgreSQL (persistent)',
+    database: 'Firestore (persistent, free tier)',
     endpoints: [
       'GET  /api/health',
       'POST /api/auth/register',
@@ -124,55 +119,48 @@ app.get('/', (req, res) => {
 // AUTHENTICATION
 // --------------------------------------------
 
-// REGISTER USER
 app.post('/api/auth/register', async (req, res) => {
   const { username, email, password } = req.body;
 
   if (!username || username.length < 2) {
-    return res.status(400).json({
-      success: false,
-      error: 'Username must be at least 2 characters'
-    });
+    return res.status(400).json({ success: false, error: 'Username must be at least 2 characters' });
   }
 
   try {
     const existing = await findUser(username);
     if (existing) {
-      return res.status(400).json({
-        success: false,
-        error: 'Username already taken'
-      });
+      return res.status(400).json({ success: false, error: 'Username already taken' });
     }
 
-    const result = await pool.query(
-      `INSERT INTO users (username, email, password, coins, diamonds)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING *`,
-      [username, email || `${username}@brainrush.game`, password || 'default123', 100, 5]
-    );
+    const newUser = {
+      username: username,
+      email: email || `${username}@brainrush.game`,
+      password: password || 'default123',
+      coins: 100,
+      diamonds: 5,
+      xp: 0,
+      level: 1,
+      streakDays: 0,
+      equippedAvatar: 'default',
+      ownedAvatars: ['default'],
+      ownedThemes: [],
+      activeTheme: 'default',
+      inventory: [],
+      gamesPlayed: 0,
+      joinedAt: FieldValue.serverTimestamp()
+    };
 
-    const newUser = result.rows[0];
+    await db.collection('users').doc(userDocId(username)).set(newUser);
+
     const token = `mock-token-${username}`;
-
     console.log(`✅ New user registered: ${username}`);
-    console.log(`📊 Total users: ${(await pool.query('SELECT COUNT(*) FROM users')).rows[0].count}`);
+    const countSnap = await db.collection('users').count().get();
+    console.log(`📊 Total users: ${countSnap.data().count}`);
 
     res.status(201).json({
       success: true,
       token: token,
-      user: {
-        username: newUser.username,
-        coins: newUser.coins,
-        diamonds: newUser.diamonds,
-        xp: newUser.xp,
-        level: newUser.level,
-        streakDays: newUser.streak_days,
-        equippedAvatar: newUser.equipped_avatar,
-        ownedAvatars: newUser.owned_avatars,
-        ownedThemes: newUser.owned_themes,
-        activeTheme: newUser.active_theme,
-        inventory: newUser.inventory
-      }
+      user: serializeUser(newUser)
     });
   } catch (err) {
     console.error('Register error:', err);
@@ -180,10 +168,8 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
-// VERIFY USER
 app.get('/api/auth/verify', async (req, res) => {
   const authHeader = req.headers.authorization;
-
   if (!authHeader) {
     return res.status(401).json({ valid: false, error: 'No token provided' });
   }
@@ -196,24 +182,7 @@ app.get('/api/auth/verify', async (req, res) => {
     if (!user) {
       return res.status(401).json({ valid: false, error: 'Invalid token' });
     }
-
-    res.json({
-      valid: true,
-      user: {
-        username: user.username,
-        coins: user.coins,
-        diamonds: user.diamonds,
-        xp: user.xp,
-        level: user.level,
-        streakDays: user.streak_days,
-        equippedAvatar: user.equipped_avatar,
-        ownedAvatars: user.owned_avatars,
-        ownedThemes: user.owned_themes,
-        activeTheme: user.active_theme,
-        inventory: user.inventory,
-        gamesPlayed: user.games_played || 0
-      }
-    });
+    res.json({ valid: true, user: serializeUser(user) });
   } catch (err) {
     res.status(500).json({ valid: false, error: 'Server error' });
   }
@@ -223,7 +192,6 @@ app.get('/api/auth/verify', async (req, res) => {
 // USER DATA
 // --------------------------------------------
 
-// UPDATE USER DATA
 app.post('/api/user/:username/update', async (req, res) => {
   const { username } = req.params;
   const updateData = req.body;
@@ -234,116 +202,63 @@ app.post('/api/user/:username/update', async (req, res) => {
       return res.status(404).json({ success: false, error: 'User not found' });
     }
 
-    // Build dynamic update query
-    const fields = [];
-    const values = [];
-    let paramCount = 1;
+    const allowed = [
+      'coins', 'diamonds', 'xp', 'level', 'streakDays',
+      'equippedAvatar', 'ownedAvatars', 'ownedThemes',
+      'activeTheme', 'inventory'
+    ];
 
-    const mapping = {
-      coins: 'coins',
-      diamonds: 'diamonds',
-      xp: 'xp',
-      level: 'level',
-      streakDays: 'streak_days',
-      equippedAvatar: 'equipped_avatar',
-      ownedAvatars: 'owned_avatars',
-      ownedThemes: 'owned_themes',
-      activeTheme: 'active_theme',
-      inventory: 'inventory'
-    };
-
-    for (const [key, dbField] of Object.entries(mapping)) {
-      if (updateData[key] !== undefined) {
-        fields.push(`${dbField} = $${paramCount}`);
-        values.push(updateData[key]);
-        paramCount++;
-      }
+    const updates = {};
+    for (const key of allowed) {
+      if (updateData[key] !== undefined) updates[key] = updateData[key];
     }
 
-    if (fields.length === 0) {
+    if (Object.keys(updates).length === 0) {
       return res.json({ success: true, message: 'No fields to update' });
     }
 
-    values.push(username);
-    const query = `UPDATE users SET ${fields.join(', ')} WHERE username = $${paramCount} RETURNING *`;
-    const result = await pool.query(query, values);
-    const updatedUser = result.rows[0];
-
+    await db.collection('users').doc(userDocId(username)).update(updates);
     console.log(`✅ User updated: ${username}`);
 
-    res.json({
-      success: true,
-      user: {
-        username: updatedUser.username,
-        coins: updatedUser.coins,
-        diamonds: updatedUser.diamonds,
-        xp: updatedUser.xp,
-        level: updatedUser.level,
-        streakDays: updatedUser.streak_days,
-        equippedAvatar: updatedUser.equipped_avatar,
-        ownedAvatars: updatedUser.owned_avatars,
-        ownedThemes: updatedUser.owned_themes,
-        activeTheme: updatedUser.active_theme,
-        inventory: updatedUser.inventory
-      }
-    });
+    res.json({ success: true, user: serializeUser({ ...user, ...updates }) });
   } catch (err) {
     console.error('Update error:', err);
     res.status(500).json({ success: false, error: 'Server error' });
   }
 });
 
-// UPDATE RESOURCES (Coins, Diamonds, XP)
 app.post('/api/user/update-resources', async (req, res) => {
   const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
+  if (!authHeader) return res.status(401).json({ error: 'Unauthorized' });
 
   const token = authHeader.replace('Bearer ', '');
   const username = token.replace('mock-token-', '');
-
   const { coins = 0, diamonds = 0, xp = 0 } = req.body;
 
   try {
-    let user = await findUser(username);
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
+    const user = await findUser(username);
+    if (!user) return res.status(404).json({ error: 'User not found' });
 
-    // Calculate new values
-    let newCoins = user.coins + coins;
-    let newDiamonds = user.diamonds + diamonds;
-    let newXp = user.xp + xp;
-    let newLevel = user.level;
+    let newCoins = (user.coins || 0) + coins;
+    let newDiamonds = (user.diamonds || 0) + diamonds;
+    let newXp = (user.xp || 0) + xp;
+    let newLevel = user.level || 1;
 
-    // Level up logic (while loop for multiple level-ups)
     while (newXp >= Math.floor(100 * Math.pow(newLevel + 1, 1.5))) {
       newLevel++;
-      newCoins += newLevel * 50; // Bonus coins on level up
+      newCoins += newLevel * 50;
       console.log(`🎉 ${username} leveled up to ${newLevel}!`);
     }
 
-    // Update database
-    const result = await pool.query(
-      `UPDATE users 
-       SET coins = $1, diamonds = $2, xp = $3, level = $4
-       WHERE username = $5
-       RETURNING coins, diamonds, xp, level`,
-      [newCoins, newDiamonds, newXp, newLevel, username]
-    );
-
-    const updated = result.rows[0];
+    await db.collection('users').doc(userDocId(username)).update({
+      coins: newCoins,
+      diamonds: newDiamonds,
+      xp: newXp,
+      level: newLevel
+    });
 
     console.log(`💰 ${username} earned: +${coins} coins, +${diamonds} diamonds, +${xp} XP`);
-
-    res.json({
-      success: true,
-      coins: updated.coins,
-      diamonds: updated.diamonds,
-      xp: updated.xp,
-      level: updated.level
-    });
+    res.json({ success: true, coins: newCoins, diamonds: newDiamonds, xp: newXp, level: newLevel });
   } catch (err) {
     console.error('Update resources error:', err);
     res.status(500).json({ error: 'Server error' });
@@ -354,26 +269,21 @@ app.post('/api/user/update-resources', async (req, res) => {
 // GAME
 // --------------------------------------------
 
-// GET LEADERBOARD
 app.get('/api/game/leaderboard', async (req, res) => {
   try {
-    const result = await pool.query(
-      `SELECT username, coins, diamonds, level, equipped_avatar as avatar, games_played
-       FROM users
-       ORDER BY coins DESC
-       LIMIT 100`
-    );
-
-    const leaderboard = result.rows.map((item, index) => ({
-      rank: index + 1,
-      username: item.username,
-      coins: item.coins || 0,
-      diamonds: item.diamonds || 0,
-      level: item.level || 1,
-      avatar: item.avatar || 'default',
-      gamesPlayed: item.games_played || 0
-    }));
-
+    const snap = await db.collection('users').orderBy('coins', 'desc').limit(100).get();
+    const leaderboard = snap.docs.map((doc, index) => {
+      const d = doc.data();
+      return {
+        rank: index + 1,
+        username: d.username || doc.id,
+        coins: d.coins || 0,
+        diamonds: d.diamonds || 0,
+        level: d.level || 1,
+        avatar: d.equippedAvatar || 'default',
+        gamesPlayed: d.gamesPlayed || 0
+      };
+    });
     res.json(leaderboard);
   } catch (err) {
     console.error('Leaderboard error:', err);
@@ -381,40 +291,30 @@ app.get('/api/game/leaderboard', async (req, res) => {
   }
 });
 
-// SAVE GAME RESULT
 app.post('/api/game/save-result', async (req, res) => {
   const authHeader = req.headers.authorization;
-  if (!authHeader) {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
+  if (!authHeader) return res.status(401).json({ error: 'Unauthorized' });
 
   const token = authHeader.replace('Bearer ', '');
   const username = token.replace('mock-token-', '');
-
   const { category, score, questionsAnswered, correctAnswers, timeSpent } = req.body;
 
   try {
-    const result = await pool.query(
-      `UPDATE users 
-       SET games_played = games_played + 1
-       WHERE username = $1
-       RETURNING games_played, coins, level`,
-      [username]
-    );
+    const user = await findUser(username);
+    if (!user) return res.status(404).json({ error: 'User not found' });
 
-    if (result.rows.length === 0) {
-      return res.status(404).json({ error: 'User not found' });
-    }
+    await db.collection('users').doc(userDocId(username)).update({
+      gamesPlayed: FieldValue.increment(1)
+    });
 
-    const updated = result.rows[0];
-
+    const updated = await findUser(username);
     console.log(`🎮 ${username} played ${category}: ${correctAnswers}/${questionsAnswered} correct`);
 
     res.json({
       success: true,
       message: 'Game result saved!',
       stats: {
-        gamesPlayed: updated.games_played,
+        gamesPlayed: updated.gamesPlayed,
         totalCoins: updated.coins,
         level: updated.level
       }
@@ -470,17 +370,22 @@ app.post('/api/ai/chat', (req, res) => {
 });
 
 // --------------------------------------------
-// ADMIN ROUTES (for testing)
+// ADMIN ROUTES
 // --------------------------------------------
 app.get('/api/admin/users', async (req, res) => {
   try {
-    const result = await pool.query(
-      `SELECT username, coins, diamonds, level, games_played FROM users ORDER BY coins DESC`
-    );
-    res.json({
-      total: result.rows.length,
-      users: result.rows
+    const snap = await db.collection('users').orderBy('coins', 'desc').get();
+    const users = snap.docs.map(doc => {
+      const d = doc.data();
+      return {
+        username: d.username || doc.id,
+        coins: d.coins || 0,
+        diamonds: d.diamonds || 0,
+        level: d.level || 1,
+        games_played: d.gamesPlayed || 0
+      };
     });
+    res.json({ total: users.length, users });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -488,7 +393,10 @@ app.get('/api/admin/users', async (req, res) => {
 
 app.delete('/api/admin/reset', async (req, res) => {
   try {
-    await pool.query('DELETE FROM users');
+    const snap = await db.collection('users').get();
+    const batch = db.batch();
+    snap.docs.forEach(doc => batch.delete(doc.ref));
+    await batch.commit();
     console.log('🔄 Database reset');
     res.json({ success: true, message: 'All data reset' });
   } catch (err) {
@@ -506,17 +414,7 @@ app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
   console.log(`📊 API: http://localhost:${PORT}/api`);
   console.log(`🟢 Health: http://localhost:${PORT}/api/health`);
-  console.log(`💾 Database: PostgreSQL (PERSISTENT!)`);
+  console.log(`💾 Database: Firestore (free tier, permanent)`);
   console.log('═══════════════════════════════════════════');
-  console.log('');
-  console.log('📌 Available Endpoints:');
-  console.log('  POST /api/auth/register');
-  console.log('  GET  /api/auth/verify');
-  console.log('  POST /api/user/:username/update');
-  console.log('  POST /api/user/update-resources');
-  console.log('  GET  /api/game/leaderboard');
-  console.log('  POST /api/game/save-result');
-  console.log('  POST /api/ai/chat');
-  console.log('');
   console.log('🔧 Press Ctrl+C to stop');
 });
